@@ -1,0 +1,107 @@
+
+{
+  "code": 200,
+  "msg": "环境监测-数据获取成功！",
+  "data": {
+    "tableData": [
+      {
+        "id": 1,
+        "title": "1#甲类库照明和风机配电箱",
+        "expand": true,
+        "total": 6,
+        "children": [
+          {
+            "title": "电气综合监控装置400A",
+            "total": 1,
+            "expand": true
+          },
+          {
+            "title": "电气综合监控装置100A",
+            "total": 1,
+            "expand": true
+          },
+          {
+            "title": "故障电弧探测器",
+            "total": 4,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "2#园区总配电箱",
+        "expand": true,
+        "total": 7,
+        "children": [
+          {
+            "title": "电箱A",
+            "total": 3,
+            "expand": true
+          },
+          {
+            "title": "电箱B",
+            "total": 2,
+            "expand": true
+          },
+          {
+            "title": "电箱C",
+            "total": 2,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "3#临货区应急照明配电箱",
+        "expand": true,
+        "total": 4,
+        "children": [
+          {
+            "title": "电箱A",
+            "total": 1,
+            "expand": true
+          },
+          {
+            "title": "电箱B",
+            "total": 3,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "4#办公区电车充电区",
+        "expand": true,
+        "total": 12,
+        "children": [
+          {
+            "title": "电箱A",
+            "total": 1,
+            "expand": true
+          },
+          {
+            "title": "电箱B",
+            "total": 3,
+            "expand": true
+          },
+          {
+            "title": "电箱B",
+            "total": 3,
+            "expand": true
+          },
+          {
+            "title": "电箱B",
+            "total": 3,
+            "expand": true
+          },
+          {
+            "title": "电箱B",
+            "total": 2,
+            "expand": true
+          }
+        ]
+      }
+    ]
+  }
+}
+

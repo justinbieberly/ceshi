@@ -1,0 +1,59 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "menu": [
+      {
+        "name": "重大危险源监测预警..",
+        "id": 1,
+        "path": false,
+        "children": [
+          {
+            "name": "货物存储",
+            "id": 1001,
+            "path": "/dashboard/goods_stored"
+          },
+          {
+            "name": "临时存储",
+            "id": 1002,
+            "path": "/dashboard/temporary_storage"
+          },
+          {
+            "name": "分布状况",
+            "id": 1002,
+            "path": "/dashboard/distribution"
+          },
+          {
+            "name": "环境监测",
+            "id": 1002,
+            "path": "/dashboard/environmental_monitoring"
+          },
+          {
+            "name": "用电监测",
+            "id": 1002,
+            "path": "/dashboard/electricity_monitoring"
+          },
+          {
+            "name": "空间监测",
+            "id": 1002,
+            "path": "/dashboard/space_monitoring"
+          }
+        ]
+      },
+      {
+        "name": "系统设置",
+        "id": 1,
+        "path": false,
+        "children": [
+          {
+            "name": "数据统计",
+            "id": 1001,
+            "path": "/dashboard/goods_stored"
+          }
+        ]
+      }
+    ]
+  }
+}
+

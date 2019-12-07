@@ -1,0 +1,151 @@
+.no-padding {
+    padding: 0 !important;
+}
+
+/*覆盖导航 按钮 颜色*/
+.nav-btn-color .ivu-btn {
+    background-color: #1abc9c;
+}
+
+.nav-btn-color .ivu-btn:hover {
+    background-color: #21ab85;
+}
+
+/*内容板块边距设置*/
+.i-layout-content-main-pro {
+    margin-top: 10px !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+/*内容板块 左边板块缩小样式*/
+.i-layout-slider-min {
+    display: none;
+    width: 80px !important;
+    transition: all 0.5s;
+}
+
+/*内容整体flex布局*/
+.body-content-main {
+    display: flex;
+    height: 100vh;
+}
+
+/*内容板块左右宽度布局*/
+.content-layout-left {
+    max-width: 24%;
+    height: 100%;
+    flex: 1;
+    float: left;
+}
+
+.content-layout-right {
+    width: 75% !important;
+    padding: 10px;
+    float: right;
+    margin-left: 1%;
+    margin-right: 1%;
+    background: #fff;
+    border-radius: 2px;
+}
+
+.user-full-screen {
+    width: 100% !important;
+}
+
+/*左边的title*/
+.i-admin-title {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.content-layout-right-pro {
+    width: 100% !important;
+    margin-right: 0 !important;
+}
+
+/*左侧的flex沾满布局*/
+.i-admin-left-menu {
+    /*height: 100vh;*/
+}
+
+.user-full-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.ivu-global-footer {
+    margin: 15px 0 24px 0 !important;
+}
+
+/*存储页面的分割设置*/
+.demo-split-pane .ivu-cell-title {
+    font-size: 12px !important;
+    line-height: 18px;
+}
+
+
+/*临时存储 表格删除padding*/
+.temporary_table_nopadding .ivu-card-body {
+    padding: 0 !important;
+}
+
+/*分布状况页面的表格 第三列 字体-宽度设置*/
+.fb-table .ivu-table-row > td:nth-child(3) > .ivu-table-cell{
+    padding: 2px !important;
+    font-size: 12px;
+}
+
+/*环境监测的数形结构 里面的i标签设置*/
+.env-air-tree .ivu-btn > .ivu-icon {
+    line-height: normal;
+    color: #ff5741;
+    margin-top: -3px;
+}
+
+/*环境监测的数形结构 隐藏 按钮*/
+.env-air-tree .ivu-btn-primary {
+    background-color: unset !important;
+    border-color: unset  !important;
+}
+.env-air-tree .ivu-btn-primary:hover {
+    background-color: unset;
+    border-color: unset;
+}
+
+/*用于覆盖树形结构覆盖颜色*/
+.tree-color-black .ivu-btn > .ivu-icon {
+    color: #272927 !important;
+}
+/*实时监控 表单的lable大小*/
+.real-time-form .ivu-form-item-label{
+    font-size: 12px !important;
+}
+
+.cell-normal-color {
+    background-color: #0feb16 !important;
+}
+
+.cell-warning-color {
+    background-color: #e8eb0f !important;
+}
+
+.cell-error-color {
+    background-color: #fb1010 !important;
+}
+
+.cell-a-color {
+    background-color: #fb1010 !important;
+}
+
+.cell-b-color {
+    background-color: #7a621f !important;
+}
+
+.cell-c-color {
+    background-color: #fbf374 !important;
+}
+
+.cell-other-color {
+    background-color: #3123fb !important;
+}
