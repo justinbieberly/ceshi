@@ -28,7 +28,7 @@
 /*内容整体flex布局*/
 .body-content-main {
     display: flex;
-    height: 100vh;
+    /*height: 100vh;*/
 }
 
 /*内容板块左右宽度布局*/
@@ -141,6 +141,18 @@
     text-align: right;
     display: inline-block;
 }
+
+/*父级定位器*/
+.father-position {
+    position: relative;
+}
+
+/*子级定位器*/
+.child-position {
+    position: absolute;
+}
+
+
 .cell-normal-color {
     background-color: #0feb16 !important;
 }

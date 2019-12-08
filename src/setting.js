@@ -102,7 +102,14 @@ const Setting = {
     // 相同路由，不同参数间进行切换，是否强力更新
     sameRouteForceUpdate: false,
     // 是否使用动态侧边菜单
-    dynamicSiderMenu: false
+    dynamicSiderMenu: false,
+    /**
+     * 版权设置
+     * */
+    copyright: {
+        copyright: ' Copyright © www.longyi.com , All Rights Reserved.',
+        contact: 'Email : 1234567@qq.com   QQ: 1234567'
+    }
 };
 
 export default Setting;

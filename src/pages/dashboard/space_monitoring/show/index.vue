@@ -2,8 +2,12 @@
     <main class="body-content-main">
         <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
             <Grid center square :hover="true" :col="column">
-                <GridItem v-for="(item, key) in gridItems" :key="key" :name="key" >{{ item }}</GridItem>
+                <GridItem v-for="(item, key) in gridItems" :key="key" :name="key" class="user-full-img father-position">
+                   <span class="child-position"> {{ item }}</span>
+                    <img src="/assets/images/u1946.svg" alt="">
+                </GridItem>
             </Grid>
+            <div style="clear: both;"></div>
         </div>
     </main>
 </template>
@@ -43,7 +47,8 @@
             getMonitoringById (showIds = []) {
                 console.log('根据id获取监控画面');
                 if (showIds.length === 0) {
-                    this.gridItems = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                    this.column = 4;
+                    this.gridItems = [0, 1, 2, 3, 4, 5, 6, 7, 8]
                 } else {
                     this.gridItems = Array.from({ length: showIds.length }, (v, k) => k);
                 }
