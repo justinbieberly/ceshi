@@ -4,7 +4,7 @@
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Button slot="extra" size="small" to="real_time_monitor">实时监测</Button>
-                    <Button slot="extra" size="small" to="#" style="margin-left: 10px;">历史数据</Button>
+                    <Button slot="extra" size="small" to="electricity_history" style="margin-left: 10px;">历史数据</Button>
                     <Tree :data="data5" :render="renderContent" class="env-air-tree tree-color-black"></Tree>
                 </Card>
             </Card>
@@ -80,11 +80,7 @@
             let that = this;
             console.log('before', that.data5);
             getElectricityMonitoring()
-                .then(async res => {
-                    console.log(that.dealTableData(res.tableData));
-                    that.data5 = that.dealTableData(res.tableData);
-                    // console.log('after', that.data5);
-                }).catch(err => { console.log('err: ', err) });
+                .then(async res => { that.data5 = that.dealTableData(res.tableData); }).catch(err => { console.log('err: ', err) });
         },
         methods: {
             renderContent (h, { root, node, data }) {
@@ -117,10 +113,10 @@
                                 width: '20px',
                                 fontSize: '16',
                                 marginRight: '7px',
-                                color: "#cc5151",
+                                color: '#cc5151',
                                 lineHeight: '20px'
-                            },
-                        },data.total),
+                            }
+                        }, data.total),
                         h('Button', {
                             props: Object.assign({}, this.buttonProps, {
                                 icon: 'ios-add-circle',
@@ -248,10 +244,10 @@
                                             width: '20px',
                                             fontSize: '16',
                                             marginRight: '7px',
-                                            color: "#cc5151",
+                                            color: '#cc5151',
                                             lineHeight: '20px'
-                                        },
-                                    },data.total),
+                                        }
+                                    }, data.total),
                                     h('Button', {
                                         props: Object.assign({}, this.buttonProps, {
                                             icon: 'ios-add-circle',
@@ -312,7 +308,7 @@
                                     })
                                 ])
                             ]);
-                        },
+                        }
                     }, data[i]);
                     dataTemp.push(temp)
                 }

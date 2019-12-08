@@ -86,6 +86,35 @@ export default {
                 title: '实时监测'
             },
             component: () => import('@/pages/dashboard/electricity_monitoring/real_time_monitor')
+        },
+        {
+            path: 'electricity_history',
+            name: `${pre}electricity-history`,
+            meta: {
+                ...meta,
+                title: '历史数据'
+            },
+            component: () => import('@/pages/dashboard/electricity_monitoring/history')
+        },
+        {
+            path: 'space_monitoring',
+            name: `${pre}space-monitoring`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '空间监测'
+            },
+            component: () => import('@/pages/dashboard/space_monitoring')
+        },
+        {
+            path: 'space_monitoring_show',
+            name: `${pre}space-monitoring-show`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '空间监测-显示全部/所选'
+            },
+            component: () => import('@/pages/dashboard/space_monitoring/show')
         }
     ]
 };

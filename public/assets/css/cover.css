@@ -49,6 +49,11 @@
     border-radius: 2px;
 }
 
+/*清楚浮动造成的页面背景不能覆盖*/
+.content-layout-right:after {
+    clear: both;
+}
+
 .user-full-screen {
     width: 100% !important;
 }
@@ -117,11 +122,25 @@
 .tree-color-black .ivu-btn > .ivu-icon {
     color: #272927 !important;
 }
+
 /*实时监控 表单的lable大小*/
 .real-time-form .ivu-form-item-label{
     font-size: 12px !important;
 }
 
+.electricity-box {
+    width: 180px;
+}
+/*用电监测的表格里面span标签 对其*/
+.user-electricity-span span {
+    font-size: 12px;
+}
+
+.user-electricity-span span:nth-child(1){
+    width: 50%;
+    text-align: right;
+    display: inline-block;
+}
 .cell-normal-color {
     background-color: #0feb16 !important;
 }

@@ -2,8 +2,9 @@
     <main class="body-content-main">
         <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
            <div class="ivu-block">
-               <span>功能操作</span>
-               <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form">
+               <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+                   <FormItem label="功能操作">
+                   </FormItem>
                    <FormItem label="输入搜索">
                        <Input v-model="formItem.input" placeholder="序号/名称" size="small"></Input>
                    </FormItem>
@@ -15,7 +16,9 @@
                    </FormItem>
                    <FormItem>
                        <Button type="primary" size="small" @click="doQuery">查询结果</Button>
-                       <Button style="margin-left: 8px" size="small" to="/dashboard/real_time_monitor">重置查询</Button>
+                       <i-link to="/dashboard/real_time_monitor">
+                           <Button style="margin-left: 8px" size="small" >重置查询</Button>
+                       </i-link>
                    </FormItem>
                    <div class="ivu-inline-block" style="float: right">
                        <FormItem>
@@ -43,16 +46,17 @@
                        </FormItem>
                    </div>
                </Form>
+               <Table border  :loading="loading" :columns="tableColumns" :data="tableData" size="small" ></Table>
            </div>
-            <Table border  :loading="loading" :columns="tableColumns" :data="tableData" size="small" ></Table>
             <div class="ivu-block" style="float: right;margin-top: 30px;">
-                <Page :total="4" :page-size="pageSize" show-total show-elevator size="small" />
+                <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
             </div>
         </div>
     </main>
 </template>
 <script>
     import { mapState } from 'vuex';
+    import { getElectricityRealTime } from '@api/account';
     export default {
         name: 'dashboard-real-time-monitoring',
         data () {
@@ -60,6 +64,7 @@
                 title: '实时监测',
                 loading: false,
                 pageSize: 100,
+                total: 0,
                 formItem: {
                     input: undefined,
                     select: undefined,
@@ -67,93 +72,8 @@
                     showNum: 1
 
                 },
-                tableColumns: [
-                    {
-                        title: '序号',
-                        align: 'center',
-                        key: 'id'
-                    },
-                    {
-                        title: '回路名称',
-                        align: 'center',
-                        key: 'name'
-                    },
-                    {
-                        title: '监测时间',
-                        align: 'center',
-                        key: 'time'
-                    },
-                    {
-                        title: '状态',
-                        key: 'status',
-                        align: 'center',
-                        filters: [
-                            {
-                                label: '正常',
-                                value: '1'
-                            },
-                            {
-                                label: '异常',
-                                value: '0'
-                            }
-                        ],
-                        filterMethod (value, row) {
-                            console.log(row);
-                            console.log(value);
-                        },
-                        render: (h, params) => {
-                            let status = '异常';
-                            if (params.row.status === 1) {
-                                status = '正常'
-                            }
-                            return h('div', status);
-                        }
-                    },
-                    {
-                        title: '监测数据',
-                        align: 'center',
-                        key: 'dataInfo'
-                    },
-                    {
-                        title: '报警内容',
-                        align: 'center',
-                        key: 'errorInfo'
-                    }
-                ],
-                tableData: [
-                    {
-                        id: 1,
-                        name: '电气综合监控装置',
-                        time: '2019.08.24   20：50',
-                        status: 0,
-                        dataInfo: '漏电通道1：397mA',
-                        errorInfo: '漏电通道1：3422mA'
-                    },
-                    {
-                        id: 2,
-                        name: '电气综合监控装置',
-                        time: '2019.08.24   20：50',
-                        status: 1,
-                        dataInfo: '漏电通道1：397mA',
-                        errorInfo: ''
-                    },
-                    {
-                        id: 3,
-                        name: '电气综合监控装置',
-                        time: '2019.08.24   20：50',
-                        status: 1,
-                        dataInfo: '漏电通道1：397mA',
-                        errorInfo: ''
-                    },
-                    {
-                        id: 4,
-                        name: '电气综合监控装置',
-                        time: '2019.08.24   20：50',
-                        status: 1,
-                        dataInfo: '漏电通道1：397mA',
-                        errorInfo: ''
-                    }
-                ]
+                tableColumns: [],
+                tableData: []
             }
         },
         computed: {
@@ -164,16 +84,66 @@
                 'menuCollapse'
             ])
         },
-        created () {},
+        created () {
+            let that = this;
+            getElectricityRealTime()
+                .then(async res => {
+                    console.log('res', res);
+                    that.tableColumns = that.dealTableData(res.tableData.tableColumns);
+                    that.total = res.tableData.tableData.length;
+                    that.tableData = res.tableData.tableData;
+            }).catch(err => { console.log('err: ', err) });
+        },
         methods: {
             setPageSize () {
-                console.log('reset page size');
-                this.pageSize = parseInt(this.formItem.showNum)
+                this.pageSize = parseInt(this.formItem.showNum);
+                console.log('reset page size', this.pageSize);
+                // 只能 请求API限制
             },
             doQuery () {
                 console.log('do query');
                 console.log(this.formItem);
                 // 只能 请求API筛选处理
+            },
+            dealTableData (data) {
+                let dataTemp = [];
+                for (let i = 0; i < data.length; i++) {
+                    let temp = {};
+                    // 状态栏目传过来的数字  所以要在这里处理 ，后期有其他也是在这里处理
+                    if (data[i].key === 'status') {
+                        Object.assign(temp, {
+                            filters: [
+                                {
+                                    label: '正常',
+                                    value: '1'
+                                },
+                                {
+                                    label: '异常',
+                                    value: '0'
+                                }
+                            ],
+                            filterMethod (value, row) {
+                                if (value === parseInt(row.status)) {
+                                    return true;
+                                }
+                            },
+                            render: (h, params) => {
+                                let status = '异常';
+                                if (params.row.status === 1) {
+                                    status = '正常'
+                                }
+                                return h('div', status);
+                            }
+                        }, data[i]);
+                    } else {
+                        temp = data[i];
+                    }
+                    dataTemp.push(temp)
+                }
+                return dataTemp
+            },
+            changePage () {
+                console.log('api change page')
             }
         }
     }

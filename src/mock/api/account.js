@@ -61,5 +61,19 @@ export default [
         handle () {
             return require('../../json_data/用电监测/response.json');
         }
+    },
+    {
+        path: '/api/getElectricityRealTime',
+        method: 'post',
+        handle () {
+            return require('../../json_data/用电监测/实时监测/response.json');
+        }
+    },
+    {
+        path: '/api/getSpaceMonitoring',
+        method: 'post',
+        handle () {
+            return require('../../json_data/空间监测/response.json');
+        }
     }
 ]

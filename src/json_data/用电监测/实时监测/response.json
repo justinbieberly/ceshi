@@ -3,105 +3,324 @@
   "code": 200,
   "msg": "环境监测-数据获取成功！",
   "data": {
-    "tableData": [
-      {
-        "id": 1,
-        "title": "1#甲类库照明和风机配电箱",
-        "expand": true,
-        "total": 6,
-        "children": [
-          {
-            "title": "电气综合监控装置400A",
-            "total": 1,
-            "expand": true
-          },
-          {
-            "title": "电气综合监控装置100A",
-            "total": 1,
-            "expand": true
-          },
-          {
-            "title": "故障电弧探测器",
-            "total": 4,
-            "expand": true
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "title": "2#园区总配电箱",
-        "expand": true,
-        "total": 7,
-        "children": [
-          {
-            "title": "电箱A",
-            "total": 3,
-            "expand": true
-          },
-          {
-            "title": "电箱B",
-            "total": 2,
-            "expand": true
-          },
-          {
-            "title": "电箱C",
-            "total": 2,
-            "expand": true
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "title": "3#临货区应急照明配电箱",
-        "expand": true,
-        "total": 4,
-        "children": [
-          {
-            "title": "电箱A",
-            "total": 1,
-            "expand": true
-          },
-          {
-            "title": "电箱B",
-            "total": 3,
-            "expand": true
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "title": "4#办公区电车充电区",
-        "expand": true,
-        "total": 12,
-        "children": [
-          {
-            "title": "电箱A",
-            "total": 1,
-            "expand": true
-          },
-          {
-            "title": "电箱B",
-            "total": 3,
-            "expand": true
-          },
-          {
-            "title": "电箱B",
-            "total": 3,
-            "expand": true
-          },
-          {
-            "title": "电箱B",
-            "total": 3,
-            "expand": true
-          },
-          {
-            "title": "电箱B",
-            "total": 2,
-            "expand": true
-          }
-        ]
-      }
-    ]
+    "tableData": {
+      "tableColumns": [
+        {
+          "title": "序号",
+          "align": "center",
+          "key": "id"
+        },
+        {
+          "title": "回路名称",
+          "align": "center",
+          "key": "name"
+        },
+        {
+          "title": "监测时间",
+          "align": "center",
+          "key": "time"
+        },
+        {
+          "title": "状态",
+          "key": "status",
+          "align": "center",
+          "filters": [
+            {
+              "label": "正常",
+              "value": "1"
+            },
+            {
+              "label": "异常",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "title": "监测数据",
+          "align": "center",
+          "key": "dataInfo"
+        },
+        {
+          "title": "报警内容",
+          "align": "center",
+          "key": "errorInfo"
+        }
+      ],
+      "tableData": [
+        {
+          "id": 1,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 0,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": "漏电通道1：3422mA"
+        },
+        {
+          "id": 2,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 3,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 4,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        },
+        {
+          "id": 34,
+          "name": "电气综合监控装置",
+          "time": "2019.08.24   20：50",
+          "status": 1,
+          "dataInfo": "漏电通道1：397mA",
+          "errorInfo": ""
+        }
+      ]
+    }
   }
 }
 

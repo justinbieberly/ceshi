@@ -87,3 +87,21 @@ export function getElectricityMonitoring (data) {
         data
     });
 }
+
+// 获取[用电监测-实时监测]的数据
+export function getElectricityRealTime (data) {
+    return request({
+        url: '/api/getElectricityRealTime',
+        method: 'post',
+        data
+    });
+}
+
+// 获取[空间监测-]的数据
+export function getSpaceMonitoring (data) {
+    return request({
+        url: '/api/getSpaceMonitoring',
+        method: 'post',
+        data
+    });
+}
