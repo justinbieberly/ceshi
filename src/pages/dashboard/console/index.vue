@@ -14,7 +14,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { Get3dModelInfo } from '@api/account';
+    import { get3dModelInfo } from '@api/account';
 
     export default {
         name: 'dashboard-console',
@@ -35,7 +35,7 @@
         },
         created () {
             let that = this;
-            Get3dModelInfo()
+            get3dModelInfo()
                 .then(async res => {
                     that.listRow = res.list;
                     console.log('res', res);

@@ -17,9 +17,9 @@ export function AccountRegister (data) {
 }
 
 // 获取【三维模型】的左侧导航栏
-export function Get3dModelInfo (data) {
+export function get3dModelInfo (data) {
     return request({
-        url: '/api/Get3dModelInfo',
+        url: '/api/get3dModelInfo',
         method: 'post',
         data
     });
@@ -92,6 +92,15 @@ export function getElectricityMonitoring (data) {
 export function getElectricityRealTime (data) {
     return request({
         url: '/api/getElectricityRealTime',
+        method: 'post',
+        data
+    });
+}
+
+// 获取[用电监测-历史数据]的数据
+export function getElectricityHistory (data) {
+    return request({
+        url: '/api/getElectricityHistory',
         method: 'post',
         data
     });

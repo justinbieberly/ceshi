@@ -3,11 +3,11 @@
         <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <a href="#" slot="extra" @click.prevent="$router.go(-1)">
+                    <Button slot="extra" size="small" @click.prevent="$router.go(-1)">
                         <Icon type="ios-arrow-back" />
                         返回
-                    </a>
-                    <Table border :columns="columns" :data="data">
+                    </Button>
+                    <Table border :columns="tables.table1.columns" :data="tables.table1.data">
                         <template slot-scope="{ row, index }" slot="detail">
                             <div class="ivu-inline-block electricity-box" v-for="(item, key) in row.detail" :key="key" :name="key" >
                                 <div class="ivu-text-center"> 漏电通道 </div>
@@ -22,13 +22,26 @@
 
                     <Tabs type="card" style="margin-top: 20px;">
                         <TabPane label="漏电,温度曲">
-                            漏电,温度曲线
-                            <div id="chartLineBox" style="width: 90%;height: 70vh;"> </div>
+                            <div id="chartLineBox" style="width: 45%;height: 70vh;" class="ivu-inline-block"> </div>
+                            <div id="chartLineBox1" style="width: 45%;height: 70vh;" class="ivu-inline-block"> </div>
                         </TabPane>
                         <TabPane label="电压、电流曲线">电压、电流曲线</TabPane>
                         <TabPane label="负载曲线">负载曲线</TabPane>
                         <TabPane label="能耗图">能耗图</TabPane>
-                        <TabPane label="历史数据">历史数据</TabPane>
+                        <TabPane label="历史数据">
+                            <Table border :columns="tables.table2.columns" :data="tables.table2.data">
+                                <template slot-scope="{ row, index }" slot="detail">
+                                    <div class="ivu-inline-block electricity-box" v-for="(item, key) in row.detail" :key="key" :name="key" >
+                                        <div class="ivu-text-center"> 漏电通道 </div>
+                                        <div class="ivu-block user-electricity-span" v-for="(info, key) in item" :key="key" :name="key" >
+                                            <span>{{ info.title}}</span>
+                                            <span v-if=" info.title">：</span>
+                                            <span>{{ info.value }}</span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </Table>
+                        </TabPane>
                     </Tabs>
                 </Card>
             </Card>
@@ -37,76 +50,62 @@
 </template>
 <script>
     import { mapState } from 'vuex';
+    import { getElectricityHistory } from '@api/account';
     const echarts = require('echarts');
     export default {
         name: 'dashboard-electricity-history',
-        data() {
+        data () {
             return {
                 title: '电气综合监控装置',
-                columns: [
-                    {
-                        title: '回路名称',
-                        width: '200px',
-                        align: 'center',
-                        key: 'name'
+                tables: {
+                    table1: {
+                        columns: [
+                            {
+                                title: '回路名称',
+                                width: '200px',
+                                align: 'center',
+                                key: 'name'
+                            },
+                            {
+                                title: '监测时间',
+                                width: '200px',
+                                align: 'center',
+                                key: 'time'
+                            },
+                            {
+                                title: '监测数据',
+                                slot: 'detail'
+                            }
+                        ],
+                        data: []
                     },
-                    {
-                        title: '监测时间',
-                        width: '200px',
-                        align: 'center',
-                        key: 'time'
+                    table2: {
+                        columns: [
+                            {
+                                title: '监测时间',
+                                width: '200px',
+                                align: 'center',
+                                key: 'time'
+                            },
+                            {
+                                title: '监测数据',
+                                slot: 'detail'
+                            }
+                        ],
+                        data: []
+                    }
+                },
+
+                echartsData: {
+                    chartLineBox: {
+                        data: []
                     },
-                    {
-                        title: '监测数据',
-                        slot: 'detail'
+                    chartLineBox1: {
+                        nameRow: [],
+                        xAxis: [],
+                        data: []
                     }
-                ],
-                data: [
-                    {
-                        name: '电气综合监控装置 400A',
-                        time: '2019.08.24   22:00:31 警报',
-                        detail: [
-                            [
-                                {
-                                    title: '通道编号-1',
-                                    value: '4074mA'
-                                },
-                                {
-                                    title: 'A相电压',
-                                    value: '4074mA'
-                                },
-                                {
-                                    title: '功率因数',
-                                    value: '0.819'
-                                },
-                                {
-                                    title: '电能',
-                                    value: '5907.28KWh'
-                                },
-                                {
-                                    title: '过压',
-                                    value: '否'
-                                }
-                            ],
-                            [
-                                {
-                                    title: '通道编号-2',
-                                    value: '2000mA'
-                                },
-                                {
-                                    title: 'B相电压',
-                                    value: '23.4V'
-                                },
-                                {},
-                                {},
-                                {
-                                    title: '过压',
-                                    value: '否'
-                                }
-                            ]
-                        ]
-                    }
-                ]
+                }
             }
         },
         computed: {
@@ -117,50 +116,114 @@
                 'menuCollapse'
             ])
         },
-        mounted () {
-            let myChart = echarts.init(document.getElementById('chartLineBox'));
-            // 指定图表的配置项和数据
-            let data = [];
-            let option = {
-                title: {
-                    text: '漏电曲线'
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    formatter: function (params) {
-                        params = params[0];
-                        var date = new Date(params.name);
-                        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-                    },
-                    axisPointer: {
-                        animation: false
-                    }
-                },
-                xAxis: {
-                    type: 'time',
-                    splitLine: {
-                        show: false
-                    }
-                },
-                yAxis: {
-                    type: 'value',
-                    boundaryGap: [0, '100%'],
-                    splitLine: {
-                        show: false
-                    }
-                },
-                series: [{
-                    name: '模拟数据',
-                    type: 'line',
-                    showSymbol: false,
-                    hoverAnimation: false,
-                    data: data
-                }]
-            };
-            myChart.setOption(option);
+        created () {
+            let that = this;
+            getElectricityHistory()
+                .then(async res => {
+                    console.log('res', res);
+                    that.tables.table1.data = res.historyTableData.table1;
+                    that.tables.table2.data = res.historyTableData.table2;
+                    that.echartsData.chartLineBox = res.echartsData.chartLineBox;
+                    that.echartsData.chartLineBox1 = res.echartsData.chartLineBox1;
+                    that.drawLDEchars();
+                    that.drawTemEchars();
+                }).catch(err => { console.log('err: ', err) })
         },
-        created () {},
+        mounted () {
+        },
         methods: {
+            drawLDEchars () {
+                // 漏电曲线
+                let myChart = echarts.init(document.getElementById('chartLineBox'));
+                myChart.setOption({
+                    title: {
+                        text: '漏电曲线'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: function (params) { // 页面显示
+                            let parameter = params[0];
+                            let date = new Date(parameter.name * 1000);
+                            let infoNum = parameter.data.value[1];
+                            let hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+                            let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+                            let mouth = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+                            let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                            return hours + ':' + minutes + ' ' + mouth + '-' + day + '<br/>漏电通道1:' + infoNum
+                        },
+                        axisPointer: {
+                            animation: false
+                        }
+                    },
+                    xAxis: {
+                        type: 'time',
+                        splitLine: {
+                            show: false
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        boundaryGap: [0, '100%'],
+                        splitLine: {
+                            show: false
+                        }
+                    },
+                    series: [{
+                        name: '漏电曲线',
+                        type: 'line',
+                        showSymbol: false,
+                        hoverAnimation: false,
+                        data: this.echartsData.chartLineBox.data
+                    }]
+                });
+            },
+            drawTemEchars () {
+                // 温度曲线  -- 该曲线必须保证每个时间点有时间 是一对一的
+                let myChart1 = echarts.init(document.getElementById('chartLineBox1'));
+                myChart1.setOption({
+                    title: {
+                        text: '温度曲线'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: this.echartsData.chartLineBox1.nameRow
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: this.echartsData.chartLineBox1.xAxis
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: this.echartsData.chartLineBox1.data
+                })
+            },
+            drawDYEchars () {
+                console.log('45454')
+            },
+            drawDLEchars () {
+                console.log('45454')
+            },
+            drawFZEchars () {
+                console.log('45454')
+            },
+            drawHNEchars () {
+                console.log('45454')
+            }
         }
     }
 </script>

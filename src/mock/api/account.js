@@ -7,7 +7,7 @@ export default [
         }
     },
     {
-        path: '/api/Get3dModelInfo',
+        path: '/api/get3dModelInfo',
         method: 'post',
         handle () {
             return require('../../json_data/三维模型/response.json');
@@ -67,6 +67,13 @@ export default [
         method: 'post',
         handle () {
             return require('../../json_data/用电监测/实时监测/response.json');
+        }
+    },
+    {
+        path: '/api/getElectricityHistory',
+        method: 'post',
+        handle () {
+            return require('../../json_data/用电监测/历史数据/response.json');
         }
     },
     {
