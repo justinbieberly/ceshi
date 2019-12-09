@@ -26,7 +26,9 @@
                             <div id="chartLineBox1" style="width: 45%;height: 70vh;" class="ivu-inline-block"> </div>
                         </TabPane>
                         <TabPane label="电压、电流曲线">电压、电流曲线</TabPane>
-                        <TabPane label="负载曲线">负载曲线</TabPane>
+                        <TabPane label="负载曲线">
+                            <div id="chartLineBox5" style="width: 95%;height: 70vh;" class="ivu-inline-block"> </div>
+                        </TabPane>
                         <TabPane label="能耗图">能耗图</TabPane>
                         <TabPane label="历史数据">
                             <Table border :columns="tables.table2.columns" :data="tables.table2.data">
@@ -127,6 +129,7 @@
                     that.echartsData.chartLineBox1 = res.echartsData.chartLineBox1;
                     that.drawLDEchars();
                     that.drawTemEchars();
+                    that.drawFZEchars();
                 }).catch(err => { console.log('err: ', err) })
         },
         mounted () {
@@ -219,7 +222,49 @@
                 console.log('45454')
             },
             drawFZEchars () {
-                console.log('45454')
+                // 负载曲线
+                let myChart = echarts.init(document.getElementById('chartLineBox5'));
+                myChart.setOption({
+                    title: {
+                        text: '负载曲线'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: function (params) { // 页面显示
+                            let parameter = params[0];
+                            let date = new Date(parameter.name * 1000);
+                            let infoNum = parameter.data.value[1];
+                            let hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+                            let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+                            let mouth = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+                            let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                            return hours + ':' + minutes + ' ' + mouth + '-' + day + '<br/>负载曲线:' + infoNum
+                        },
+                        axisPointer: {
+                            animation: false
+                        }
+                    },
+                    xAxis: {
+                        type: 'time',
+                        splitLine: {
+                            show: false
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        boundaryGap: [0, '100%'],
+                        splitLine: {
+                            show: false
+                        }
+                    },
+                    series: [{
+                        name: '漏电曲线',
+                        type: 'line',
+                        showSymbol: false,
+                        hoverAnimation: false,
+                        data: this.echartsData.chartLineBox.data
+                    }]
+                });
             },
             drawHNEchars () {
                 console.log('45454')

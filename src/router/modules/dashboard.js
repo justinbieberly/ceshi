@@ -115,6 +115,16 @@ export default {
                 title: '空间监测-显示全部/所选'
             },
             component: () => import('@/pages/dashboard/space_monitoring/show')
+        },
+        {
+            path: 'risk_zoning',
+            name: `${pre}risk-zoning`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '风险分区'
+            },
+            component: () => import('@/pages/dashboard/risk_zoning')
         }
     ]
 };

@@ -76,6 +76,11 @@ const Config = {
             alias: '获取-空间监测-的数据',
             url: '/空间监测/response.json',
             method: 'get'
+        },
+        getRiskZoningData: {
+            alias: '获取-风险分区-的数据',
+            url: '/风险分区/response.json',
+            method: 'get'
         }
 
     },

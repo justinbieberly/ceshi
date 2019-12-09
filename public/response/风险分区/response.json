@@ -1,0 +1,78 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "tableData":  {
+      "data": [
+        {
+          "name": "1#甲类库",
+          "zoning": "1-1",
+          "level": 4,
+          "graphic": ""
+        },
+        {
+          "name": "",
+          "zoning": "1-2",
+          "level": 3,
+          "graphic": ""
+        },
+        {
+          "name": "",
+          "zoning": "1-3",
+          "level": 4,
+          "graphic": ""
+        },
+        {
+          "name": "2#乙类库",
+          "zoning": "2-1",
+          "level": 2,
+          "graphic": ""
+        },
+        {
+          "name": "",
+          "zoning": "2-2",
+          "level": 3,
+          "graphic": ""
+        },
+        {
+          "name": "3#乙类库",
+          "zoning": "3-1",
+          "level": 4,
+          "graphic": ""
+        },
+        {
+          "name": "",
+          "zoning": "3-2",
+          "level": 3,
+          "graphic": ""
+        },
+        {
+          "name": "4#甲类库",
+          "zoning": "4-1",
+          "level": 4,
+          "graphic": ""
+        },
+        {
+          "name": "",
+          "zoning": "4-2",
+          "level": 2,
+          "graphic": ""
+        },
+        {
+          "name": "5#丙类库",
+          "zoning": "5-1",
+          "level": 1,
+          "graphic": ""
+        },
+        {
+          "name": "办公楼",
+          "zoning": "",
+          "level": 1,
+          "graphic": ""
+        }
+      ]
+    }
+  }
+}
+

@@ -117,3 +117,12 @@ export function getSpaceMonitoring (data) {
         data
     });
 }
+
+// 获取[风险分区-]的数据
+export function getRiskZoningData (data) {
+    return request({
+        url: apiConfig.getRiskZoningData.url,
+        method: apiConfig.getRiskZoningData.method,
+        data
+    });
+}

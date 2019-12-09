@@ -49,7 +49,7 @@
           {
             "name": "风险分区",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
+            "path": "/dashboard/risk_zoning"
           },
           {
             "name": "风险预警",
