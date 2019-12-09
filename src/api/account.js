@@ -1,26 +1,20 @@
 import request from '@/plugins/request';
+import Config from '@/config';
+
+const apiConfig = Config.apiRoute;
 
 export function AccountLogin (data) {
     return request({
-        url: '/api/login',
-        method: 'post',
+        url: apiConfig.login.url,
+        method: apiConfig.login.method,
         data
     });
 }
 
 export function AccountRegister (data) {
     return request({
-        url: '/api/register',
-        method: 'post',
-        data
-    });
-}
-
-// 获取【三维模型】的左侧导航栏
-export function get3dModelInfo (data) {
-    return request({
-        url: '/api/get3dModelInfo',
-        method: 'post',
+        url: apiConfig.login.url,
+        method: apiConfig.login.method,
         data
     });
 }
@@ -28,8 +22,17 @@ export function get3dModelInfo (data) {
 // 获取【头部的导航】数据 信息链接
 export function getHeaderMenu (data) {
     return request({
-        url: '/api/getHeaderMenu',
-        method: 'post',
+        url: apiConfig.getHeaderMenu.url,
+        method: apiConfig.getHeaderMenu.method,
+        data
+    });
+}
+
+// 获取【三维模型】的左侧导航栏
+export function get3dModelInfo (data) {
+    return request({
+        url: apiConfig.get3dModelInfo.url,
+        method: apiConfig.get3dModelInfo.method,
         data
     });
 }
@@ -37,8 +40,8 @@ export function getHeaderMenu (data) {
 // 获取【货物存储】的数据
 export function getGoodsStored (data) {
     return request({
-        url: '/api/getGoodsStored',
-        method: 'post',
+        url: apiConfig.getGoodsStored.url,
+        method: apiConfig.getGoodsStored.method,
         data
     });
 }
@@ -46,17 +49,17 @@ export function getGoodsStored (data) {
 // 获取[货物存储详情]的数据 后期可能更为根据条件获取比如id之类
 export function getStoredDetail (data) {
     return request({
-        url: '/api/getStoredDetail',
-        method: 'post',
+        url: apiConfig.getStoredDetail.url,
+        method: apiConfig.getStoredDetail.method,
         data
     });
 }
 
-// 获取[临时货存储]的数据
+// 获取[临时存储]的数据
 export function getTemporaryStorage (data) {
     return request({
-        url: '/api/getTemporaryStorage',
-        method: 'post',
+        url: apiConfig.getTemporaryStorage.url,
+        method: apiConfig.getTemporaryStorage.method,
         data
     });
 }
@@ -64,8 +67,8 @@ export function getTemporaryStorage (data) {
 // 获取[分布情况]的数据
 export function getDistributionData (data) {
     return request({
-        url: '/api/getDistributionData',
-        method: 'post',
+        url: apiConfig.getDistributionData.url,
+        method: apiConfig.getDistributionData.method,
         data
     });
 }
@@ -73,8 +76,8 @@ export function getDistributionData (data) {
 // 获取[环境监测]的数据
 export function getEnvironmentalMonitoring (data) {
     return request({
-        url: '/api/getEnvironmentalMonitoring',
-        method: 'post',
+        url: apiConfig.getEnvironmentalMonitoring.url,
+        method: apiConfig.getEnvironmentalMonitoring.method,
         data
     });
 }
@@ -82,8 +85,8 @@ export function getEnvironmentalMonitoring (data) {
 // 获取[用电监测]的数据
 export function getElectricityMonitoring (data) {
     return request({
-        url: '/api/getElectricityMonitoring',
-        method: 'post',
+        url: apiConfig.getElectricityMonitoring.url,
+        method: apiConfig.getElectricityMonitoring.method,
         data
     });
 }
@@ -91,8 +94,8 @@ export function getElectricityMonitoring (data) {
 // 获取[用电监测-实时监测]的数据
 export function getElectricityRealTime (data) {
     return request({
-        url: '/api/getElectricityRealTime',
-        method: 'post',
+        url: apiConfig.getElectricityRealTime.url,
+        method: apiConfig.getElectricityRealTime.method,
         data
     });
 }
@@ -100,8 +103,8 @@ export function getElectricityRealTime (data) {
 // 获取[用电监测-历史数据]的数据
 export function getElectricityHistory (data) {
     return request({
-        url: '/api/getElectricityHistory',
-        method: 'post',
+        url: apiConfig.getElectricityHistory.url,
+        method: apiConfig.getElectricityHistory.method,
         data
     });
 }
@@ -109,8 +112,8 @@ export function getElectricityHistory (data) {
 // 获取[空间监测-]的数据
 export function getSpaceMonitoring (data) {
     return request({
-        url: '/api/getSpaceMonitoring',
-        method: 'post',
+        url: apiConfig.getSpaceMonitoring.url,
+        method: apiConfig.getSpaceMonitoring.method,
         data
     });
 }

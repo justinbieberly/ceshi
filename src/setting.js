@@ -1,6 +1,7 @@
 /**
  * iView Admin Pro 业务配置
  * */
+import Config from '@/config';
 
 const env = process.env.NODE_ENV;
 
@@ -103,13 +104,7 @@ const Setting = {
     sameRouteForceUpdate: false,
     // 是否使用动态侧边菜单
     dynamicSiderMenu: false,
-    /**
-     * 版权设置
-     * */
-    copyright: {
-        copyright: ' Copyright © www.longyi.com , All Rights Reserved.',
-        contact: 'Email : 1234567@qq.com   QQ: 1234567'
-    }
+    ...Config // 覆盖掉原来的配置 以config里面的配置为准
 };
 
 export default Setting;

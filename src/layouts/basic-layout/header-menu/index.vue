@@ -58,7 +58,7 @@
             </DropdownMenu>
         </Dropdown>
         <div class="i-layout-header-trigger-no-height nav-btn-color" v-else>
-            <Dropdown placement="bottom-start"  style="margin-left: 10px" v-for="(item, key) in menuList" :key="key" :name="key" >
+            <Dropdown placement="bottom-start" style="margin-left: 10px" v-for="(item, key) in menuList" :key="key" :name="key" >
                 <Button type="primary">
                      {{ item.name }}
                     <Icon type="ios-arrow-down"></Icon>
