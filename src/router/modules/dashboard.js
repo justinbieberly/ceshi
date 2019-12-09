@@ -125,6 +125,16 @@ export default {
                 title: '风险分区'
             },
             component: () => import('@/pages/dashboard/risk_zoning')
+        },
+        {
+            path: 'risk_early_warning',
+            name: `${pre}risk-early-warning`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '风险预警'
+            },
+            component: () => import('@/pages/dashboard/risk_early_warning')
         }
     ]
 };

@@ -126,3 +126,12 @@ export function getRiskZoningData (data) {
         data
     });
 }
+
+// 获取[风险预警-]的数据
+export function getRiskEarlyWarning (data) {
+    return request({
+        url: apiConfig.getRiskEarlyWarning.url,
+        method: apiConfig.getRiskEarlyWarning.method,
+        data
+    });
+}
