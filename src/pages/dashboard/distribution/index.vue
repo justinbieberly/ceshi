@@ -22,7 +22,31 @@
             return {
                 title: '分布状况',
                 modelImg: '/assets/images/u666.svg',
-                reservoirData: {}
+                reservoirData: {
+                    columns: [
+                        {
+                            title: '库房',
+                            key: 'name'
+                        },
+                        {
+                            title: '防火分区',
+                            width: '70px',
+                            key: 'partition'
+                        },
+                        {
+                            title: '危险源',
+                            align: 'left',
+                            type: 'html',
+                            key: 'hazards'
+                        },
+                        {
+                            title: '图示',
+                            width: '50px',
+                            key: 'graphic'
+                        }
+                    ],
+                    data: []
+                }
             }
         },
         computed: {
@@ -38,7 +62,7 @@
             getDistributionData()
                 .then(async res => {
                     console.log('pageData', res);
-                    that.reservoirData = res.tableData;
+                    that.reservoirData.data = res.tableData.data;
                 }).catch(err => { console.log('err: ', err) })
         },
         methods: {

@@ -4,28 +4,6 @@
   "msg": "数据获取成功！",
   "data": {
     "tableData":  {
-      "columns": [
-        {
-          "title": "库房",
-          "key": "name"
-        },
-        {
-          "title": "防火分区",
-          "width": "70px",
-          "key": "partition"
-        },
-        {
-          "title": "危险源",
-          "align": "left",
-          "type": "html",
-          "key": "hazards"
-        },
-        {
-          "title": "图示",
-          "width": "50px",
-          "key": "graphic"
-        }
-      ],
       "data": [
         {
           "name": "1#甲类库",
