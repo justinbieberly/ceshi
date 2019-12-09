@@ -30,7 +30,23 @@
                 title: '货物存储',
                 modelImg: '/assets/images/u393.svg',
                 pageData: {},
-                reservoirData: {}
+                reservoirData: {
+                    columns: [
+                        {
+                            title: '库区名称',
+                            sortable: true,
+                            align: "center",
+                            key: 'name'
+                        },
+                        {
+                            title: '最大库存量(L)',
+                            sortable: true,
+                            align: "center",
+                            key: 'stock'
+                        }
+                    ],
+                    data: []
+                }
             }
         },
         computed: {
@@ -47,7 +63,7 @@
                 .then(async res => {
                     console.log('pageData', res);
                     that.pageData = res;
-                    that.reservoirData = res.StorageTable;
+                    that.reservoirData.data = res.storageTable.data;
                 }).catch(err => { console.log('err: ', err) })
         },
         methods: {

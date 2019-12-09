@@ -34,21 +34,7 @@
         "value": "钢筋混凝土"
       }
     ],
-    "StorageTable":  {
-      "columns": [
-        {
-          "title": "库区名称",
-          "sortable": true,
-          "align": "center",
-          "key": "name"
-        },
-        {
-          "title": "最大库存量(L)",
-          "key": "stock",
-          "align": "center",
-          "sortable": true
-        }
-      ],
+    "storageTable":  {
       "data": [
         {
           "name": "1#甲类库",
