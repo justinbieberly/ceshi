@@ -35,13 +35,13 @@
                         {
                             title: '库区名称',
                             sortable: true,
-                            align: "center",
+                            align: 'center',
                             key: 'name'
                         },
                         {
                             title: '最大库存量(L)',
                             sortable: true,
-                            align: "center",
+                            align: 'center',
                             key: 'stock'
                         }
                     ],

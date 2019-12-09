@@ -46,7 +46,7 @@
                        </FormItem>
                    </div>
                </Form>
-               <Table border  :loading="loading" :columns="tableColumns" :data="tableData" size="small" ></Table>
+               <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
            </div>
             <div class="ivu-block" style="float: right;margin-top: 30px;">
                 <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
@@ -72,8 +72,63 @@
                     showNum: 1
 
                 },
-                tableColumns: [],
-                tableData: []
+                reservoirData: {
+                    columns: [
+                        {
+                            title: '序号',
+                            align: 'center',
+                            key: 'id'
+                        },
+                        {
+                            title: '回路名称',
+                            align: 'center',
+                            key: 'name'
+                        },
+                        {
+                            title: '监测时间',
+                            align: 'center',
+                            key: 'time'
+                        },
+                        {
+                            title: '状态',
+                            key: 'status',
+                            align: 'center',
+                            filters: [
+                                {
+                                    label: '正常',
+                                    value: 1
+                                },
+                                {
+                                    label: '异常',
+                                    value: 0
+                                }
+                            ],
+                            filterMethod (value, row) {
+                                if (value === row.status) {
+                                    return true;
+                                }
+                            },
+                            render: (h, params) => {
+                                let status = '异常';
+                                if (params.row.status === 1) {
+                                    status = '正常'
+                                }
+                                return h('div', status);
+                            }
+                        },
+                        {
+                            title: '监测数据',
+                            align: 'center',
+                            key: 'dataInfo'
+                        },
+                        {
+                            title: '报警内容',
+                            align: 'center',
+                            key: 'errorInfo'
+                        }
+                    ],
+                    data: []
+                }
             }
         },
         computed: {
@@ -88,10 +143,8 @@
             let that = this;
             getElectricityRealTime()
                 .then(async res => {
-                    console.log('res', res);
-                    that.tableColumns = that.dealTableData(res.tableData.tableColumns);
-                    that.total = res.tableData.tableData.length;
-                    that.tableData = res.tableData.tableData;
+                    that.total = res.tableData.data.length;
+                    that.reservoirData.data = res.tableData.data;
             }).catch(err => { console.log('err: ', err) });
         },
         methods: {
@@ -104,43 +157,6 @@
                 console.log('do query');
                 console.log(this.formItem);
                 // 只能 请求API筛选处理
-            },
-            dealTableData (data) {
-                let dataTemp = [];
-                for (let i = 0; i < data.length; i++) {
-                    let temp = {};
-                    // 状态栏目传过来的数字  所以要在这里处理 ，后期有其他也是在这里处理
-                    if (data[i].key === 'status') {
-                        Object.assign(temp, {
-                            filters: [
-                                {
-                                    label: '正常',
-                                    value: '1'
-                                },
-                                {
-                                    label: '异常',
-                                    value: '0'
-                                }
-                            ],
-                            filterMethod (value, row) {
-                                if (value === parseInt(row.status)) {
-                                    return true;
-                                }
-                            },
-                            render: (h, params) => {
-                                let status = '异常';
-                                if (params.row.status === 1) {
-                                    status = '正常'
-                                }
-                                return h('div', status);
-                            }
-                        }, data[i]);
-                    } else {
-                        temp = data[i];
-                    }
-                    dataTemp.push(temp)
-                }
-                return dataTemp
             },
             changePage () {
                 console.log('api change page')
