@@ -86,6 +86,11 @@ const Config = {
             alias: '获取-风险预警-的数据',
             url: '/风险预警/response.json',
             method: 'get'
+        },
+        getRiskHistory: {
+            alias: '获取-风险预警-历史数据-的数据',
+            url: '/风险预警/历史数据/response.json',
+            method: 'get'
         }
 
     },

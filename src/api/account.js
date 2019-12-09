@@ -135,3 +135,12 @@ export function getRiskEarlyWarning (data) {
         data
     });
 }
+
+// 获取[风险预警-历史记录]的数据
+export function getRiskHistory (data) {
+    return request({
+        url: apiConfig.getRiskHistory.url,
+        method: apiConfig.getRiskHistory.method,
+        data
+    });
+}

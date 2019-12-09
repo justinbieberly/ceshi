@@ -135,6 +135,16 @@ export default {
                 title: '风险预警'
             },
             component: () => import('@/pages/dashboard/risk_early_warning')
+        },
+        {
+            path: 'risk_warning_history',
+            name: `${pre}risk-warning-history`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '风险预警-历史数据'
+            },
+            component: () => import('@/pages/dashboard/risk_early_warning/history')
         }
     ]
 };

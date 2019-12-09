@@ -3,7 +3,7 @@
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Button slot="extra" size="small" to="electricity_history" style="margin-left: 10px;">历史数据</Button>
+                    <Button slot="extra" size="small" to="risk_warning_history" style="margin-left: 10px;">历史数据</Button>
                     <CheckboxGroup v-model="checkInfo" @on-change="select" class="fbyj-checkbox">
                         <Checkbox :label="item.id" v-for="(item, key) in checkBox" :key="key" > {{item.name}} </Checkbox>
                     </CheckboxGroup>
@@ -57,7 +57,7 @@
         margin-top: 15px;
         .ivu-checkbox-group-item {
             display: block !important;
-            padding: 8px 12px;
+            padding: 8px 22px;
         }
     }
 </style>

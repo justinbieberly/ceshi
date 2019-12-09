@@ -1,0 +1,134 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "tableData": {
+      "alarm_type": [
+        {
+          "id": 1,
+          "name": "环境温度"
+        },
+        {
+          "id": 2,
+          "name": "人员异常"
+        },
+        {
+          "id": 3,
+          "name": "空间监测"
+        },
+        {
+          "id": 4,
+          "name": "临时存储"
+        },
+        {
+          "id": 5,
+          "name": "火灾报警信号"
+        },
+        {
+          "id": 6,
+          "name": "可燃气体"
+        },
+        {
+          "id": 7,
+          "name": "电气火灾"
+        },
+        {
+          "id": 8,
+          "name": "隐患登记"
+        }
+      ],
+      "data": [
+        {
+          "id": 1,
+          "serial_number": 1000001,
+          "time": 1575900159,
+          "alarm_type": "环境温度",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "人员异常",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "环境温度",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "空间监测",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "临时存储",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "火灾报警信号",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "可燃气体",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "电气火灾",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "隐患登记",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "人员异常",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        },
+        {
+          "id": 2,
+          "serial_number": 1575900159,
+          "time": 1575900159,
+          "alarm_type": "人员异常",
+          "alarm_location": "A1库房 左上角",
+          "alarm_desc": "----报警描述--------"
+        }
+      ]
+    }
+  }
+}
+
