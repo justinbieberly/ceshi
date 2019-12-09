@@ -1,0 +1,212 @@
+{
+  "code": 200,
+  "msg": "空间监测-数据获取成功！",
+  "data": {
+    "tableData": [
+      {
+        "title": "1#甲类库内摄像头",
+        "id": 121,
+        "expand": true,
+        "children": [
+          {
+            "title": "1#甲类库   左上角",
+            "id": 122,
+            "expand": true
+          },
+          {
+            "title": "1#甲类库   右上角",
+            "id": 123,
+            "expand": true
+          },
+          {
+            "title": "1#甲类库   左下角",
+            "id": 124,
+            "expand": true
+          },
+          {
+            "title": "1#甲类库   左下角",
+            "checked": true,
+            "id": 125,
+            "expand": true
+          },
+          {
+            "title": " 1#甲类库   右下角",
+            "id": 126,
+            "expand": true
+          },
+          {
+            "title": "1#甲类库  西南角",
+            "checked": true,
+            "id": 127,
+            "expand": true
+          },
+          {
+            "title": "1#甲类库   南北角",
+            "id": 128,
+            "expand": true
+          },
+          {
+            "title": "1#甲类库   中间1 ",
+            "id": 129,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "1#乙类库内摄像头",
+        "children": [
+          {
+            "title": "1#乙类库   左上角",
+            "id": 130,
+            "expand": true
+          },
+          {
+            "title": "1#乙类库   右上角",
+            "id": 131,
+            "expand": true
+          },
+          {
+            "title": "1#乙类库   左下角",
+            "id": 132,
+            "expand": true
+          },
+          {
+            "title": "1#乙类库   左下角",
+            "checked": true,
+            "id": 133,
+            "expand": true
+          },
+          {
+            "title": " 1#乙类库   右下角",
+            "id": 134,
+            "expand": true
+          },
+          {
+            "title": "1#乙类库  西南角",
+            "checked": true,
+            "id": 135,
+            "expand": true
+          },
+          {
+            "title": "1#乙类库   南北角",
+            "id": 136,
+            "expand": true
+          },
+          {
+            "title": "1#乙类库   中间1 ",
+            "id": 137,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "1#丙类库内摄像头",
+        "children": [
+          {
+            "title": "1#丙类库   左上角",
+            "id": 138,
+            "expand": true
+          },
+          {
+            "title": "1#丙类库   右上角",
+            "id": 139,
+            "expand": true
+          },
+          {
+            "title": "1#丙类库   左下角",
+            "id": 140,
+            "expand": true
+          },
+          {
+            "title": "1#丙类库   左下角",
+            "checked": true,
+            "id": 141,
+            "expand": true
+          },
+          {
+            "title": " 1#丙类库   右下角",
+            "id": 142,
+            "expand": true
+          },
+          {
+            "title": "1#丙类库  西南角",
+            "checked": true,
+            "id": 143,
+            "expand": true
+          },
+          {
+            "title": "1#丙类库   南北角",
+            "id": 144,
+            "expand": true
+          },
+          {
+            "title": "1#丙类库   中间1 ",
+            "id": 145,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "1#丁类库内摄像头",
+        "children": [
+          {
+            "title": "1#丁类库   左上角",
+            "id": 146,
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   右上角",
+            "id": 147,
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   左下角",
+            "id": 148,
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   左下角",
+            "checked": true,
+            "id": 149,
+            "expand": true
+          },
+          {
+            "title": " 1#丁类库   右下角",
+            "id": 150,
+            "expand": true
+          },
+          {
+            "title": "1#丁类库  西南角",
+            "checked": true,
+            "id": 151,
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   南北角",
+            "id": 152,
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   中间1 ",
+            "id": 153,
+            "checked": true,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "出入口摄像头",
+        "id": 154
+      },
+      {
+        "title": "作业区摄像头",
+        "id": 155
+      },
+      {
+        "title": "作业设备停放区摄像头",
+        "id": 156
+      }
+    ]
+  }
+}
+

@@ -1,0 +1,121 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "list": [
+      {
+        "title": "场地",
+        "id": 1,
+        "children": [
+          {
+            "title": "场地一",
+            "id": 1001,
+            "expand": true,
+            "checked": true
+          },
+          {
+            "title": "场地二",
+            "id": 1002,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "场地三",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "场地三",
+            "id": 1003,
+            "checked": false,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "建筑空间",
+        "id": 1,
+        "children": [
+          {
+            "title": "#甲类库",
+            "id": 1001,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "#乙类库",
+            "id": 1002,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "#丙类库",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "办公楼",
+            "id": 1003,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "设施设备",
+        "id": 1,
+        "children": [
+          {
+            "title": "灭火器",
+            "id": 1001,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "黄沙箱",
+            "id": 1002,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "消防喷淋",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "安全设施",
+            "id": 1003,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "其他设施设备",
+        "id": 1,
+        "children": [
+          {
+            "title": "防撞桩",
+            "id": 1001,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "洗眼设备",
+            "id": 1002,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "个人静电释放器",
+            "id": 1003,
+            "expand": true
+          }
+        ]
+      }
+    ]
+  }
+}
+
