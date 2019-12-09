@@ -22,7 +22,53 @@
             return {
                 title: '临时存储',
                 modelImg: '/assets/images/u666.svg',
-                reservoirData: {}
+                reservoirData: {
+                    columns: [
+                        {
+                            title: '名称',
+                            width: '66px',
+                            align: 'center',
+                            key: 'name'
+                        },
+                        {
+                            title: '状态',
+                            width: '66px',
+                            align: 'center',
+                            key: 'state',
+                            render: (h, params) => {
+                                let info = params.row.state;
+                                if (info === 1) {
+                                    params.row.cellClassName = {
+                                        graphic: 'cell-normal-color'
+                                    }
+                                    return h('span', '正常');
+                                } else if (info === 2) {
+                                    params.row.cellClassName = {
+                                        graphic: 'cell-warning-color'
+                                    }
+                                    return h('span', '警戒');
+                                } else if (info === 3) {
+                                    params.row.cellClassName = {
+                                        graphic: 'cell-error-color'
+                                    }
+                                    return h('span', '超量');
+                                }
+                            }
+                        },
+                        {
+                            title: '描述',
+                            align: 'center',
+                            key: 'desc'
+                        },
+                        {
+                            title: '图示',
+                            align: 'center',
+                            width: '66px',
+                            key: 'graphic'
+                        }
+                    ],
+                    data: []
+                }
             }
         },
         computed: {
@@ -39,7 +85,7 @@
                 .then(async res => {
                     console.log('pageData', res);
                     that.pageData = res;
-                    that.reservoirData = res.tableData;
+                    that.reservoirData.data = res.tableData.data;
                 }).catch(err => { console.log('err: ', err) })
         },
         methods: {
