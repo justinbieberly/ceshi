@@ -1,9 +1,9 @@
 <template>
-    <i-link class="i-layout-header-logo logo-content"  :class="{ 'i-header-logo-no-words': showMin }" to="/">
+    <i-link class="i-layout-header-logo logo-content"  :class="{ 'i-header-logo-no-words': isMobile }" to="/">
         <img :src="logo.logoPath" v-if="isMobile">
         <img :src="logo.logoPath" v-else-if="headerTheme === 'light'">
         <img :src="logo.logoPath" v-else>
-        <span class="logo-words-desc" v-if="!isMobile & showMin">
+        <span class="logo-words-desc" v-if="!isMobile & !isTablet">
            <span v-for="(item, key) in logo.logoDesc" :key="key" :name="key" > {{ item }} </span>
         </span>
     </i-link>
@@ -15,7 +15,6 @@
         name: 'iHeaderLogo',
         data () {
             return {
-                showMin: true,
                 logo: {
                     logoPath: '',
                     logoDesc: []
@@ -25,14 +24,11 @@
         computed: {
             ...mapState('admin/layout', [
                 'isMobile',
-                'headerTheme'
+                'headerTheme',
+                'isTablet'
             ])
         },
         mounted () {
-            let screenWidth = document.body.clientWidth;
-            if (screenWidth < 1360) {
-                this.showMin = false
-            }
         },
         created () {
             this.logo.logoPath = Config.logo.logoPath

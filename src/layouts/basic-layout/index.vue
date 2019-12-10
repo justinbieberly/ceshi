@@ -240,7 +240,13 @@
                 });
             },
             autoScreen () {
-                console.log('-------vue------')
+                let screenWidth = document.body.clientWidth;
+                if (screenWidth < 1390) {
+                    this.$store.commit('admin/layout/setDevice', 'ShowUser');
+                }
+                if (screenWidth < 1360) {
+                    this.$store.commit('admin/layout/setDevice', 'Tablet');
+                }
             }
         },
         mounted () {

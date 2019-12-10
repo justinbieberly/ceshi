@@ -12,6 +12,7 @@ export default {
         isMobile: false, // 是否为手机
         isTablet: false, // 是否为平板
         isDesktop: true, // 是否为桌面
+        isShowUser: true, // 是否显示用户名
         isFullscreen: false // 是否切换到了全屏
     },
     mutations: {
@@ -24,6 +25,7 @@ export default {
             state.isMobile = false;
             state.isTablet = false;
             state.isDesktop = false;
+            state.isShowUser = false;
             state[`is${type}`] = true;
         },
         /**
