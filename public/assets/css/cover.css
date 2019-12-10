@@ -11,6 +11,11 @@
     background-color: #21ab85;
 }
 
+/*整体页面的行高 在导航有影响*/
+.i-layout-header-trigger{
+    line-height: 20px !important;
+}
+
 /*内容板块边距设置*/
 .i-layout-content-main-pro {
     margin-top: 10px !important;
