@@ -240,7 +240,7 @@
                 });
             },
             autoScreen () {
-                console.log('屏幕尺寸修改')
+                console.log('-------vue------')
             }
         },
         mounted () {
