@@ -219,6 +219,10 @@
     color: #006F04;
 }
 
+.tzsb-history-search-bt {
+    margin-left: 10px;
+}
+
 .cell-normal-color {
     background-color: #0feb16 !important;
 }

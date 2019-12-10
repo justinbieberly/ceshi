@@ -153,3 +153,12 @@ export function getSpecialManagement (data) {
         data
     });
 }
+
+// 获取[特种设备管理-历史记录]的数据
+export function getSpecialManagementHistory (data) {
+    return request({
+        url: apiConfig.getSpecialManagementHistory.url,
+        method: apiConfig.getSpecialManagementHistory.method,
+        data
+    });
+}

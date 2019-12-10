@@ -1,0 +1,131 @@
+{
+  "code": 200,
+  "msg": "特种设备-历史记录-数据获取成功！",
+  "data": {
+    "tableData": {
+      "data": [
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 1,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 1,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 0,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        }
+      ]
+    }
+  }
+}
+

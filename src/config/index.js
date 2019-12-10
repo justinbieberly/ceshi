@@ -96,6 +96,11 @@ const Config = {
             alias: '获取-特种设备管理-的数据',
             url: '/特种设备管理/response.json',
             method: 'get'
+        },
+        getSpecialManagementHistory: {
+            alias: '获取-特种设备管理-的数据',
+            url: '/特种设备管理/历史记录/response.json',
+            method: 'get'
         }
 
     },

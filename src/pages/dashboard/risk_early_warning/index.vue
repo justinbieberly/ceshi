@@ -10,8 +10,8 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right" :class="{ 'content-layout-right-pro': this.menuCollapse }">
-            右边
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+            <img :src="modelImg" alt="模型视图">
         </div>
     </main>
 </template>
@@ -24,6 +24,7 @@
         data () {
             return {
                 title: '风险预警',
+                modelImg: '/assets/images/u2224.svg',
                 checkBox: [],
                 checkInfo: []
             }
@@ -57,7 +58,7 @@
         margin-top: 15px;
         .ivu-checkbox-group-item {
             display: block !important;
-            padding: 8px 22px;
+            padding: 8px 32px;
         }
     }
 </style>

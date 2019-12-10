@@ -26,15 +26,18 @@
                         {
                             title: '库房',
                             width: '94px',
+                            align: 'center',
                             key: 'name'
                         },
                         {
                             title: '防火分区',
                             width: '66px',
+                            align: 'center',
                             key: 'zoning'
                         },
                         {
                             title: '风险等级',
+                            align: 'center',
                             key: 'level',
                             render: (h, params) => {
                                 let info = params.row.level;
