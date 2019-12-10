@@ -247,6 +247,9 @@
                 if (screenWidth < 1360) {
                     this.$store.commit('admin/layout/setDevice', 'Tablet');
                 }
+                if (screenWidth < 900) {
+                    this.$store.commit('admin/layout/setDevice', 'Mobile');
+                }
             }
         },
         mounted () {

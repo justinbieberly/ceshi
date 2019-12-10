@@ -1,6 +1,23 @@
 <template>
     <div class="i-layout-header-trigger i-layout-header-trigger-min ">
-        <div class="i-layout-header-trigger-no-height nav-btn-color">
+        <Dropdown v-if="isMobile" ref="menu">
+            <a href="javascript:void(0)">
+                <Icon type="md-apps" size="23"/>
+            </a>
+            <DropdownMenu slot="list">
+                <Dropdown placement="right-start">
+                    <DropdownItem>
+                        重大危险源监测预警
+                        <Icon type="ios-arrow-forward"></Icon>
+                    </DropdownItem>
+                    <DropdownMenu slot="list">
+                        <DropdownItem>挂炉烤鸭</DropdownItem>
+                        <DropdownItem>焖炉烤鸭</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </DropdownMenu>
+        </Dropdown>
+        <div class="i-layout-header-trigger-no-height nav-btn-color" v-else>
             <Dropdown placement="bottom-start" style="margin-left: 10px" v-for="(item, key) in menuList" :key="key" :name="key" >
                 <Button type="primary">
                      {{ item.name }}
