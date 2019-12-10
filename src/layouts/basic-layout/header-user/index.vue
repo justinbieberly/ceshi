@@ -2,7 +2,7 @@
     <span class="i-layout-header-trigger i-layout-header-trigger-min">
         <Dropdown :trigger="isMobile ? 'click' : 'hover'" class="i-layout-header-user" :class="{ 'i-layout-header-user-mobile': isMobile }" @on-click="handleClick">
             <Avatar size="small" :src="info.avatar" v-if="info.avatar" />
-            <span class="i-layout-header-user-name" v-if="!isMobile">{{ info.name }}</span>
+            <span class="i-layout-header-user-name" v-if="!isMobile & showMin">{{ info.name }}</span>
             <DropdownMenu slot="list">
                 <i-link to="/setting/user">
                     <DropdownItem>
@@ -29,6 +29,11 @@
 
     export default {
         name: 'iHeaderUser',
+        data () {
+            return {
+                showMin: true
+            }
+        },
         computed: {
             ...mapState('admin/user', [
                 'info'
@@ -37,6 +42,12 @@
                 'isMobile',
                 'logoutConfirm'
             ])
+        },
+        mounted () {
+            let screenWidth = document.body.clientWidth;
+            if (screenWidth < 1430) {
+                this.showMin = false
+            }
         },
         methods: {
             ...mapActions('admin/account', [

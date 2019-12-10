@@ -1,5 +1,5 @@
 <template>
-    <Layout class="i-layout">
+    <Layout class="i-layout" v-resize="autoScreen">
 <!--        <Sider v-if="!isMobile && !hideSider" class="i-layout-sider" :class="siderClasses" :width="menuSideWidth">-->
 <!--            <i-menu-side :hide-logo="isHeaderStick && headerFix && showHeader" />-->
 <!--        </Sider>-->
@@ -238,6 +238,9 @@
                 this.$nextTick(() => {
                     this.loadRouter = true;
                 });
+            },
+            autoScreen () {
+                console.log('屏幕尺寸修改')
             }
         },
         mounted () {

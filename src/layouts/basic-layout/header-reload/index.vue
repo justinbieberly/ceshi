@@ -1,5 +1,5 @@
 <template>
-    <span class="i-layout-header-trigger" :class="{ 'i-layout-header-trigger-min': showSiderCollapse }" @click="handleReload">
+    <span class="i-layout-header-trigger re-header-size" :class="{ 'i-layout-header-trigger-min': showSiderCollapse }" @click="handleReload">
         <Icon custom="i-icon i-icon-refresh" />
     </span>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div class="i-layout-header-trigger i-layout-header-trigger-min">
+    <div class="i-layout-header-trigger i-layout-header-trigger-min ">
         <Dropdown v-if="isMobile || isTablet || isCollapse" ref="menu">
             <a href="javascript:void(0)">
                 <Icon type="md-apps" size="23"/>

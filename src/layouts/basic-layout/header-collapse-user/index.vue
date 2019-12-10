@@ -1,5 +1,5 @@
 <template>
-    <span class="i-layout-header-trigger" :class="{ 'i-layout-header-trigger-min': showReload }" @click="handleToggleMenuSide">
+    <span class="i-layout-header-trigger re-header-size" :class="{ 'i-layout-header-trigger-min': showReload }" @click="handleToggleMenuSide">
         <Icon custom="i-icon i-icon-menu-unfold" v-show="menuCollapse || isMobile" />
         <Icon custom="i-icon i-icon-menu-fold" v-show="!menuCollapse && !isMobile" />
     </span>
