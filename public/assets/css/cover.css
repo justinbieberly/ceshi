@@ -12,7 +12,7 @@
 }
 
 /*整体页面的行高 在导航有影响*/
-.i-layout-header-trigger{
+.i-layout-header-trigger {
     line-height: 20px !important;
 }
 
@@ -24,6 +24,7 @@
 .i-header-logo-no-words {
     width: auto !important;
 }
+
 /*内容板块边距设置*/
 .i-layout-content-main-pro {
     margin-top: 10px !important;
@@ -46,14 +47,14 @@
 
 /*内容板块左右宽度布局*/
 .content-layout-left {
-    max-width: 24%;
+    max-width: 29%;
     height: 100%;
     flex: 1;
     float: left;
 }
 
 .content-layout-right {
-    width: 75% !important;
+    width: 70% !important;
     padding: 10px;
     float: right;
     margin-left: 1%;
@@ -109,7 +110,7 @@
 }
 
 /*分布状况页面的表格 第三列 字体-宽度设置*/
-.fb-table .ivu-table-row > td:nth-child(3) > .ivu-table-cell{
+.fb-table .ivu-table-row > td:nth-child(3) > .ivu-table-cell {
     padding: 2px !important;
     font-size: 12px;
 }
@@ -124,8 +125,9 @@
 /*环境监测的数形结构 隐藏 按钮*/
 .env-air-tree .ivu-btn-primary {
     background-color: unset !important;
-    border-color: unset  !important;
+    border-color: unset !important;
 }
+
 .env-air-tree .ivu-btn-primary:hover {
     background-color: unset;
     border-color: unset;
@@ -137,19 +139,20 @@
 }
 
 /*实时监控 表单的lable大小*/
-.real-time-form .ivu-form-item-label{
+.real-time-form .ivu-form-item-label {
     font-size: 12px !important;
 }
 
 .electricity-box {
     width: 180px;
 }
+
 /*用电监测的表格里面span标签 对其*/
 .user-electricity-span span {
     font-size: 12px;
 }
 
-.user-electricity-span span:nth-child(1){
+.user-electricity-span span:nth-child(1) {
     width: 50%;
     text-align: right;
     display: inline-block;
@@ -165,6 +168,56 @@
     position: absolute;
 }
 
+/*特种设备*/
+.tzsb-er-min {
+    height: 116px;
+    overflow: hidden;
+    border: 1px solid #e3e3e3;
+    margin-bottom: 15px;
+}
+
+.tzsb-er-min canvas {
+    width: calc(92px * 0.9) !important;
+    height: calc(116px * 0.9) !important;
+    top: 11px !important;
+}
+
+.tzsb-er-min > #chartLineBox > div {
+    width: 91px !important;
+}
+
+.tzsb-child-info {
+    left: 30%;
+    top: 3%;
+}
+
+.tzsb-child-info .left-content {
+    width: 48%;
+    float: left;
+}
+
+.tzsb-child-info .right-content {
+    width: 51%;
+    float: left;
+}
+
+.tzsb-title {
+    text-align: center;
+}
+
+.tzsb-group {
+    float: left;
+}
+
+.tzsb-group span {
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.tzsb-info-value {
+    padding-left: 7px;
+    color: #006F04;
+}
 
 .cell-normal-color {
     background-color: #0feb16 !important;

@@ -144,3 +144,12 @@ export function getRiskHistory (data) {
         data
     });
 }
+
+// 获取[特种设备管理]的数据
+export function getSpecialManagement (data) {
+    return request({
+        url: apiConfig.getSpecialManagement.url,
+        method: apiConfig.getSpecialManagement.method,
+        data
+    });
+}

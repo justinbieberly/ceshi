@@ -91,6 +91,11 @@ const Config = {
             alias: '获取-风险预警-历史数据-的数据',
             url: '/风险预警/历史数据/response.json',
             method: 'get'
+        },
+        getSpecialManagement: {
+            alias: '获取-特种设备管理-的数据',
+            url: '/特种设备管理/response.json',
+            method: 'get'
         }
 
     },

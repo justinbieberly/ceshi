@@ -145,6 +145,16 @@ export default {
                 title: '风险预警-历史数据'
             },
             component: () => import('@/pages/dashboard/risk_early_warning/history')
+        },
+        {
+            path: 'special_management',
+            name: `${pre}special-management`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '特种设备管理'
+            },
+            component: () => import('@/pages/dashboard/special_management')
         }
     ]
 };

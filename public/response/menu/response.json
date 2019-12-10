@@ -59,7 +59,7 @@
           {
             "name": "特种设备管理",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
+            "path": "/dashboard/special_management"
           },
           {
             "name": "控制室值班",
