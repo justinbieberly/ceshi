@@ -47,7 +47,7 @@
         ]
       },
       {
-        "title": "1#乙类库内探测器",
+        "title": "2#乙类库内探测器",
         "children": [
           {
             "title": "1#乙类库   左上角   正常",
@@ -88,7 +88,7 @@
         ]
       },
       {
-        "title": "1#丙类库内探测器",
+        "title": "3#丙类库内探测器",
         "children": [
           {
             "title": "1#丙类库   左上角   正常",
@@ -129,7 +129,48 @@
         ]
       },
       {
-        "title": "1#丁类库内探测器",
+        "title": "4#丁类库内探测器",
+        "children": [
+          {
+            "title": "1#丁类库   左上角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   右上角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   左下角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   左下角   故障",
+            "checked": true,
+            "errorLevel": 2,
+            "expand": true
+          },
+          {
+            "title": " 1#丁类库   右下角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库  西南角   浓度超标",
+            "checked": true,
+            "errorLevel": 1,
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   南北角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   中间1    正常",
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "5#丁类库内探测器",
         "children": [
           {
             "title": "1#丁类库   左上角   正常",
@@ -214,7 +255,7 @@
         ]
       },
       {
-        "title": "1#乙类库内探测器",
+        "title": "2#乙类库内探测器",
         "children": [
           {
             "title": "1#乙类库   左上角   正常",
@@ -255,7 +296,7 @@
         ]
       },
       {
-        "title": "1#丙类库内探测器",
+        "title": "3#丙类库内探测器",
         "children": [
           {
             "title": "1#丙类库   左上角   正常",
@@ -296,7 +337,48 @@
         ]
       },
       {
-        "title": "1#丁类库内探测器",
+        "title": "4#丁类库内探测器",
+        "children": [
+          {
+            "title": "1#丁类库   左上角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   右上角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   左下角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   左下角   故障",
+            "checked": true,
+            "errorLevel": 2,
+            "expand": true
+          },
+          {
+            "title": " 1#丁类库   右下角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库  西南角   浓度超标",
+            "checked": true,
+            "errorLevel": 1,
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   南北角   正常",
+            "expand": true
+          },
+          {
+            "title": "1#丁类库   中间1    正常",
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "5#丁类库内探测器",
         "children": [
           {
             "title": "1#丁类库   左上角   正常",

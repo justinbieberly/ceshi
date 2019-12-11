@@ -11,13 +11,13 @@
     background-color: #21ab85;
 }
 
-/*整体页面的行高 在导航有影响*/
-.i-layout-header-trigger {
+/*整体页面的行高 在导航 那个缝隙 有影响*/
+.user-header-recover .i-layout-header-trigger-no-height .ivu-dropdown {
     line-height: 20px !important;
 }
 
 .re-header-size {
-    height: 20px !important;
+    /*height: 20px !important;*/
 }
 
 /*隐藏LOGO的文字*/
@@ -120,6 +120,11 @@
     line-height: normal;
     color: #ff5741;
     margin-top: -3px;
+}
+
+/*修改了色块 导致树形结构展开关闭图标异常 修复*/
+.env-air-tree .ivu-icon-ios-arrow-forward {
+    margin-top: -16px;
 }
 
 /*环境监测的数形结构 隐藏 按钮*/

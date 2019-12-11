@@ -69,7 +69,7 @@
           {
             "name": "应急管理",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
+            "path": "/dashboard/emergency_management"
           }
         ]
       },

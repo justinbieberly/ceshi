@@ -165,6 +165,16 @@ export default {
                 title: '控制室值班管理'
             },
             component: () => import('@/pages/dashboard/control_room')
+        },
+        {
+            path: 'emergency_management',
+            name: `${pre}emergency-management`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '应急管理'
+            },
+            component: () => import('@/pages/dashboard/emergency_management')
         }
     ]
 };

@@ -20,6 +20,31 @@
                             <Button style="margin-left: 8px" size="small" >重置查询</Button>
                         </i-link>
                     </FormItem>
+                    <div class="ivu-inline-block" style="float: right">
+                        <FormItem>
+                            <Button style="margin-left: 8px" size="small" to="/dashboard/risk_early_warning">
+                                <Icon type="ios-arrow-back" />
+                                返回
+                            </Button>
+                        </FormItem>
+                        <FormItem label="显示条数">
+                            <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                                <Option value="20">20条/页</Option>
+                                <Option value="50">50条/页</Option>
+                                <Option value="100">100条/页</Option>
+                            </Select>
+                        </FormItem>
+                        <FormItem label="排序方式">
+                            <Select v-model="formItem.sortWay" size="small">
+                                <Option value="id">序号</Option>
+                                <Option value="name">回路名称</Option>
+                                <Option value="time">监测时间</Option>
+                                <Option value="status">状态</Option>
+                                <Option value="dataInfo">监测数据</Option>
+                                <Option value="errorInfo">报警内容</Option>
+                            </Select>
+                        </FormItem>
+                    </div>
                 </Form>
                 <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
             </div>
