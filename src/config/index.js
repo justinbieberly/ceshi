@@ -101,6 +101,21 @@ const Config = {
             alias: '获取-特种设备管理-的数据',
             url: '/特种设备管理/历史记录/response.json',
             method: 'get'
+        },
+        getConsoleRoomData: {
+            alias: '获取-控制室值班-的数据',
+            url: '/值班室值班/response.json',
+            method: 'get'
+        },
+        getOnDutySituation: {
+            alias: '获取-控制室值班-值班情况-的数据',
+            url: '/值班室值班/值班情况/response.json',
+            method: 'get'
+        },
+        getPunchCardLog: {
+            alias: '获取-控制室值班-打卡记录-的数据',
+            url: '/值班室值班/打卡记录/response.json',
+            method: 'get'
         }
 
     },

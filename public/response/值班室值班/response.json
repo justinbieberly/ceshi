@@ -1,0 +1,194 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "tableData":  {
+      "onDutyData": [
+        {
+          "duty_time": 1576043758,
+          "duty_user": "iEfoam",
+          "status": 1
+        },
+        {
+          "duty_time": 1576053758,
+          "duty_user": "杭三",
+          "status": 1
+        },
+        {
+          "duty_time": 1576043758,
+          "duty_user": "张三",
+          "status": 1
+        },
+        {
+          "duty_time": 1576083758,
+          "duty_user": "李四",
+          "status": 1
+        },
+        {
+          "duty_time": 1576943758,
+          "duty_user": "老王",
+          "status": 1
+        },
+        {
+          "duty_time": 1576043758,
+          "duty_user": "李云龙",
+          "status": 0
+        }
+      ]
+    },
+    "alarmFaultSignal": [
+      {
+        "name": "1#甲类库入口处",
+        "dateTime": "2019.03.02  09：52",
+        "data": [
+          {
+            "name": "类型",
+            "value": "压力开关"
+          },
+          {
+            "name": "状态",
+            "value": "监督"
+          },
+          {
+            "name": "点号",
+            "value": "145"
+          },
+          {
+            "name": "分区",
+            "value": "0000"
+          },
+          {
+            "name": "机号",
+            "value": "01"
+          },
+          {
+            "name": "回路",
+            "value": "01"
+          }
+        ]
+      },
+      {
+        "name": "2#甲类库入口处",
+        "dateTime": "2019.03.02  09：52",
+        "data": [
+          {
+            "name": "类型",
+            "value": "压力开关"
+          },
+          {
+            "name": "状态",
+            "value": "监督"
+          },
+          {
+            "name": "点号",
+            "value": "145"
+          },
+          {
+            "name": "分区",
+            "value": "0000"
+          },
+          {
+            "name": "机号",
+            "value": "01"
+          },
+          {
+            "name": "回路",
+            "value": "01"
+          }
+        ]
+      },
+      {
+        "name": "3#甲类库入口处",
+        "dateTime": "2019.03.02  09：52",
+        "data": [
+          {
+            "name": "类型",
+            "value": "压力开关"
+          },
+          {
+            "name": "状态",
+            "value": "监督"
+          },
+          {
+            "name": "点号",
+            "value": "145"
+          },
+          {
+            "name": "分区",
+            "value": "0000"
+          },
+          {
+            "name": "机号",
+            "value": "01"
+          },
+          {
+            "name": "回路",
+            "value": "01"
+          }
+        ]
+      },
+      {
+        "name": "4#甲类库入口处",
+        "dateTime": "2019.03.02  09：52",
+        "data": [
+          {
+            "name": "类型",
+            "value": "压力开关"
+          },
+          {
+            "name": "状态",
+            "value": "监督"
+          },
+          {
+            "name": "点号",
+            "value": "145"
+          },
+          {
+            "name": "分区",
+            "value": "0000"
+          },
+          {
+            "name": "机号",
+            "value": "01"
+          },
+          {
+            "name": "回路",
+            "value": "01"
+          }
+        ]
+      },
+      {
+        "name": "5#甲类库入口处",
+        "dateTime": "2019.03.02  09：52",
+        "data": [
+          {
+            "name": "类型",
+            "value": "压力开关"
+          },
+          {
+            "name": "状态",
+            "value": "监督"
+          },
+          {
+            "name": "点号",
+            "value": "145"
+          },
+          {
+            "name": "分区",
+            "value": "0000"
+          },
+          {
+            "name": "机号",
+            "value": "01"
+          },
+          {
+            "name": "回路",
+            "value": "01"
+          }
+        ]
+      }
+    ]
+  }
+}
+

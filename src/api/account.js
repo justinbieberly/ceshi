@@ -162,3 +162,30 @@ export function getSpecialManagementHistory (data) {
         data
     });
 }
+
+// 获取[控制室值班]的数据
+export function getConsoleRoomData (data) {
+    return request({
+        url: apiConfig.getConsoleRoomData.url,
+        method: apiConfig.getConsoleRoomData.method,
+        data
+    });
+}
+
+// 获取[控制室值班- 值班情况]的数据
+export function getOnDutySituation (data) {
+    return request({
+        url: apiConfig.getOnDutySituation.url,
+        method: apiConfig.getOnDutySituation.method,
+        data
+    });
+}
+
+// 获取[控制室值班- 值班情况]的数据
+export function getPunchCardLog (data) {
+    return request({
+        url: apiConfig.getPunchCardLog.url,
+        method: apiConfig.getPunchCardLog.method,
+        data
+    });
+}

@@ -155,6 +155,16 @@ export default {
                 title: '特种设备管理'
             },
             component: () => import('@/pages/dashboard/special_management')
+        },
+        {
+            path: 'control_room',
+            name: `${pre}control-room`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '控制室值班管理'
+            },
+            component: () => import('@/pages/dashboard/control_room')
         }
     ]
 };

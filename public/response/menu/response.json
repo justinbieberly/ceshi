@@ -64,7 +64,7 @@
           {
             "name": "控制室值班",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
+            "path": "/dashboard/control_room"
           },
           {
             "name": "应急管理",

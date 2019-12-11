@@ -1,0 +1,46 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "tableData": {
+      "data": [
+        {
+          "id": 1,
+          "personnel": "iEfoam",
+          "time": 1576057794
+        },
+        {
+          "id": 2,
+          "personnel": "张三",
+          "time": 1576058794
+        },
+        {
+          "id": 3,
+          "personnel": "李四",
+          "time": 1576061794
+        },
+        {
+          "id": 4,
+          "personnel": "王二",
+          "time": 1576067794
+        },
+        {
+          "id": 5,
+          "personnel": "iEfoam",
+          "time": 1576077794
+        },
+        {
+          "id": 6,
+          "personnel": "iEfoam",
+          "time": 157608794
+        },
+        {
+          "id": 7,
+          "personnel": "iEfoam",
+          "time": 1576057794
+        }
+      ]
+    }
+  }
+}
+
