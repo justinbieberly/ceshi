@@ -133,7 +133,7 @@
         data () {
             return {
                 title: '控制室值班管理',
-                modelImg: '/assets/images/u87.svg',
+                modelImg: '/assets/images/u3190.svg',
                 loading: false,
                 isExport: false,
                 onDutySituation: false,
@@ -373,11 +373,11 @@
                 this.isExport = false
                 this.onDutySituation = false
                 this.isPunchCardLog = false
-                this.modelImg = '/assets/images/u87.svg'
+                this.modelImg = '/assets/images/u3190.svg'
             },
             tabsChange (value) {
                 if (value === 0) {
-                    this.modelImg = '/assets/images/u87.svg'
+                    this.modelImg = '/assets/images/u3190.svg'
                 } else {
                     this.isPunchCardLog = false
                     this.onDutySituation = false
