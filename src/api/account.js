@@ -189,3 +189,30 @@ export function getPunchCardLog (data) {
         data
     });
 }
+
+// 获取[控制室值班- 值班情况]的数据
+export function getEmergencyResponsePlan (data) {
+    return request({
+        url: apiConfig.getEmergencyResponsePlan.url,
+        method: apiConfig.getEmergencyResponsePlan.method,
+        data
+    });
+}
+
+// 获取[控制室值班- 值班情况]的数据
+export function getPreparednessDrill (data) {
+    return request({
+        url: apiConfig.getPreparednessDrill.url,
+        method: apiConfig.getPreparednessDrill.method,
+        data
+    });
+}
+
+// 获取[控制室值班- 值班情况]的数据
+export function getEmergencyTreatment (data) {
+    return request({
+        url: apiConfig.getEmergencyTreatment.url,
+        method: apiConfig.getEmergencyTreatment.method,
+        data
+    });
+}

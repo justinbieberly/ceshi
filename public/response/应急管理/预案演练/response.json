@@ -1,0 +1,86 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "menu": [
+      {
+        "id": 15,
+        "create_at": "2016.12.02",
+        "title": "火灾应急预案演练"
+      },
+      {
+        "id": 16,
+        "create_at": "2016.12.02",
+        "title": "危化品泄露事故专项预案演练"
+      },
+      {
+        "id": 17,
+        "create_at": "2016.12.02",
+        "title": "紧急疏散预案演练"
+      },
+      {
+        "id": 18,
+        "create_at": "2016.12.02",
+        "title": "综合应急预案演练"
+      },
+      {
+        "id": 19,
+        "create_at": "",
+        "title": "厂区消防安全培训"
+      }
+    ],
+    "tableData":  {
+      "data": [
+        {
+          "id": 1,
+          "file_name": "火灾应急预案演练文档",
+          "category": "火灾应急预案演练",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "word"
+        },
+        {
+          "id": 2,
+          "file_name": "火灾应急预案演练文档",
+          "category": "火灾应急预案演练",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "MP4"
+        },
+        {
+          "id": 3,
+          "file_name": "火灾应急预案演练文档",
+          "category": "火灾应急预案演练",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 4,
+          "file_name": "火灾应急预案演练文档",
+          "category": "火灾应急预案演练",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "mp4"
+        },
+        {
+          "id": 5,
+          "file_name": "火灾应急预案演练文档",
+          "category": "火灾应急预案演练",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "word"
+        },
+        {
+          "id": 6,
+          "file_name": "厂区消防安全培训",
+          "category": "火灾应急预案演练",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        }
+      ]
+    }
+  }
+}
+

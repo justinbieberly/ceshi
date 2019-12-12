@@ -234,6 +234,11 @@
     text-align: center;
 }
 
+/*应管理*/
+.hzyj-btn > span {
+    width: 100%;
+}
+
 .kzs-menu-btn .ivu-btn:nth-child(2) {
     margin-left: 20px;
 }

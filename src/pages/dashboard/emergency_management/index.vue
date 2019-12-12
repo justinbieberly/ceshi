@@ -3,27 +3,254 @@
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Tabs type="card" class="ivu-mt">
+                    <Tabs type="card" class="ivu-mt"  @on-click="changeTabs" >
                         <TabPane label="应急预案">
-
+                            <Button style="width: 100%" class="hzyj-btn"
+                                    v-for="(item, key) in menuList"
+                                    :key="key"
+                                    :type="btnArr[key].btnType"
+                                    @click="selectThisBtn(key)">
+                                <div class="ivu-block hzjjya-list">
+                                    <div class="ivu-inline-block">{{ item.title }}</div>
+                                    <div class="ivu-inline-block">{{ item.create_at}}</div>
+                                    <div class="ivu-inline-block do-action-btn">
+                                        <Icon type="ios-add-circle" size="18" @click="modalAction(1, '')"/>
+                                        <Icon type="ios-close-circle" size="18" @click="modalAction(2, item.id, key)"/>
+                                        <Icon type="md-create" size="18" @click="modalAction(3, item, key)"/>
+                                    </div>
+                                </div>
+                            </Button>
                         </TabPane>
-                        <TabPane label="标签二">标签二的内容</TabPane>
+                        <TabPane label="预案演练">
+                            <Button style="width: 100%" class="hzyj-btn"
+                                    v-for="(item, key) in menuList"
+                                    :key="key"
+                                    :type="btnArr[key].btnType"
+                                    @click="selectThisBtn(key)">
+                                <div class="ivu-block hzjjya-list">
+                                    <div class="ivu-inline-block">{{ item.title }}</div>
+                                    <div class="ivu-inline-block">{{ item.create_at}}</div>
+                                    <div class="ivu-inline-block do-action-btn">
+                                        <Icon type="ios-add-circle" size="18" @click="modalAction(1, '')"/>
+                                        <Icon type="ios-close-circle" size="18" @click="modalAction(2, item.id, key)"/>
+                                        <Icon type="md-create" size="18" @click="modalAction(3, item, key)"/>
+                                    </div>
+                                </div>
+                            </Button>
+                        </TabPane>
+                        <TabPane label="应急处理">
+                            <div class="ivu-block">
+                                <Button type="default" long>SDMS</Button>
+                                <div class="ivu-block ivu-mt-16">
+                                    <div class="ivu-text-center item-jywz" v-for="(item, key) in emergency.emergencyRow" :key="key">
+                                        <h3>{{ item.title }}</h3>
+                                        <ButtonGroup v-for="(value, index) in item.data" :key="index" class="ivu-mb-8">
+                                            <Button type="primary" style="width: 130px">{{ value.name }}</Button>
+                                            <Button style="width: 250px">{{ value.number }}</Button>
+                                        </ButtonGroup>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPane>
                     </Tabs>
                 </Card>
             </Card>
         </div>
         <div class="content-layout-right" :class="{ 'content-layout-right-pro': this.menuCollapse }">
-            右边
+           <div class="ivu-block" v-if="!emergency.isEmergency">
+               <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+                   <div class="ivu-form-item" style="line-height: 32px;">
+                       功能操作
+                   </div>
+                   <FormItem label="输入搜索">
+                       <Input v-model="formItem.condition" placeholder="文件名/序号/..." size="small" style="width: 120px" />
+                   </FormItem>
+                   <FormItem label="所属类别">
+                       <Select v-model="formItem.category" size="small"  style="width:100px">
+                           <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>
+                       </Select>
+                       <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
+                       <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                   </FormItem>
+                   <FormItem label="文档格式">
+                       <Select v-model="formItem.fileType" size="small"  style="width:100px">
+                           <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>
+                       </Select>
+                       <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
+                       <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                       <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
+                   </FormItem>
+                   <FormItem label="显示条数">
+                       <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                           <Option value="20">20条/页</Option>
+                           <Option value="50">50条/页</Option>
+                           <Option value="100">100条/页</Option>
+                       </Select>
+                   </FormItem>
+                   <FormItem label="排序方式">
+                       <Select v-model="formItem.sortWay" size="small">
+                           <Option :value="item.key" v-for="(item, key) in table.columns" :key="key">{{ item.title }}</Option>
+                       </Select>
+                   </FormItem>
+               </Form>
+               <Table border :columns="table.columns" :data="table.data" class="ivu-mt">
+                   <template slot-scope="{ row, index }" slot="action">
+                       <Button type="primary" size="small" style="margin-right: 5px" >预览</Button>
+                       <Button type="primary" size="small" style="margin-right: 5px" @click.native="download(row.file_url)">下载</Button>
+                       <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(2, row)">编辑</Button>
+                       <Button type="error" size="small" @click="modalTable(3, row)">删除</Button>
+                   </template>
+               </Table>
+               <div class="ivu-block" style="float: right;margin-top: 30px;">
+                   <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+               </div>
+           </div>
+            <img :src="emergency.imgModel" alt="" v-else>
         </div>
+        <Modal
+                v-model="modal.modal1.status"
+                :title="modal.modal1.title"
+                @on-ok="submit">
+            <div class="ivu-block ivu-p-8">
+                <div v-if="modal.modal1.state === 3">
+                    <div style="text-align:center">
+                        <p>删除当前类别会丢失所有表单数据,是否继续?</p>
+                    </div>
+                </div>
+                <Form :model="modal.modal1" :label-width="80" :label-colon="true" :hide-required-mark="false" v-else>
+                    <FormItem label="类别名"   :rules="{required: true, message: 'can not be empty', trigger: 'blur'}">
+                        <Input v-model="modal.modal1.input" placeholder="输入别名..."></Input>
+                    </FormItem>
+                </Form>
+            </div>
+        </Modal>
+        <Modal
+                v-model="modal.modal2.status"
+                :title="modal.modal2.title"
+                @on-ok="tableSubmit">
+            <div class="ivu-block ivu-p-8">
+                <div v-if="modal.modal2.state === 3">
+                    <div style="text-align:center">
+                        <p>删除当前行会丢失所有数据记录,是否继续?</p>
+                    </div>
+                </div>
+                <Form :model="modal" :label-width="100" :label-colon="true"
+                      :hide-required-mark="false"
+                      style="width: 350px;margin-right: auto;margin-left: auto;" v-else>
+                    <FormItem label="文件名"   :rules="{required: true, message: '文件名不能为空', trigger: 'blur'}">
+                        <Input v-model="modal.modal2.fileName" placeholder="请输入文件名..." style="width: 180px"></Input>
+                    </FormItem>
+                    <FormItem label="所属类别"   :rules="{required: true, message: '文件类别不能为空', trigger: 'blur'}">
+                        <Select v-model="modal.modal2.category" placeholder="请选择文件类别..." style="width: 180px">
+                            <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="文件格式"   :rules="{required: true, message: '文件格式不能为空', trigger: 'blur'}">
+                        <Select v-model="modal.modal2.fileType" placeholder="请选择文件格式..." style="width: 180px">
+                            <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="上传选择器"   :rules="{required: true, message: '文件必须!', trigger: 'blur'}">
+                        <Upload action="//jsonplaceholder.typicode.com/posts/"
+                                :on-success="uploadSuccess" @on-error="uploadFailed" ref="uploadEle">
+                            <Button icon="ios-cloud-upload-outline">选择上传文件</Button>
+                            <span class="ivu-block upload-notice">只能上传word/pdf/视频格式文件，文件不能超过500Mb</span>
+                        </Upload>
+                    </FormItem>
+                </Form>
+            </div>
+        </Modal>
     </main>
 </template>
 <script>
     import { mapState } from 'vuex';
+    import { getEmergencyResponsePlan, getPreparednessDrill, getEmergencyTreatment } from '@api/account';
     export default {
         name: 'dashboard-temporary-storage',
         data () {
             return {
-                title: '应急管理'
+                title: '应急管理',
+                loading: false,
+                menuList: [],
+                btnArr: [],
+                modal: {
+                    modal1: {
+                        id: 0,
+                        key: undefined,
+                        status: false,
+                        input: '',
+                        state: 1, // 1添加 2编辑
+                        title: '添加一个类别'
+                    },
+                    modal2: {
+                        categoryList: [], // 所有的分类
+                        fileTypeList: [], // 所有的文件类型
+                        status: false,
+                        state: 1,
+                        title: '添加文件',
+                        fileName: '',
+                        category: '',
+                        fileType: '',
+                        filePath: '' // 返回id 还是路劲
+                    }
+
+                },
+                pageSize: 100,
+                total: 0,
+                formItem: {
+                    category: undefined,
+                    fileType: undefined,
+                    dateRange: undefined,
+                    condition: undefined,
+                    showNum: 1,
+                    sortWay: undefined
+
+                },
+                table: {
+                    columns: [
+                        {
+                            title: '序号',
+                            key: 'id',
+                            width: '70px',
+                            align: 'center'
+                        },
+                        {
+                            title: '文件名',
+                            key: 'file_name',
+                            align: 'center'
+                        },
+                        {
+                            title: '所属类别',
+                            key: 'category',
+                            width: '170px',
+                            align: 'center'
+                        },
+                        {
+                            title: '添加时间',
+                            key: 'add_time',
+                            width: '170px',
+                            align: 'center'
+                        },
+                        {
+                            title: '文件格式',
+                            width: '100px',
+                            key: 'file_type',
+                            align: 'center'
+                        },
+                        {
+                            title: '操作',
+                            align: 'center',
+                            slot: 'action',
+                            key: 'action'
+                        }
+                    ],
+                    data: []
+                },
+                emergency: { // 应急处理
+                    isEmergency: false,
+                    imgModel: '/assets/images/u651.svg',
+                    emergencyRow: []
+                }
             }
         },
         computed: {
@@ -34,10 +261,242 @@
                 'menuCollapse'
             ])
         },
-        created () {},
+        created () {
+            let that = this;
+            getEmergencyResponsePlan()
+                .then(async res => {
+                    that.table.data = res.tableData.data
+                    this.init(res)
+                    that.menuList = res.menu
+                }).catch(err => {
+                    console.log('err: ', err)
+                })
+        },
         methods: {
+            changeTabs (index) {
+                // 点击tab分页 如果只在一个页面 页面数据会混淆
+                let that = this;
+                if (index === 0) {
+                    // 应急预案
+                    that.emergency.isEmergency = false
+                    getEmergencyResponsePlan()
+                        .then(async res => {
+                            that.table.data = res.tableData.data
+                            this.init(res)
+                            that.menuList = res.menu
+                        }).catch(err => {
+                            console.log('err: ', err)
+                        })
+                } else if (index === 1) {
+                    // 预案演练
+                    that.emergency.isEmergency = false
+                    getPreparednessDrill()
+                        .then(async res => {
+                            that.table.data = res.tableData.data
+                            this.init(res)
+                            that.menuList = res.menu
+                        }).catch(err => {
+                            console.log('err: ', err)
+                        })
+                } else if (index === 2) {
+                    // 预案演练
+                    that.emergency.isEmergency = true
+                    getEmergencyTreatment()
+                        .then(async res => {
+                            that.emergency.emergencyRow = res.rowList
+                        }).catch(err => {
+                            console.log('err: ', err)
+                        })
+                }
+            },
+            submit () {
+                if (this.modal.modal1.state === 1) {
+                    // TODO 异步后台添加
+                    let date = new Date()
+                    this.menuList.push({
+                        id: 520,
+                        title: this.modal.modal1.input,
+                        create_at: date.getFullYear() + '.' + (date.getMonth() + 1) + '.' + date.getDay()
+                    })
+                    this.btnArr.push({
+                        btnType: 'default'
+                    })
+                    this.$Message.success('添加成功');
+                } else if (this.modal.modal1.state === 2) {
+                    // TODO 异步编辑数据 this.modal.modal1.id
+                    let key = this.modal.modal1.key
+                    this.menuList[key].title = this.modal.modal1.input
+                    this.$Message.success('编辑成功');
+                } else {
+                    // TODO 异步删除操作
+                    let key = this.modal.modal1.key
+                    this.menuList.splice(key, 1)
+                    this.$Message.success('删除成功');
+                }
+            },
+            modalAction (state, temp, key = 0) {
+                // 操作显示不同的模态框
+                if (state === 1) {
+                    // add
+                    this.modal.modal1.title = '添加类别'
+                    this.modal.modal1.state = 1
+                    this.modal.modal1.input = ''
+                } else if (state === 3) {
+                    // edit
+                    this.modal.modal1.title1 = '编辑类别'
+                    this.modal.modal1.state = 2
+                    this.modal.modal1.input = temp.title
+                    this.modal.modal1.id = temp
+                    this.modal.modal1.key = key
+                } else {
+                    // delete
+                    // TODO 此处已经传入了id 根据id删除
+                    this.modal.modal1.id = temp
+                    this.modal.modal1.title1 = '是否删除当前类别?'
+                    this.modal.modal1.state = 3
+                    this.modal.modal1.key = key
+                }
+                this.modal.modal1.status = true
+            },
+            selectThisBtn (index) {
+                // 点击按钮切换颜色
+                this.btnArr.some((item, key, arr) => {
+                    this.btnArr[key].btnType = 'default'
+                })
+                this.btnArr[index].btnType = 'warning'
+            },
+            setPageSize () {
+                this.pageSize = parseInt(this.formItem.showNum);
+                console.log('reset page size', this.pageSize);
+                // TODO 只能 请求API限制  分页 限制每页显示数量
+            },
+            doQuery () {
+                console.log('do query');
+                // TODO 只能 请求API筛选处理 查询
+            },
+            changePage () {
+                // TODO 翻页
+            },
+            modalTable (state, temp) {
+                // 右侧的表格 操作添加和编辑模态框
+                if (state === 1) {
+                    // 添加
+                    this.modal.modal2.title = '添加文件'
+                    this.modal.modal2.state = 1
+                } else if (state === 2) {
+                    // 编辑
+                    this.modal.modal2.fileName = temp.file_name
+                    this.modal.modal2.category = temp.category
+                    this.modal.modal2.fileType = temp.file_type
+                    this.modal.modal2.title = '编辑文件'
+                    this.modal.modal2.state = 2
+                } else {
+                    this.modal.modal2.title = '删除当前行数据?'
+                    this.modal.modal2.state = 3
+                }
+                this.modal.modal2.status = true
+            },
+            tableSubmit () {
+                if (this.modal.modal2.state === 1) {
+                    console.log(this.modal.modal2)
+                    this.$Message.success('添加成功');
+                } else if (this.modal.modal2.state === 2) {
+                    this.$Message.success('编辑成功');
+                } else {
+                    this.$Message.success('删除成功');
+                }
+            },
+            uploadSuccess (response, file, fileList) {
+                this.$Message.success('文件上传成功!');
+                // TODO 上传完成之后需要处理
+                console.log(response, file, fileList)
+            },
+            uploadFailed (response, file, fileList) {
+                console.log(response, file, fileList)
+                // TODO 上传失败之后需要处理
+                this.$refs.uploadEle.clearFiles()
+                this.$Message.error('文件上传失败!');
+            },
+            init (data) {
+                // 初始化函数 将页面需要的数据注入到变量里面帮助页面渲染
+                let categoryList = []
+                let fileType = []
+                data.tableData.data.some((item, key, arr) => {
+                    if (categoryList.indexOf(item.category) === -1) {
+                        categoryList.push(item.category)
+                    }
+                    if (fileType.indexOf(item.file_type) === -1) {
+                        fileType.push(item.file_type)
+                    }
+                })
+                this.modal.modal2.categoryList = categoryList
+                this.modal.modal2.fileTypeList = fileType
+                data.menu.some((item, key, arr) => {
+                    if (key === 0) {
+                        this.btnArr.push({
+                            btnType: 'warning'
+                        })
+                    } else {
+                        this.btnArr.push({
+                            btnType: 'default'
+                        })
+                    }
+                })
+            },
+            download (url) {
+                if (!url) {
+                    return
+                }
+                let link = document.createElement('a')
+                link.style.display = 'none'
+                link.href = url
+                // download 属性定义了下载链接的地址而不是跳转路径
+                link.setAttribute('download', '文件.jpg')
+                document.body.appendChild(link)
+                link.click()
+            }
         }
     }
 </script>
 <style lang="scss" scoped>
+    .hzyj-btn{
+        margin-bottom: 10px;
+    }
+    .hzjjya-list {
+        width: 100%;
+        div:nth-child(1) {
+            width: 50%;
+            text-align: left;
+        }
+
+        div:nth-child(2) {
+            width: 23%;
+        }
+
+        div:nth-child(3) {
+            float: right;
+        }
+        .do-action-btn {
+            z-index: 6;
+            i {
+                margin-right: 5px;
+                display: inline-block;
+            }
+        }
+    }
+    .upload-notice {
+        font-size: 12px;
+        color: #9c9c9c;
+        line-height: 14px;
+        margin-top: 5px;
+    }
+
+    .item-jywz {
+        width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+        h3 {
+            text-align: left;
+        }
+    }
 </style>

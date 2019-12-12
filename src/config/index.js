@@ -116,6 +116,21 @@ const Config = {
             alias: '获取-控制室值班-打卡记录-的数据',
             url: '/值班室值班/打卡记录/response.json',
             method: 'get'
+        },
+        getEmergencyResponsePlan: {
+            alias: '获取-应急预案例-的数据',
+            url: '/应急管理/应急预案/response.json',
+            method: 'get'
+        },
+        getPreparednessDrill: {
+            alias: '获取-应急预案例-的数据',
+            url: '/应急管理/预案演练/response.json',
+            method: 'get'
+        },
+        getEmergencyTreatment: {
+            alias: '获取-应急预案例-的数据',
+            url: '/应急管理/应急处理/response.json',
+            method: 'get'
         }
 
     },
