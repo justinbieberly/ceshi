@@ -31,7 +31,7 @@
                 data5: [],
                 data6: [],
                 buttonProps: {
-                    type: 'primary',
+                    type: 'text',
                     size: 'small'
                 }
             }
