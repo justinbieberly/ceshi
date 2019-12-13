@@ -256,7 +256,7 @@
 }
 
 /*人员管理页面*/
-.echart-box #chartLineBox2 canvas, #chartLineBox3 canvas  {
+.echart-box #chartLineBox2 canvas, .echart-box #chartLineBox3 canvas  {
     top: -50px !important;
 }
 
