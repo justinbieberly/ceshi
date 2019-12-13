@@ -2,38 +2,55 @@
     <main class="body-content-main">
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
             <Card :bordered="false" class="i-admin-left-menu">
-                <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Tabs type="card" style="margin-top: 40px;">
-                        <TabPane label="可燃气体监测">
-                            <Tree :data="data5" :render="renderContent" class="env-air-tree"></Tree>
-                        </TabPane>
-                        <TabPane label="环境温度监测">
-                            <Tree :data="data6" :render="renderContent" class="env-air-tree"></Tree>
-                        </TabPane>
-                    </Tabs>
+                <Card :title='title' icon="ios-options"  shadow class="temporary_table_nopadding">
+                    <Button slot="extra" size="small" @click.prevent="$router.go(-1)">
+                        人员目录
+                    </Button>
+                    <div class="ivu-block">
+                        <Tree :data="treeData" :render="renderContent" class="env-air-tree"></Tree>
+                    </div>
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
-            <img :src="modelImg" alt="">
+        <div class="content-layout-right" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+            右边
         </div>
     </main>
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getEnvironmentalMonitoring } from '@api/account';
     export default {
-        name: 'dashboard-environmental-monitoring',
+        name: 'dashboard-personnel-information',
         data () {
             return {
-                title: '环境监测',
-                modelImg: '/assets/images/u957.svg',
-                data5: [],
-                data6: [],
-                buttonProps: {
-                    type: 'text', // R让按钮不在页面上显示
-                    size: 'small'
-                }
+                title: '人员信息管理',
+                treeData: [
+                    {
+                        'title': '总经理',
+                        'children': [
+                            {
+                                'title': '秘书',
+                                'expand': true,
+                                'children': [
+                                    {
+                                        'title': '李秘书',
+                                        'phone': '24102438102',
+                                        'expand': true
+                                    },
+                                    {
+                                        'title': '邓秘书',
+                                        'phone': '24102438102',
+                                        'expand': true
+                                    }
+                                ]
+                            },
+                            {
+                                'title': '助理',
+                                'expand': true
+                            }
+                        ]
+                    }
+                ]
             }
         },
         computed: {
@@ -44,15 +61,7 @@
                 'menuCollapse'
             ])
         },
-        created () {
-            let that = this;
-            getEnvironmentalMonitoring()
-                .then(async res => {
-                    console.log(res);
-                    that.data5 = that.dealTableData(res.airTableData);
-                    that.data6 = that.dealTableData(res.temperTableData)
-                }).catch(err => { console.log('err: ', err) })
-        },
+        created () {},
         methods: {
             renderContent (h, { root, node, data }) {
                 // 页面渲染引擎
@@ -146,24 +155,6 @@
                     ])
                     ]);
                 }
-            },
-            dealTableData (data) {
-                let dataTemp = [];
-                for (let i = 0; i < data.length; i++) {
-                    let temp = {};
-                    Object.assign(temp, data[i]);
-                    let dataChildTemp = [];
-                    for (let n = 0; n < data[i].children.length; n++) {
-                        let childrenTemp = {};
-                        Object.assign(childrenTemp, {
-                            disabled: true
-                        }, data[i].children[n]);
-                        dataChildTemp.push(childrenTemp)
-                    }
-                    temp.children = dataChildTemp;
-                    dataTemp.push(temp)
-                }
-                return dataTemp;
             }
         }
     }

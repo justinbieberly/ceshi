@@ -175,6 +175,16 @@ export default {
                 title: '应急管理'
             },
             component: () => import('@/pages/dashboard/emergency_management')
+        },
+        {
+            path: 'personnel_information',
+            name: `${pre}personnel_information`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '应急管理'
+            },
+            component: () => import('@/pages/dashboard/personnel_information')
         }
     ]
 };

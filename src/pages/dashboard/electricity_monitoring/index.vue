@@ -35,7 +35,7 @@
             </div>
             <div slot="footer">
                 <Button type="error" size="large" long :loading="modal_loading" @click="removeAll"  v-if="modalInfo.title_del">删除</Button>
-                <Button type="error" size="large" long :loading="modal_loading" @click="updateData()"  v-if="modalInfo.title_edit">更新</Button>
+                <Button type="primary" size="large" long :loading="modal_loading" @click="updateData()"  v-if="modalInfo.title_edit">更新</Button>
             </div>
         </Modal>
     </main>
@@ -179,12 +179,15 @@
                     expand: true
                 });
                 this.$set(data, 'children', children);
+                // TODO 新增一个节点
+                this.$Message.success('添加成功!');
             },
             remove (root, node, data) {
                 const parentKey = root.find(el => el === node).parent;
                 const parent = root.find(el => el.nodeKey === parentKey).node;
                 const index = parent.children.indexOf(data);
                 parent.children.splice(index, 1);
+                // TODO 删除一个节点
                 this.$Message.success('删除成功！');
             },
             removeAll () {
@@ -196,6 +199,7 @@
                     let delObject = this.data5.find(el => el.id === id);
                     let thisKey = this.data5.indexOf(delObject);
                     this.data5.splice(thisKey, 1);
+                    // TODO 删除一个父级节点
                     this.$Message.success('删除成功！');
                 }, 500);
             },
@@ -206,6 +210,7 @@
                     this.modalInfo.modalState = false;
                     this.monitorHelper.thisTemp.title = this.monitorHelper.name;
                     this.monitorHelper.thisTemp.total = this.monitorHelper.value;
+                    // TODO 更新一个父级节点
                     this.$Message.success('更新成功！');
                 }, 500);
             },

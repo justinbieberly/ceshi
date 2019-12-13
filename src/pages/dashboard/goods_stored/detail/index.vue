@@ -4,8 +4,10 @@
             <Card :bordered="false" class="user-cover">
                 <Card :title="title" icon="ios-options"  :padding="0" shadow>
                     <a href="#" slot="extra" @click.prevent="$router.go(-1)">
-                        <Icon type="ios-arrow-back" />
-                        返回
+                        <Button size="small">
+                            <Icon type="ios-arrow-back" />
+                            返回
+                        </Button>
                     </a>
                 </Card>
             </Card>

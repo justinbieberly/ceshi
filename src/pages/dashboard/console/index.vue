@@ -3,7 +3,7 @@
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow >
-                    <Tree :data="listRow" show-checkbox multiple></Tree>
+                    <Tree :data="listRow" show-checkbox multiple @on-check-change="show"></Tree>
                 </Card>
             </Card>
         </div>
@@ -38,10 +38,14 @@
             get3dModelInfo()
                 .then(async res => {
                     that.listRow = res.list;
-                    console.log('res', res);
                 }).catch(err => { console.log('err: ', err) })
         },
         methods: {
+            show (info) {
+                console.log('点击了')
+                console.log(info);
+                // TODO info里面包含了所有数据  请求API显示
+            }
         }
     }
 </script>

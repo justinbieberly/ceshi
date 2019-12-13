@@ -5,11 +5,12 @@
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Tabs type="card" class="ivu-mt"  @on-click="changeTabs" >
                         <TabPane label="应急预案">
-                            <Button style="width: 100%" class="hzyj-btn"
+                            <div style="width: 100%" class="hzyj-btn ivu-btn"
                                     v-for="(item, key) in menuList"
                                     :key="key"
-                                    :type="btnArr[key].btnType"
-                                    @click="selectThisBtn(key)">
+                                    :type="btnArr[key].state"
+                                 :class="{ 'ivu-btn-warning': btnArr[key].state }"
+                                 @click="selectThisBtn(key)">
                                 <div class="ivu-block hzjjya-list">
                                     <div class="ivu-inline-block">{{ item.title }}</div>
                                     <div class="ivu-inline-block">{{ item.create_at}}</div>
@@ -19,14 +20,15 @@
                                         <Icon type="md-create" size="18" @click="modalAction(3, item, key)"/>
                                     </div>
                                 </div>
-                            </Button>
+                            </div>
                         </TabPane>
                         <TabPane label="预案演练">
-                            <Button style="width: 100%" class="hzyj-btn"
-                                    v-for="(item, key) in menuList"
-                                    :key="key"
-                                    :type="btnArr[key].btnType"
-                                    @click="selectThisBtn(key)">
+                            <div style="width: 100%" class="hzyj-btn ivu-btn"
+                                 v-for="(item, key) in menuList"
+                                 :key="key"
+                                 :type="btnArr[key].state"
+                                 :class="{ 'ivu-btn-warning': btnArr[key].state }"
+                                 @click="selectThisBtn(key)">
                                 <div class="ivu-block hzjjya-list">
                                     <div class="ivu-inline-block">{{ item.title }}</div>
                                     <div class="ivu-inline-block">{{ item.create_at}}</div>
@@ -36,7 +38,7 @@
                                         <Icon type="md-create" size="18" @click="modalAction(3, item, key)"/>
                                     </div>
                                 </div>
-                            </Button>
+                            </div>
                         </TabPane>
                         <TabPane label="应急处理">
                             <div class="ivu-block">
@@ -319,7 +321,7 @@
                         create_at: date.getFullYear() + '.' + (date.getMonth() + 1) + '.' + date.getDay()
                     })
                     this.btnArr.push({
-                        btnType: 'default'
+                        state: false
                     })
                     this.$Message.success('添加成功');
                 } else if (this.modal.modal1.state === 2) {
@@ -361,9 +363,9 @@
             selectThisBtn (index) {
                 // 点击按钮切换颜色
                 this.btnArr.some((item, key, arr) => {
-                    this.btnArr[key].btnType = 'default'
+                    this.btnArr[key].state = false
                 })
-                this.btnArr[index].btnType = 'warning'
+                this.btnArr[index].state = true
             },
             setPageSize () {
                 this.pageSize = parseInt(this.formItem.showNum);
@@ -434,11 +436,11 @@
                 data.menu.some((item, key, arr) => {
                     if (key === 0) {
                         this.btnArr.push({
-                            btnType: 'warning'
+                            state: true
                         })
                     } else {
                         this.btnArr.push({
-                            btnType: 'default'
+                            state: false
                         })
                     }
                 })
@@ -460,6 +462,8 @@
 </script>
 <style lang="scss" scoped>
     .hzyj-btn{
+        width: 100%;
+        line-height: 32px;
         margin-bottom: 10px;
     }
     .hzjjya-list {
@@ -474,7 +478,7 @@
         }
 
         div:nth-child(3) {
-            float: right;
+            margin-left: 10px;
         }
         .do-action-btn {
             z-index: 6;

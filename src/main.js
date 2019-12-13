@@ -1,3 +1,6 @@
+// 支持ＩＥ
+import '@babel/polyfill';
+
 // Vue
 import Vue from 'vue';
 import App from './App';
@@ -32,9 +35,6 @@ import { getHeaderName, getMenuSider, getSiderSubmenu } from '@/libs/system';
 
 // 内置组件
 import iLink from '@/components/link';
-
-// 支持ＩＥ
-import '@babel/polyfill';
 
 // 使用样式，修改主题可以在 styles 目录下创建新的主题包并修改 iView 默认的 less 变量
 // 参考 https://www.iviewui.com/docs/guide/theme

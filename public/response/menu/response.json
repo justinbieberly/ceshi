@@ -81,7 +81,7 @@
           {
             "name": "人员信息管理",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
+            "path": "/dashboard/personnel_information"
           },
           {
             "name": "实名进出管理",
