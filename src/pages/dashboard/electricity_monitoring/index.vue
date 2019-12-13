@@ -63,7 +63,7 @@
                 },
                 data5: [],
                 buttonProps: {
-                    type: 'default',
+                    type: 'text',
                     size: 'small'
                 }
             }
@@ -120,7 +120,7 @@
                         h('Button', {
                             props: Object.assign({}, this.buttonProps, {
                                 icon: 'ios-add-circle',
-                                type: 'primary'
+                                type: 'text'
                             }),
                             style: {
                                 width: '20px',
@@ -135,7 +135,7 @@
                         h('Button', {
                             props: Object.assign({}, this.buttonProps, {
                                 icon: 'ios-close-circle',
-                                type: 'primary'
+                                type: 'text'
                             }),
                             style: {
                                 width: '20px',
@@ -150,7 +150,7 @@
                         h('Button', {
                             props: Object.assign({}, this.buttonProps, {
                                 icon: 'md-create',
-                                type: 'primary'
+                                type: 'text'
                             }),
                             style: {
                                 width: '20px',
@@ -251,7 +251,7 @@
                                     h('Button', {
                                         props: Object.assign({}, this.buttonProps, {
                                             icon: 'ios-add-circle',
-                                            type: 'primary'
+                                            type: 'text'
                                         }),
                                         style: {
                                             width: '20px',
@@ -266,7 +266,7 @@
                                     h('Button', {
                                         props: Object.assign({}, this.buttonProps, {
                                             icon: 'ios-close-circle',
-                                            type: 'primary'
+                                            type: 'text'
                                         }),
                                         style: {
                                             width: '20px',
@@ -288,7 +288,7 @@
                                     h('Button', {
                                         props: Object.assign({}, this.buttonProps, {
                                             icon: 'md-create',
-                                            type: 'primary'
+                                            type: 'text'
                                         }),
                                         style: {
                                             width: '20px',
