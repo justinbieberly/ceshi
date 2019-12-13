@@ -124,7 +124,7 @@
 
 /*修改了色块 导致树形结构展开关闭图标异常 修复*/
 .env-air-tree .ivu-icon-ios-arrow-forward {
-    margin-top: -16px;
+    /*margin-top: -16px;*/
 }
 
 /*环境监测的数形结构 隐藏 按钮*/
@@ -254,6 +254,17 @@
 .kzs-zb-table {
     margin-top: 20px;
 }
+
+/*人员管理页面*/
+.echart-box #chartLineBox2 canvas, #chartLineBox3 canvas  {
+    top: -50px !important;
+}
+
+/*属性结构*/
+.ryxxgl-tree .ivu-btn-icon-only{
+    height: 25px !important;
+}
+
 .cell-normal-color {
     background-color: #0feb16 !important;
 }
@@ -286,6 +297,10 @@
     background-color: #f5f5f5 !important;
 }
 
-.half_width {
+.half-width {
     width: 49% !important;
+}
+
+.ivu-float-left {
+    float: left;
 }

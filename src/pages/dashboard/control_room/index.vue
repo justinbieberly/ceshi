@@ -30,7 +30,7 @@
                                         <span>时间:</span>
                                         <span class="tzsb-info-value">{{ items.dateTime }}</span>
                                     </div>
-                                    <div class="ivu-inline-block half_width" v-for="(item, k) in items.data" :key="k">
+                                    <div class="ivu-inline-block half-width" v-for="(item, k) in items.data" :key="k">
                                         <span>{{ item.name }}:</span>
                                         <span class="tzsb-info-value">{{ item.value }}</span>
                                     </div>

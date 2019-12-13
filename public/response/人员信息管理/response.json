@@ -1,0 +1,362 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "tableData":  {
+      "data": [
+        {
+          "id": 166001,
+          "title": "总经理",
+          "expand": true,
+          "children": [
+            {
+              "id": 166002,
+              "title": "秘书",
+              "expand": true,
+              "children": [
+                {
+                  "id": 166003,
+                  "title": "李秘书",
+                  "sex": 1,
+                  "age": 23,
+                  "workTime": 1,
+                  "expand": true,
+                  "phone": "24102438102"
+                },
+                {
+                  "id": 166004,
+                  "title": "邓秘书",
+                  "sex": 2,
+                  "age": 22,
+                  "workTime": 2,
+                  "expand": true,
+                  "phone": "15084360833"
+                }
+              ]
+            },
+            {
+              "id": 166005,
+              "title": "助理",
+              "expand": true,
+              "children": [
+                {
+                  "id": 1660051,
+                  "title": "李助理",
+                  "sex": 2,
+                  "age": 22,
+                  "workTime": 3,
+                  "expand": true,
+                  "phone": "15874569984"
+                }
+              ]
+            },
+            {
+              "id": 166006,
+              "title": "司机",
+              "expand": true,
+              "children": [
+                {
+                  "id": 1660061,
+                  "title": "李司机",
+                  "sex": 1,
+                  "age": 38,
+                  "workTime": 4,
+                  "expand": true,
+                  "phone": "15874569984"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1660022,
+          "title": "业务部",
+          "expand": false,
+          "children": [
+            {
+              "id": 16600221,
+              "title": "业务组",
+              "expand": true,
+              "children": [
+                {
+                  "id": 16600222,
+                  "title": "陈业务",
+                  "sex": 2,
+                  "age": 30,
+                  "workTime": 8,
+                  "expand": true,
+                  "phone": "24102438102"
+                },
+                {
+                  "id": 16600223,
+                  "title": "邓业务",
+                  "sex": 1,
+                  "age": 32,
+                  "workTime": 16,
+                  "expand": true,
+                  "phone": "15084360833"
+                },
+                {
+                  "id": 16600224,
+                  "title": "熊业务",
+                  "sex": 1,
+                  "age": 35,
+                  "workTime": 17,
+                  "expand": true,
+                  "phone": "15084360833"
+                }
+              ]
+            },
+            {
+              "id": 166002222,
+              "title": "客户服务组",
+              "expand": true,
+              "children": [
+                {
+                  "id": 1660022224,
+                  "title": "李客户服务",
+                  "sex": 2,
+                  "age": 22,
+                  "workTime": 3,
+                  "expand": true,
+                  "phone": "15874569984"
+                },
+                {
+                  "id": 1660022225,
+                  "title": "邱客户服务",
+                  "sex": 2,
+                  "age": 24,
+                  "workTime": 4,
+                  "expand": true,
+                  "phone": "15874569984"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 16600223,
+          "title": "仓储部",
+          "expand": false,
+          "children": [
+            {
+              "id": 166002231,
+              "title": "仓储组",
+              "expand": true,
+              "children": [
+                {
+                  "id": 166002232,
+                  "title": "仓管一号",
+                  "sex": 2,
+                  "age": 45,
+                  "workTime": 8,
+                  "expand": true,
+                  "phone": "24102438102"
+                }
+              ]
+            },
+            {
+              "id": 166002232,
+              "title": "叉车组",
+              "expand": true,
+              "children": [
+                {
+                  "id": 1660022224,
+                  "title": "叉车员一号",
+                  "sex": 1,
+                  "age": 38,
+                  "workTime": 10,
+                  "expand": true,
+                  "phone": "15874569984"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 16600224,
+          "title": "物流部",
+          "expand": false,
+          "children": [
+            {
+              "id": 166002241,
+              "title": "装卸组",
+              "expand": true,
+              "children": [
+                {
+                  "id": 166002242,
+                  "title": "装卸1",
+                  "sex": 2,
+                  "age": 30,
+                  "workTime": 5,
+                  "expand": true,
+                  "phone": "24102438102"
+                }
+              ]
+            },
+            {
+              "id": 166002242,
+              "title": "调度组",
+              "expand": true,
+              "children": [
+                {
+                  "id": 1660022423,
+                  "title": "调度1",
+                  "sex": 1,
+                  "age": 35,
+                  "workTime": 3,
+                  "expand": true,
+                  "phone": "15874569984"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 16600224,
+          "title": "安全部",
+          "expand": false,
+          "children": [
+            {
+              "id": 1660022433,
+              "title": "值班",
+              "sex": 2,
+              "age": 30,
+              "workTime": 8,
+              "expand": true,
+              "phone": "24102438102"
+            },
+            {
+              "id": 166002213242,
+              "title": "值班2",
+              "sex": 2,
+              "age": 30,
+              "workTime": 1,
+              "expand": true,
+              "phone": "24102438102"
+            }
+          ]
+        },
+        {
+          "id": 16600224,
+          "title": "客服部",
+          "expand": false,
+          "children": [
+            {
+              "id": 1660022433,
+              "title": "客服1",
+              "sex": 2,
+              "age": 30,
+              "workTime": 4,
+              "expand": true,
+              "phone": "24102438102"
+            },
+            {
+              "id": 166002213242,
+              "title": "客服2",
+              "sex": 2,
+              "age": 28,
+              "workTime": 11,
+              "expand": true,
+              "phone": "24102438102"
+            }
+          ]
+        },
+        {
+          "id": 16600224,
+          "title": "财务部",
+          "expand": false,
+          "children": [
+            {
+              "id": 1660022433,
+              "title": "财务1",
+              "sex": 2,
+              "age": 30,
+              "workTime": 13,
+              "expand": true,
+              "phone": "24102438102"
+            },
+            {
+              "id": 166002213242,
+              "title": "财务1",
+              "sex": 2,
+              "age": 28,
+              "workTime": 12,
+              "expand": true,
+              "phone": "24102438102"
+            }
+          ]
+        },
+        {
+          "id": 16600224,
+          "title": "办公室",
+          "expand": false,
+          "children": [
+            {
+              "id": 1660022433,
+              "title": "办公室1",
+              "sex": 2,
+              "age": 55,
+              "workTime": 1,
+              "expand": true,
+              "phone": "24102438102"
+            },
+            {
+              "id": 166002213242,
+              "title": "办公室2",
+              "sex": 2,
+              "age": 28,
+              "workTime": 1,
+              "expand": true,
+              "phone": "24102438102"
+            }
+          ]
+        },
+        {
+          "id": 16600224,
+          "title": "离职",
+          "expand": false,
+          "children": [
+            {
+              "id": 166002284433,
+              "title": "李明",
+              "sex": 2,
+              "age": 22,
+              "workTime": 1,
+              "expand": true,
+              "phone": "24102438102"
+            },
+            {
+              "id": 16600221553242,
+              "title": "张三",
+              "sex": 2,
+              "age": 25,
+              "workTime": 1,
+              "expand": true,
+              "phone": "24102438102"
+            },
+            {
+              "id": 166221553242,
+              "title": "李四",
+              "sex": 2,
+              "age": 25,
+              "workTime": 1,
+              "expand": true,
+              "phone": "24102438102"
+            },
+            {
+              "id": 166221553242,
+              "title": "小明",
+              "sex": 2,
+              "age": 45,
+              "workTime": 1,
+              "expand": true,
+              "phone": "24102438102"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

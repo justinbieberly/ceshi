@@ -131,6 +131,11 @@ const Config = {
             alias: '获取-应急预案例-的数据',
             url: '/应急管理/应急处理/response.json',
             method: 'get'
+        },
+        getPersonnelInformation: {
+            alias: '获取-人员信息管理-的数据',
+            url: '/人员信息管理/response.json',
+            method: 'get'
         }
 
     },

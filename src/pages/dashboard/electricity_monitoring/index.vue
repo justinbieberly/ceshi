@@ -90,7 +90,12 @@
                         width: '100%'
                     }
                 }, [
-                    h('span', [
+                    h('span', {
+                        style: {
+                            display: 'inline-block',
+                            width: '72%'
+                        }
+                    }, [
                         h('Icon', {
                             props: {
                                 type: 'ios-paper-outline'
@@ -104,15 +109,14 @@
                     h('span', {
                         style: {
                             display: 'inline-block',
-                            float: 'right',
-                            marginRight: '18px'
                         }
                     }, [
                         h('span', {
                             style: {
-                                width: '20px',
+                                width: '25px',
+                                display: 'inline-block',
+                                textAlign: 'center',
                                 fontSize: '16',
-                                marginRight: '7px',
                                 color: '#cc5151',
                                 lineHeight: '20px'
                             }
@@ -226,7 +230,12 @@
                                     width: '100%'
                                 }
                             }, [
-                                h('span', [
+                                h('span', {
+                                    style: {
+                                        display: 'inline-block',
+                                        width: '73%'
+                                    }
+                                }, [
                                     h('Icon', {
                                         props: {
                                             type: 'ios-folder-outline'
@@ -239,16 +248,15 @@
                                 ]),
                                 h('span', {
                                     style: {
-                                        display: 'inline-block',
-                                        float: 'right',
-                                        marginRight: '18px'
+                                        display: 'inline-block'
                                     }
                                 }, [
                                     h('span', {
                                         style: {
-                                            width: '20px',
+                                            width: '25px',
+                                            display: 'inline-block',
+                                            textAlign: 'center',
                                             fontSize: '16',
-                                            marginRight: '7px',
                                             color: '#cc5151',
                                             lineHeight: '20px'
                                         }

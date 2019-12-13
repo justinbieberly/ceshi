@@ -345,7 +345,7 @@
                     this.modal.modal1.input = ''
                 } else if (state === 3) {
                     // edit
-                    this.modal.modal1.title1 = '编辑类别'
+                    this.modal.modal1.title = '编辑类别'
                     this.modal.modal1.state = 2
                     this.modal.modal1.input = temp.title
                     this.modal.modal1.id = temp
@@ -354,7 +354,7 @@
                     // delete
                     // TODO 此处已经传入了id 根据id删除
                     this.modal.modal1.id = temp
-                    this.modal.modal1.title1 = '是否删除当前类别?'
+                    this.modal.modal1.title = '删除类别?'
                     this.modal.modal1.state = 3
                     this.modal.modal1.key = key
                 }

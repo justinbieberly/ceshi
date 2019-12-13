@@ -216,3 +216,12 @@ export function getEmergencyTreatment (data) {
         data
     });
 }
+
+// 获取[人员信息管理]的数据
+export function getPersonnelInformation (data) {
+    return request({
+        url: apiConfig.getPersonnelInformation.url,
+        method: apiConfig.getPersonnelInformation.method,
+        data
+    });
+}
