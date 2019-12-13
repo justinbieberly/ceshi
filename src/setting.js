@@ -12,7 +12,7 @@ const Setting = {
     // 网页标题的后缀
     titleSuffix: '张家港龙亿智慧仓库安全管理系统',
     // 路由模式，可选值为 history 或 hash
-    routerMode: 'history',
+    routerMode: 'hash',
     // 页面切换时，是否显示模拟的进度条
     showProgressBar: true,
     // 接口请求地址

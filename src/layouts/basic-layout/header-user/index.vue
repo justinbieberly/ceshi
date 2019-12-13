@@ -1,7 +1,7 @@
 <template>
     <span class="i-layout-header-trigger i-layout-header-trigger-min">
 
-        <Dropdown :trigger="isMobile ? 'click' : 'hover'" class="i-layout-header-user" :class="{ 'i-layout-header-user-mobile': isMobile }" @on-click="handleClick">
+        <Dropdown placement="bottom-end" :trigger="isMobile ? 'click' : 'hover'" class="i-layout-header-user" :class="{ 'i-layout-header-user-mobile': isMobile }" @on-click="handleClick">
 <!--            <Avatar size="small" :src="info.avatar" v-if="info.avatar" />-->
             <span class="ivu-avatar ivu-avatar-circle ivu-avatar-image ivu-avatar-small">
                 <Icon type="md-contact" size="25"/>
@@ -15,7 +15,7 @@
                     </DropdownItem>
                 </i-link>
                 <i-link to="/setting/account">
-                    <DropdownItem>
+                    <DropdownItem style="width: 180px">
                         <Icon type="ios-time-outline" />
                         <span>{{ info.login_time }}</span>
                     </DropdownItem>
