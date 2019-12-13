@@ -93,7 +93,8 @@
                     h('span', {
                         style: {
                             display: 'inline-block',
-                            width: '72%'
+                            float: 'left'
+                            // width: '72%'
                         }
                     }, [
                         h('Icon', {
@@ -109,6 +110,8 @@
                     h('span', {
                         style: {
                             display: 'inline-block',
+                            float: 'right',
+                            marginRight: '10px'
                         }
                     }, [
                         h('span', {
@@ -233,7 +236,8 @@
                                 h('span', {
                                     style: {
                                         display: 'inline-block',
-                                        width: '73%'
+                                        float: 'left'
+                                        // width: '73%'
                                     }
                                 }, [
                                     h('Icon', {
@@ -248,7 +252,9 @@
                                 ]),
                                 h('span', {
                                     style: {
-                                        display: 'inline-block'
+                                        display: 'inline-block',
+                                        float: 'right',
+                                        marginRight: '10px'
                                     }
                                 }, [
                                     h('span', {

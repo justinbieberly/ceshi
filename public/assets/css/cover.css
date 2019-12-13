@@ -124,7 +124,7 @@
 
 /*修改了色块 导致树形结构展开关闭图标异常 修复*/
 .env-air-tree .ivu-icon-ios-arrow-forward {
-    /*margin-top: -16px;*/
+    margin-top: -20px;
 }
 
 /*环境监测的数形结构 隐藏 按钮*/
@@ -265,6 +265,13 @@
     height: 25px !important;
 }
 
+.ryxxgl-tree .ivu-btn > .ivu-icon {
+    line-height: unset !important;
+}
+
+.ryxxgl-tree .ivu-tree-arrow i {
+    margin-top: -20px;
+}
 .cell-normal-color {
     background-color: #0feb16 !important;
 }

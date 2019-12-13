@@ -90,37 +90,7 @@
                     isMenu: false,
                     state: 1
                 },
-                treeData: [
-                    {
-                        id: '10065',
-                        'title': '总经理',
-                        expand: true,
-                        'children': [
-                            {
-                                'title': '秘书',
-                                'expand': true,
-                                'children': [
-                                    {
-                                        'id': '1001',
-                                        'title': '李秘书',
-                                        'phone': '24102438102',
-                                        'expand': true
-                                    },
-                                    {
-                                        'id': '1002',
-                                        'title': '邹秘书',
-                                        'phone': '24102438102',
-                                        'expand': true
-                                    }
-                                ]
-                            },
-                            {
-                                'title': '助理',
-                                'expand': true
-                            }
-                        ]
-                    }
-                ],
+                treeData: [],
                 heplerCount: {
                     total: 0,
                     departmentNum: 0,
@@ -177,24 +147,32 @@
                         width: '100%'
                     }
                 }, [
-                    h('span', [
-                        h('Icon', {
-                            props: {
-                                type: 'ios-person'
-                            },
-                            style: {
-                                marginRight: '8px'
-                            }
-                        }),
-                        h('span', data.title)
-                    ]),
-                    h('span', [
-                        h('span', {
-                            style: {
-                                display: 'inline-block',
-                                marginLeft: '20px'
-                            }
-                        }, data.phone)
+                    h('span', {
+                        style: {
+                            display: 'inline-block',
+                            float: 'left'
+                            // width: '75%'
+                        }
+                    }, [
+                        h('span', [
+                            h('Icon', {
+                                props: {
+                                    type: 'ios-person'
+                                },
+                                style: {
+                                    marginRight: '8px'
+                                }
+                            }),
+                            h('span', data.title)
+                        ]),
+                        h('span', [
+                            h('span', {
+                                style: {
+                                    display: 'inline-block',
+                                    marginLeft: '20px'
+                                }
+                            }, data.phone)
+                        ])
                     ]),
                     h('span', {
                         style: {
@@ -311,24 +289,32 @@
                                     width: '100%'
                                 }
                             }, [
-                                h('span', [
-                                    h('Icon', {
-                                        props: {
-                                            type: 'ios-person'
-                                        },
-                                        style: {
-                                            marginRight: '8px'
-                                        }
-                                    }),
-                                    h('span', data.title)
-                                ]),
-                                h('span', [
-                                    h('span', {
-                                        style: {
-                                            display: 'inline-block',
-                                            marginLeft: '20px'
-                                        }
-                                    }, data.phone)
+                                h('span', {
+                                    style: {
+                                        display: 'inline-block',
+                                        float: 'left'
+                                        // width: '75%'
+                                    }
+                                }, [
+                                    h('span', [
+                                        h('Icon', {
+                                            props: {
+                                                type: 'ios-person'
+                                            },
+                                            style: {
+                                                marginRight: '8px'
+                                            }
+                                        }),
+                                        h('span', data.title)
+                                    ]),
+                                    h('span', [
+                                        h('span', {
+                                            style: {
+                                                display: 'inline-block',
+                                                marginLeft: '20px'
+                                            }
+                                        }, data.phone)
+                                    ])
                                 ]),
                                 h('span', {
                                     style: {
