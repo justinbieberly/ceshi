@@ -1,0 +1,56 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "tableData": {
+      "data": [
+        {
+          "id": "1",
+          "userName": "iEfoam",
+          "sex": "男",
+          "workNumber": "160090882",
+          "phone": "12356567563",
+          "cardID": "5005909023432433",
+          "state": "进入",
+          "logADoor": "2018-12-15 09:45",
+          "logBDoor": "2018-12-15 11:45",
+          "gardenTime": "2h",
+          "type": "内部",
+          "note": "",
+          "photo": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
+        },
+        {
+          "id": "2",
+          "userName": "张三",
+          "sex": "男",
+          "workNumber": "160090882",
+          "phone": "12356567563",
+          "cardID": "5005909023432433",
+          "state": "离开",
+          "logADoor": "2018-12-15 09:45",
+          "logBDoor": "2018-12-15 11:45",
+          "gardenTime": "2h",
+          "type": "外部",
+          "note": "非法入内",
+          "photo": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
+        },
+        {
+          "id": "3",
+          "userName": "李四",
+          "sex": "男",
+          "workNumber": "160090882",
+          "phone": "12356567563",
+          "cardID": "5005909023432433",
+          "state": "进入",
+          "logADoor": "2018-12-15 09:45",
+          "logBDoor": "2018-12-15 11:45",
+          "gardenTime": "2h",
+          "type": "外部",
+          "note": "非法入内",
+          "photo": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
+        }
+      ]
+    }
+  }
+}
+

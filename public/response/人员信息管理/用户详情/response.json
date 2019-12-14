@@ -1,0 +1,147 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "baseInfo": [
+      {
+        "name": "姓名",
+        "value": "iEfoam"
+      },
+      {
+        "name": "部门",
+        "value": "技术部"
+      },
+      {
+        "name": "岗位",
+        "value": "Golang开发工程师"
+      },
+      {
+        "name": "电话",
+        "value": "023-123123"
+      },
+      {
+        "name": "身份证号码",
+        "value": "5002351XXXXX303119"
+      },
+      {
+        "name": "学历",
+        "value": "高中"
+      },
+      {
+        "name": "婚姻状况",
+        "value": "已婚"
+      },
+      {
+        "name": "身份证有效期",
+        "value": "2025-06"
+      },
+      {
+        "name": "农行卡#",
+        "value": "2132 3123 3123 1312"
+      },
+      {
+        "name": "入职时间",
+        "value": "2019-01"
+      },
+      {
+        "name": "家庭住址",
+        "value": "重庆市南岸区二塘路"
+      },
+      {
+        "name": "是否胜任",
+        "value": "是"
+      },
+      {
+        "name": "社保编号",
+        "value": "SD1231232"
+      },
+      {
+        "name": "驾  驶  证",
+        "value": "SDDF324234"
+      },
+      {
+        "name": "背景调查",
+        "value": "无不良背景"
+      },
+      {
+        "name": "公积金账号",
+        "value": "SDSSDS78"
+      },
+      {
+        "name": "驾驶证有效期",
+        "value": "2030-12"
+      },
+      {
+        "name": "黑名单",
+        "value": "否"
+      },
+      {
+        "name": "养老金申请时间",
+        "value": "2019-03"
+      },
+      {
+        "name": "从业资格证",
+        "value": "SH78565"
+      },
+      {
+        "name": "任职状态",
+        "value": "在职"
+      },
+      {
+        "name": "公积金缴纳时间",
+        "value": "2019-03"
+      },
+      {
+        "name": "从业资格证有效期",
+        "value": "2039-03"
+      },
+      {
+        "name": "合同起始日期",
+        "value": "iEfoam"
+      },
+      {
+        "name": "合同起始日期",
+        "value": "2019-03"
+      },
+      {
+        "name": "合同终止日期",
+        "value": "2029-03"
+      },
+      {
+        "name": "暂  住  证",
+        "value": "SD3423-03"
+      },
+      {
+        "name": "暂住证有效期",
+        "value": "2029-03"
+      }
+    ],
+    "certificate": [
+      {
+        "name": "身份证",
+        "value": "/assets/images/u5753.svg"
+      },
+      {
+        "name": "驾驶证",
+        "value": "/assets/images/u5753.svg"
+      },
+      {
+        "name": "体检报告",
+        "value": "/assets/images/u5753.svg"
+      },
+      {
+        "name": "从业资格证",
+        "value": "/assets/images/u5753.svg"
+      },
+      {
+        "name": "毕业证书",
+        "value": "/assets/images/u5753.svg"
+      },
+      {
+        "name": "暂住证",
+        "value": "/assets/images/u5753.svg"
+      }
+    ]
+  }
+}
+

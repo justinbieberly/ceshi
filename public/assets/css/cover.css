@@ -256,9 +256,9 @@
 }
 
 /*人员管理页面*/
-.echart-box #chartLineBox2 canvas, .echart-box #chartLineBox3 canvas  {
-    top: -50px !important;
-}
+/*.echart-box #chartLineBox2 canvas, .echart-box #chartLineBox3 canvas  {*/
+/*    top: -50px !important;*/
+/*}*/
 
 /*属性结构*/
 .ryxxgl-tree .ivu-btn-icon-only{

@@ -1,0 +1,63 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "alarmInformation": [
+      {
+        "name": "张三",
+        "status": "进入",
+        "sex": "男",
+        "type": "内部",
+        "time": "10.13  17：30",
+        "info": "人员已入园超过24小时",
+        "header": "/assets/images/u5857.svg"
+      },
+      {
+        "name": "李四",
+        "status": "进入",
+        "sex": "男",
+        "type": "内部",
+        "time": "10.13  17：30",
+        "info": "人员已入园超过24小时",
+        "header": "/assets/images/u5857.svg"
+      },
+      {
+        "name": "王二",
+        "status": "进入",
+        "sex": "男",
+        "type": "内部",
+        "time": "10.13  17：30",
+        "info": "人员已入园超过24小时",
+        "header": "/assets/images/u5857.svg"
+      },
+      {
+        "name": "邹二娃",
+        "status": "进入",
+        "sex": "男",
+        "type": "内部",
+        "time": "10.13  17：30",
+        "info": "人员已入园超过24小时",
+        "header": "/assets/images/u5857.svg"
+      }
+    ],
+    "data": [
+      {
+        "type": "第一道门在园",
+        "count": "11",
+        "insiders": "8"
+      },
+      {
+        "type": "第二道门在园",
+        "count": "2",
+        "insiders": "0"
+      },
+      {
+        "type": "总人数",
+        "count": "12",
+        "insiders": "8"
+      }
+    ]
+  }
+}
+

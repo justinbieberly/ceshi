@@ -136,6 +136,26 @@ const Config = {
             alias: '获取-人员信息管理-的数据',
             url: '/response/人员信息管理/response.json',
             method: 'get'
+        },
+        getPersonnelList: {
+            alias: '获取-人员信息管理-的数据',
+            url: '/response/人员信息管理/人员目录/response.json',
+            method: 'get'
+        },
+        getUserInfoById: {
+            alias: '获取-人员信息管理-详情-的数据',
+            url: '/response/人员信息管理/用户详情/response.json',
+            method: 'get'
+        },
+        getRealNameManagement: {
+            alias: '获取-实名进出管理-的数据',
+            url: '/response/实名进出管理/response.json',
+            method: 'get'
+        },
+        getRecordOfInOut: {
+            alias: '获取-实名进出管理-进出记录-的数据',
+            url: '/response/实名进出管理/进出记录/response.json',
+            method: 'get'
         }
 
     },

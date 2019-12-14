@@ -3,8 +3,9 @@
         <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
             <div class="ivu-block">
                 <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
-                    <FormItem label="功能操作">
-                    </FormItem>
+                    <div class="ivu-form-item" style="line-height: 32px;">
+                        功能操作
+                    </div>
                     <FormItem label="报警类型">
                         <Select v-model="formItem.select" size="small" placeholder="请选择类型" style="width: 150px">
                             <Option :value="item.id" v-for="(item, key) in formItem.alarm_type" :key="key">{{ item.name }}</Option>

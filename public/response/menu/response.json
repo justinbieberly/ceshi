@@ -86,7 +86,7 @@
           {
             "name": "实名进出管理",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
+            "path": "/dashboard/real_name_management"
           },
           {
             "name": "访客登记管理",

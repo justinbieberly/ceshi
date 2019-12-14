@@ -32,8 +32,9 @@
             <div v-else>
                 <div class="ivu-block">
                     <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
-                        <FormItem label="功能操作">
-                        </FormItem>
+                        <div class="ivu-form-item" style="line-height: 32px;">
+                            功能操作
+                        </div>
                         <FormItem label="输入搜索">
                             <Input v-model="formItem.condition" placeholder="编号/名称/..." size="small" style="width: 120px" />
                         </FormItem>

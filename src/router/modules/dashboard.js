@@ -178,13 +178,23 @@ export default {
         },
         {
             path: 'personnel_information',
-            name: `${pre}personnel_information`,
+            name: `${pre}personnel-information`,
             props: true,
             meta: {
                 ...meta,
                 title: '应急管理'
             },
             component: () => import('@/pages/dashboard/personnel_information')
+        },
+        {
+            path: 'real_name_management',
+            name: `${pre}real-name-management`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '应急管理'
+            },
+            component: () => import('@/pages/dashboard/real_name_management')
         }
     ]
 };

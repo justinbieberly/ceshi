@@ -3,7 +3,7 @@
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title='title' icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Button slot="extra" size="small" @click.prevent="$router.go(-1)">
+                    <Button slot="extra" size="small" @click.prevent="showTable">
                         人员目录
                     </Button>
                     <div class="ivu-block">
@@ -28,7 +28,51 @@
                 </div>
             </div>
             <div class="ivu-block" v-else>
-                table
+                <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+                    <div class="ivu-form-item" style="line-height: 32px;">
+                        功能操作
+                    </div>
+                    <FormItem label="输入搜索">
+                        <Input v-model="formItem.condition" placeholder="编号/名称/..." size="small" style="width: 120px" />
+                    </FormItem>
+                    <FormItem label="在职状态">
+                        <Select v-model="formItem.status" size="small"  style="width:100px">
+                            <Option value="1" >在职</Option>
+                            <Option value="0" >离职</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="性别">
+                        <Select v-model="formItem.sex" size="small"  style="width:100px">
+                            <Option value="1" >男</Option>
+                            <Option value="2" >女</Option>
+                        </Select>
+                        <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
+                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
+                    </FormItem>
+                    <FormItem label="显示条数">
+                        <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                            <Option value="20">20条/页</Option>
+                            <Option value="50">50条/页</Option>
+                            <Option value="100">100条/页</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="排序方式">
+                        <Select v-model="formItem.sortWay" size="small">
+                            <Option :value="item.key" v-for="(item, key) in table.columns" :key="key">{{ item.title }}</Option>
+                        </Select>
+                    </FormItem>
+                </Form>
+                <Table border :columns="table.columns" :data="table.data" class="ivu-mt">
+                    <template slot-scope="{ row, index }" slot="action">
+                        <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(1, row)">预览</Button>
+                        <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(2, row)">编辑</Button>
+                        <Button type="error" size="small" @click="modalTable(3, row)">删除</Button>
+                    </template>
+                </Table>
+                <div class="ivu-block" style="float: right;margin-top: 30px;">
+                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                </div>
             </div>
         </div>
         <Modal v-model="modalInfo.status" width="360">
@@ -63,11 +107,162 @@
                 <Button type="primary" size="large" long :loading="modalInfo.modal_loading" @click="updateData()"  v-else>提交</Button>
             </div>
         </Modal>
+        <Modal
+                :fullscreen="tableModal.state === 1"
+                v-model="tableModal.status"
+                :title="tableModal.title"
+                @on-ok="tableSubmit">
+            <div v-if="tableModal.state === 1" class="ivu-block">
+                <Row>
+                    <Col :xs="24" :sm="24" :md="24" :lg="14">
+                        <div class="ivu-block">
+                            <Row>
+                                <Col class="ivu-p-8" :xs="24" :sm="8" :md="8" :lg="6" :offset="1" v-for="(item, key) in userDetail.info" :key="key">
+                                    <Row>
+                                        <Col :xs="12" :sm="12" :md="12" :lg="8">{{ item.name }}:</Col>
+                                        <Col :xs="12" :sm="12" :md="12" :lg="16">{{ item.value }}</Col>
+                                    </Row>
+                                </Col>
+
+                            </Row>
+                        </div>
+                    </Col>
+                    <Col :xs="24" :sm="24" :md="24" :lg="10">
+                        <div class="ivu-block">
+                            <Row>
+                                <Col :xs="12" :sm="12" :md="12" :lg="8" class="user-info-img" v-for="(item, key) in userDetail.certificate" :key="key">
+                                    <div>{{ item.name }}</div>
+                                    <img :src="item.value" alt="">
+                                </Col>
+                            </Row>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+            <div v-else-if="tableModal.state === 2">
+                <Form :model="formItem" :label-width="100">
+                    <FormItem label="姓名">
+                        <Input v-model="formItem.userName" placeholder="请输入用户名..."></Input>
+                    </FormItem>
+                    <FormItem label="电话">
+                        <Input v-model="formItem.phone" placeholder="请输入电话号码..."></Input>
+                    </FormItem>
+                    <FormItem label="部门">
+                        <Input v-model="formItem.department" placeholder="请输入部门信息..."></Input>
+                    </FormItem>
+                    <FormItem label="岗位">
+                        <Input v-model="formItem.jobs" placeholder="请输入岗位信息..."></Input>
+                    </FormItem>
+                    <FormItem label="身份证号码">
+                        <Input v-model="formItem.IdCard" placeholder="请输入身份证号码..."></Input>
+                    </FormItem>
+                    <FormItem label="学 历">
+                        <Input v-model="formItem.education" placeholder="请输入学历信息..."></Input>
+                    </FormItem>
+                    <FormItem label="身份证有效期">
+                        <DatePicker type="date"
+                                    placeholder="请输入身份证有效期..."
+                                    style="width: 200px"
+                                    v-model="formItem.IdCardLife">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="农行卡">
+                        <Input v-model="formItem.bankCard" placeholder="请输入农行卡号..."></Input>
+                    </FormItem>
+                    <FormItem label="入职时间">
+                        <DatePicker type="date"
+                                    placeholder="请输入入职时间..."
+                                    style="width: 200px"
+                                    v-model="formItem.joinTime">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="家庭住址">
+                        <Input v-model="formItem.address" placeholder="请输入家庭住址..."></Input>
+                    </FormItem>
+                    <FormItem label="是否胜任">
+                        <Input v-model="formItem.competent" placeholder="请输入..."></Input>
+                    </FormItem>
+                    <FormItem label="社保编号">
+                        <Input v-model="formItem.socialSecurity" placeholder="请输入社保编号..."></Input>
+                    </FormItem>
+                    <FormItem label="驾 驶 证">
+                        <Input v-model="formItem.driverLicense" placeholder="请输入驾驶证信息..."></Input>
+                    </FormItem>
+                    <FormItem label="背景调查">
+                        <Input v-model="formItem.referenceCheck" placeholder="请输入背景调查结果..."></Input>
+                    </FormItem>
+                    <FormItem label="公积金账号">
+                        <Input v-model="formItem.accumulationAccount" placeholder="请输入公积金账号..."></Input>
+                    </FormItem>
+                    <FormItem label="驾驶证有效期">
+                        <DatePicker type="date"
+                                    placeholder="请输入驾驶证有效期..."
+                                    style="width: 200px"
+                                    v-model="formItem.driverLicenseLife">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="黑名单">
+                        <Input v-model="formItem.blacklist" placeholder="请输入..."></Input>
+                    </FormItem>
+                    <FormItem label="养老金申请时间">
+                        <DatePicker type="date"
+                                    placeholder="请输入养老金申请时间..."
+                                    style="width: 200px"
+                                    v-model="formItem.enInsuranceTime">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="从业资格证">
+                        <Input v-model="formItem.userName" placeholder="请输入..."></Input>
+                    </FormItem>
+                    <FormItem label="任职状态">
+                        <Input v-model="formItem.status" placeholder="请输入..."></Input>
+                    </FormItem>
+                    <FormItem label="公积金缴纳时间">
+                        <DatePicker type="date"
+                                    placeholder="请选择公积金缴纳时间..."
+                                    style="width: 200px"
+                                    v-model="formItem.accumulationTime">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="从业资格证有效期">
+                        <DatePicker type="date"
+                                    placeholder="请选择从业资格证有效期..."
+                                    style="width: 200px"
+                                    v-model="formItem.QualificationsLife">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="合同起始日期">
+                        <DatePicker type="date"
+                                    placeholder="请选择合同起始日期..."
+                                    style="width: 200px"
+                                    v-model="formItem.contractBeginAt">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="暂住证">
+                        <Input v-model="formItem.TemporaryPermit" placeholder="请输入..."></Input>
+                    </FormItem>
+                    <FormItem label="合同终止日期">
+                        <DatePicker type="date"
+                                    placeholder="请选择合同终止日期..."
+                                    style="width: 200px"
+                                    v-model="formItem.contractEndAt">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="暂住证有效期">
+                        <DatePicker type="date"
+                                    placeholder="请选择合同终止日期..."
+                                    style="width: 200px"
+                                    v-model="formItem.TemporaryPermitExpre">
+                        </DatePicker>
+                    </FormItem>
+                </Form>
+            </div>
+        </Modal>
     </main>
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getPersonnelInformation } from '@api/account';
+    import { getPersonnelInformation, getPersonnelList, getUserInfoById } from '@api/account';
     const echarts = require('echarts');
     export default {
         name: 'dashboard-personnel-information',
@@ -89,6 +284,12 @@
                     modal_loading: false,
                     isMenu: false,
                     state: 1
+                },
+                tableModal: {
+                    status: false,
+                    state: 1, // 1查看2 编辑 3 添加 4 删除
+                    cache: undefined,
+                    title: '添加用户'
                 },
                 treeData: [],
                 heplerCount: {
@@ -114,7 +315,211 @@
                         data: [0, 0, 0, 0, 0]
                     }
                 },
-                isTable: false
+                isTable: true,
+                loading: false,
+                pageSize: 100,
+                total: 0,
+                formItem: {
+                    condition: '',
+                    status: '',
+                    sex: '',
+                    showNum: '',
+                    sortWay: ''
+                },
+                table: {
+                    columns: [
+                        {
+                            title: '序号',
+                            key: 'id',
+                            width: '70px',
+                            align: 'center'
+                        },
+                        {
+                            title: '部门',
+                            key: 'department',
+                            width: '200px',
+                            align: 'center'
+                        },
+                        {
+                            title: '姓名',
+                            key: 'userName',
+                            width: '100px',
+                            align: 'center'
+                        },
+                        {
+                            title: '岗位',
+                            key: 'jobs',
+                            width: '200px',
+                            align: 'center'
+                        },
+                        {
+                            title: '电话',
+                            width: '170px',
+                            key: 'phone',
+                            align: 'center'
+                        },
+                        {
+                            title: '学历',
+                            width: '100px',
+                            key: 'education',
+                            align: 'center'
+                        },
+                        {
+                            title: '婚姻状况',
+                            width: '70px',
+                            key: 'marital',
+                            align: 'center'
+                        },
+                        {
+                            title: '入职时间',
+                            width: '140px',
+                            key: 'joinTime',
+                            align: 'center'
+                        },
+                        {
+                            title: '申请养老时间',
+                            width: '140px',
+                            key: 'enInsuranceTime',
+                            align: 'center'
+                        },
+                        {
+                            title: '社保编号',
+                            width: '200px',
+                            key: 'socialSecurity',
+                            align: 'center'
+                        },
+                        {
+                            title: '公积金账号',
+                            width: '200px',
+                            key: 'accumulationAccount',
+                            align: 'center'
+                        },
+                        {
+                            title: '公积金缴纳时间',
+                            width: '140px',
+                            key: 'accumulationTime',
+                            align: 'center'
+                        },
+                        {
+                            title: '合同起始日期',
+                            width: '140px',
+                            key: 'contractBeginAt',
+                            align: 'center'
+                        },
+                        {
+                            title: '合同终止日期',
+                            width: '140px',
+                            key: 'contractEndAt',
+                            align: 'center'
+                        },
+                        {
+                            title: '身份证号码',
+                            width: '200px',
+                            key: 'IdCard',
+                            align: 'center'
+                        },
+                        {
+                            title: '身份证有效期',
+                            width: '140px',
+                            key: 'IdCardLife',
+                            align: 'center'
+                        },
+                        {
+                            title: '家庭住址',
+                            width: '200px',
+                            key: 'address',
+                            align: 'center'
+                        },
+                        {
+                            title: '驾驶证',
+                            width: '150px',
+                            key: 'driverLicense',
+                            align: 'center'
+                        },
+                        {
+                            title: '驾驶证有效期',
+                            width: '104px',
+                            key: 'driverLicenseLife',
+                            align: 'center'
+                        },
+                        {
+                            title: '从业资格有效期',
+                            width: '140px',
+                            key: 'QualificationsLife',
+                            align: 'center'
+                        },
+                        {
+                            title: '暂住证',
+                            width: '150px',
+                            key: 'TemporaryPermit',
+                            align: 'center'
+                        },
+                        {
+                            title: '农行卡号',
+                            width: '200px',
+                            key: 'bankCard',
+                            align: 'center'
+                        },
+                        {
+                            title: '是否胜任',
+                            width: '70px',
+                            key: 'competent',
+                            align: 'center',
+                            render: (h, params) => {
+                                let status = params.row.competent
+                                if (status === 1) {
+                                    return h('span', '是')
+                                }
+                                return h('span', '否')
+                            }
+                        },
+                        {
+                            title: '背景调查',
+                            width: '200px',
+                            key: 'referenceCheck',
+                            align: 'center'
+                        },
+                        {
+                            title: '任职状态',
+                            width: '70px',
+                            key: 'status',
+                            align: 'center',
+                            render: (h, params) => {
+                                let status = params.row.competent
+                                if (status === 1) {
+                                    return h('span', '在职')
+                                }
+                                return h('span', '离职')
+                            }
+                        },
+                        {
+                            title: '黑名单',
+                            width: '80px',
+                            key: 'blacklist',
+                            align: 'center',
+                            render: (h, params) => {
+                                let status = params.row.competent
+                                if (status === 1) {
+                                    return h('span', '是')
+                                }
+                                return h('span', '否')
+                            }
+                        },
+                        {
+                            title: '操作',
+                            width: '200px',
+                            key: 'action',
+                            slot: 'action',
+                            align: 'center',
+                            fixed: 'right'
+                        }
+                    ],
+                    data: []
+                },
+                userDetail: {
+                    info: [],
+                    certificate: []
+                }
             }
         },
         computed: {
@@ -126,6 +531,7 @@
             ])
         },
         created () {
+            this.showTable()
             let that = this
             getPersonnelInformation()
                 .then(async res => {
@@ -395,7 +801,6 @@
                     this.modalInfo.modal_loading = false;
                     this.modalInfo.status = false;
                     if (this.modalInfo.isMenu) {
-                        console.log(this.formData.name)
                         this.modalInfo.monitorHelper.thisTemp.title = this.formData.name;
                     } else {
                         this.modalInfo.monitorHelper.thisTemp.title = this.formData.name;
@@ -459,10 +864,6 @@
                         value: sexData.female
                     }
                 ]
-                console.log('numberEchars', this.echarsData.numberEchars)
-                console.log('sexEchars', this.echarsData.sexEchars)
-                console.log('ageEchars', this.echarsData.ageEchars)
-                console.log('workEchars', this.echarsData.workEchars)
             },
             identifyAge (data) {
                 // 辨别年龄
@@ -560,10 +961,10 @@
                         type: 'value'
                     },
                     grid: {
-                        // top: '0',
+                        top: '0',
                         left: '3%',
                         right: '4%',
-                        bottom: '0',
+                        bottom: '0%',
                         containLabel: true
                     },
                     series: [
@@ -575,6 +976,54 @@
                         }
                     ]
                 })
+            },
+            tableSubmit () {
+                if (this.tableModal.state === 1) {
+                } else if (this.modal.modal2.state === 2) {
+                    this.$Message.success('编辑成功');
+                } else {
+                    this.$Message.success('删除成功');
+                }
+            },
+            setPageSize () {
+                this.pageSize = parseInt(this.formItem.showNum);
+                console.log('reset page size', this.pageSize);
+                // TODO 只能 请求API限制  分页 限制每页显示数量
+            },
+            doQuery () {
+                console.log('do query');
+                // TODO 只能 请求API筛选处理 查询
+            },
+            changePage () {
+                // TODO 翻页
+            },
+            showTable () {
+                // 显示人员名录的表格
+                getPersonnelList().then(async res => {
+                    console.log('res----', res)
+                    this.table.data = res.tableData.data
+                })
+            },
+            modalTable (state, temp) {
+                let that = this
+                // 操作用户信息
+                if (state === 1) {
+                    // 预览
+                    this.tableModal.title = '用户信息预览'
+                    this.tableModal.state = 1
+                    getUserInfoById().then(async res => {
+                        that.userDetail.info = res.baseInfo
+                        that.userDetail.certificate = res.certificate
+                    })
+                } else if (state === 2) {
+                    // 编辑信息
+                    this.tableModal.title = '编辑用户'
+                    this.tableModal.state = 2
+                } else {
+                    this.tableModal.title = '删除当前行数据?'
+                    this.tableModal.state = 3
+                }
+                this.tableModal.status = true
             }
         }
     }
@@ -595,6 +1044,17 @@
         }
         .echart-box:nth-child(4) {
             border-left: 1px solid #c9c1cb;
+        }
+    }
+    .user-info-img {
+        div {
+            line-height: 2;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        img {
+            width: 55%;
+            height: 55%;
         }
     }
 </style>

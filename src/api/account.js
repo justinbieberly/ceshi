@@ -225,3 +225,39 @@ export function getPersonnelInformation (data) {
         data
     });
 }
+
+// 获取[人员信息管理 - 人员名录]的数据
+export function getPersonnelList (data) {
+    return request({
+        url: apiConfig.getPersonnelList.url,
+        method: apiConfig.getPersonnelList.method,
+        data
+    });
+}
+
+// 获取[人员信息管理 - 个人信息详情]的数据
+export function getUserInfoById (data) {
+    return request({
+        url: apiConfig.getUserInfoById.url,
+        method: apiConfig.getUserInfoById.method,
+        data
+    });
+}
+
+// 获取[实名进出管理 - 人员名录]的数据
+export function getRealNameManagement (data) {
+    return request({
+        url: apiConfig.getRealNameManagement.url,
+        method: apiConfig.getRealNameManagement.method,
+        data
+    });
+}
+
+// 获取[实名进出管理-进出记录]的数据
+export function getRecordOfInOut (data) {
+    return request({
+        url: apiConfig.getRecordOfInOut.url,
+        method: apiConfig.getRecordOfInOut.method,
+        data
+    });
+}
