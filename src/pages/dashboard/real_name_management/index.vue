@@ -321,7 +321,7 @@
                     filename: 'Custom data',
                     original: false,
                     columns: this.table.tableRight.columns.filter((col, index) => index < 12),
-                    data: this.table.tableRight.data.filter((col, index) =>  index < 12)
+                    data: this.table.tableRight.data.filter((col, index) => index < 12)
                 });
             }
         }

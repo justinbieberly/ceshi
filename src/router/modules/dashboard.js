@@ -182,7 +182,7 @@ export default {
             props: true,
             meta: {
                 ...meta,
-                title: '应急管理'
+                title: '人员信息管理'
             },
             component: () => import('@/pages/dashboard/personnel_information')
         },
@@ -192,9 +192,19 @@ export default {
             props: true,
             meta: {
                 ...meta,
-                title: '应急管理'
+                title: '实名进出管理'
             },
             component: () => import('@/pages/dashboard/real_name_management')
+        },
+        {
+            path: 'visitor_registration_management',
+            name: `${pre}visitor-registration-management`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '访客登记管理'
+            },
+            component: () => import('@/pages/dashboard/visitor_registration_management')
         }
     ]
 };
