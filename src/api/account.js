@@ -261,3 +261,30 @@ export function getRecordOfInOut (data) {
         data
     });
 }
+
+// 获取[实名进出管理-进出记录]的数据
+export function getVisitorRegistration (data) {
+    return request({
+        url: apiConfig.getVisitorRegistration.url,
+        method: apiConfig.getVisitorRegistration.method,
+        data
+    });
+}
+
+// 获取[实名进出管理-进出记录]的数据
+export function getregistrationLog (data) {
+    return request({
+        url: apiConfig.getregistrationLog.url,
+        method: apiConfig.getregistrationLog.method,
+        data
+    });
+}
+
+// 获取[实名进出管理-进出记录]的数据
+export function getVehicleReInspection (data) {
+    return request({
+        url: apiConfig.getVehicleReInspection.url,
+        method: apiConfig.getVehicleReInspection.method,
+        data
+    });
+}

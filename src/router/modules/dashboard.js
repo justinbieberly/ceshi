@@ -205,6 +205,16 @@ export default {
                 title: '访客登记管理'
             },
             component: () => import('@/pages/dashboard/visitor_registration_management')
+        },
+        {
+            path: 'vehicle_re_inspection',
+            name: `${pre}vehicle-re-inspection`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '车辆登记检查'
+            },
+            component: () => import('@/pages/dashboard/vehicle_re_inspection')
         }
     ]
 };

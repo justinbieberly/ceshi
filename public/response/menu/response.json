@@ -91,12 +91,12 @@
           {
             "name": "访客登记管理",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
+            "path": "/dashboard/visitor_registration_management"
           },
           {
             "name": "车辆登记检查",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
+            "path": "/dashboard/vehicle_re_inspection"
           }
         ]
       },

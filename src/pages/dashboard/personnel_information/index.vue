@@ -3,8 +3,17 @@
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title='title' icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Button slot="extra" size="small" @click.prevent="showTable">
+                    <Button slot="extra" size="small" @click="showTable" v-if="!isTable">
                         人员目录
+                    </Button>
+                    <Button slot="extra" size="small" v-if="isTable" style="margin-right: 8px;"
+                            @click="exportData" >
+                        <Icon type="md-arrow-round-down" />
+                        导出
+                    </Button>
+                    <Button slot="extra" size="small" @click.prevent="back" v-if="isTable" >
+                        <Icon type="ios-arrow-back" />
+                        返回
                     </Button>
                     <div class="ivu-block">
                         <Tree :data="treeData" :render="renderContent" class="tree-color-black ryxxgl-tree"></Tree>
@@ -13,7 +22,7 @@
             </Card>
         </div>
         <div class="content-layout-right" :class="{ 'content-layout-right-pro': this.menuCollapse }">
-            <div class="ivu-block" v-if="!isTable">
+            <div class="ivu-block" :class="{ 'ivu-hidden':isTable }">
                 <div class="ivu-block half-width ivu-float-left ivu-text-center echart-box">
                     <div id="chartLineBox" style="width: 80%;height: 300px;" class="ivu-inline-block"> </div>
                 </div>
@@ -27,7 +36,7 @@
                     <div id="chartLineBox3" style="width: 100%;height: 300px;" class="ivu-inline-block"> </div>
                 </div>
             </div>
-            <div class="ivu-block" v-else>
+            <div class="ivu-block ivu-hidden" :class="{ 'ivu-show':isTable }">
                 <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
                     <div class="ivu-form-item" style="line-height: 32px;">
                         功能操作
@@ -48,7 +57,7 @@
                         </Select>
                         <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
                         <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
-                        <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
+                        <Button size="small" @click="modalTable(0)" class="ivu-ml">添加</Button>
                     </FormItem>
                     <FormItem label="显示条数">
                         <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
@@ -63,7 +72,7 @@
                         </Select>
                     </FormItem>
                 </Form>
-                <Table border :columns="table.columns" :data="table.data" class="ivu-mt">
+                <Table border :columns="table.columns" :data="table.data" :loading="loading" class="ivu-mt" ref="table">
                     <template slot-scope="{ row, index }" slot="action">
                         <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(1, row)">预览</Button>
                         <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(2, row)">编辑</Button>
@@ -75,38 +84,6 @@
                 </div>
             </div>
         </div>
-        <Modal v-model="modalInfo.status" width="360">
-            <p slot="header" style="color:#f60;text-align:center" v-if="modalInfo.state === 2">
-                <Icon type="ios-information-circle"></Icon>
-                <span>{{ modalInfo.title}}</span>
-            </p>
-            <p slot="header" class="ivu-text-center" v-else>
-                <span>{{ modalInfo.title}}</span>
-            </p>
-            <div style="text-align:center"  v-if="modalInfo.state === 2">
-                <p>删除之后，下游的所有子栏也会删除</p>
-                <p>是否继续删除？</p>
-            </div>
-            <div style="text-align:center" v-else>
-                <div v-if="modalInfo.isMenu">
-                    <Input v-model="formData.name" placeholder="组名..."  clearable style="width: 300px" >
-                        <span slot="prepend">组名：</span>
-                    </Input>
-                </div>
-                <div class="ivu-block" v-else>
-                    <Input v-model="formData.name" placeholder="监用户名..."  clearable style="width: 300px" >
-                        <span slot="prepend">用户名：</span>
-                    </Input>
-                    <Input v-model="formData.phone" type="number" Number placeholder="联系方式..."  clearable style="width: 300px;margin-top: 10px;">
-                        <span slot="prepend">联系方式：</span>
-                    </Input>
-                </div>
-            </div>
-            <div slot="footer">
-                <Button type="error" size="large" long :loading="modalInfo.modal_loading" @click="removeAll"  v-if="modalInfo.state === 2">删除</Button>
-                <Button type="primary" size="large" long :loading="modalInfo.modal_loading" @click="updateData()"  v-else>提交</Button>
-            </div>
-        </Modal>
         <Modal
                 :fullscreen="tableModal.state === 1"
                 v-model="tableModal.status"
@@ -123,7 +100,6 @@
                                         <Col :xs="12" :sm="12" :md="12" :lg="16">{{ item.value }}</Col>
                                     </Row>
                                 </Col>
-
                             </Row>
                         </div>
                     </Col>
@@ -139,123 +115,153 @@
                     </Col>
                 </Row>
             </div>
-            <div v-else-if="tableModal.state === 2">
-                <Form :model="formItem" :label-width="100">
+            <div v-else-if="tableModal.state === 2 || this.tableModal.state === 0" class="ivu-p-8 ">
+                <Form :model="formItem" :label-width="160" :label-colon="true">
                     <FormItem label="姓名">
-                        <Input v-model="formItem.userName" placeholder="请输入用户名..."></Input>
+                        <Input v-model="formItem.userName" placeholder="请输入用户名..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="电话">
-                        <Input v-model="formItem.phone" placeholder="请输入电话号码..."></Input>
+                        <Input v-model="formItem.phone" placeholder="请输入电话号码..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="部门">
-                        <Input v-model="formItem.department" placeholder="请输入部门信息..."></Input>
+                        <Input v-model="formItem.department" placeholder="请输入部门信息..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="岗位">
-                        <Input v-model="formItem.jobs" placeholder="请输入岗位信息..."></Input>
+                        <Input v-model="formItem.jobs" placeholder="请输入岗位信息..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="身份证号码">
-                        <Input v-model="formItem.IdCard" placeholder="请输入身份证号码..."></Input>
+                        <Input v-model="formItem.IdCard" placeholder="请输入身份证号码..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="学 历">
-                        <Input v-model="formItem.education" placeholder="请输入学历信息..."></Input>
+                        <Input v-model="formItem.education" placeholder="请输入学历信息..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="身份证有效期">
                         <DatePicker type="date"
                                     placeholder="请输入身份证有效期..."
-                                    style="width: 200px"
+                                    class="form-item-width"
                                     v-model="formItem.IdCardLife">
                         </DatePicker>
                     </FormItem>
                     <FormItem label="农行卡">
-                        <Input v-model="formItem.bankCard" placeholder="请输入农行卡号..."></Input>
+                        <Input v-model="formItem.bankCard" placeholder="请输入农行卡号..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="入职时间">
                         <DatePicker type="date"
                                     placeholder="请输入入职时间..."
-                                    style="width: 200px"
+                                    class="form-item-width"
                                     v-model="formItem.joinTime">
                         </DatePicker>
                     </FormItem>
                     <FormItem label="家庭住址">
-                        <Input v-model="formItem.address" placeholder="请输入家庭住址..."></Input>
+                        <Input v-model="formItem.address" placeholder="请输入家庭住址..." class="form-item-width"></Input>
                     </FormItem>
-                    <FormItem label="是否胜任">
-                        <Input v-model="formItem.competent" placeholder="请输入..."></Input>
+                    <FormItem label="能否胜任">
+                        <Select v-model="formItem.competent" class="form-item-width" placeholder="请选择...">
+                            <Option value="1" >能</Option>
+                            <Option value="0" >否</Option>
+                        </Select>
                     </FormItem>
                     <FormItem label="社保编号">
-                        <Input v-model="formItem.socialSecurity" placeholder="请输入社保编号..."></Input>
+                        <Input v-model="formItem.socialSecurity" placeholder="请输入社保编号..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="驾 驶 证">
-                        <Input v-model="formItem.driverLicense" placeholder="请输入驾驶证信息..."></Input>
+                        <Upload action="//jsonplaceholder.typicode.com/posts/">
+                            <Button icon="ios-cloud-upload-outline">上传证件</Button>
+                        </Upload>
                     </FormItem>
-                    <FormItem label="背景调查">
-                        <Input v-model="formItem.referenceCheck" placeholder="请输入背景调查结果..."></Input>
-                    </FormItem>
-                    <FormItem label="公积金账号">
-                        <Input v-model="formItem.accumulationAccount" placeholder="请输入公积金账号..."></Input>
+                    <FormItem label="驾 驶 证号">
+                        <Input v-model="formItem.driverLicense" placeholder="请输入驾驶证信息..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="驾驶证有效期">
                         <DatePicker type="date"
                                     placeholder="请输入驾驶证有效期..."
-                                    style="width: 200px"
+                                    class="form-item-width"
                                     v-model="formItem.driverLicenseLife">
                         </DatePicker>
                     </FormItem>
-                    <FormItem label="黑名单">
-                        <Input v-model="formItem.blacklist" placeholder="请输入..."></Input>
+                    <FormItem label="公积金账号">
+                        <Input v-model="formItem.accumulationAccount" placeholder="请输入公积金账号..." class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="养老金申请时间">
                         <DatePicker type="date"
                                     placeholder="请输入养老金申请时间..."
-                                    style="width: 200px"
+                                    class="form-item-width"
                                     v-model="formItem.enInsuranceTime">
                         </DatePicker>
                     </FormItem>
                     <FormItem label="从业资格证">
-                        <Input v-model="formItem.userName" placeholder="请输入..."></Input>
+                        <Upload action="//jsonplaceholder.typicode.com/posts/">
+                            <Button icon="ios-cloud-upload-outline">上传证件</Button>
+                        </Upload>
                     </FormItem>
-                    <FormItem label="任职状态">
-                        <Input v-model="formItem.status" placeholder="请输入..."></Input>
-                    </FormItem>
-                    <FormItem label="公积金缴纳时间">
-                        <DatePicker type="date"
-                                    placeholder="请选择公积金缴纳时间..."
-                                    style="width: 200px"
-                                    v-model="formItem.accumulationTime">
-                        </DatePicker>
+                    <FormItem label="从业资格证号">
+                        <Input v-model="formItem.userName" placeholder="请输入..."  class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="从业资格证有效期">
                         <DatePicker type="date"
                                     placeholder="请选择从业资格证有效期..."
-                                    style="width: 200px"
+                                    class="form-item-width"
                                     v-model="formItem.QualificationsLife">
+                        </DatePicker>
+                    </FormItem>
+                    <FormItem label="公积金缴纳时间">
+                        <DatePicker type="date"
+                                    placeholder="请选择公积金缴纳时间..."
+                                    class="form-item-width"
+                                    v-model="formItem.accumulationTime">
                         </DatePicker>
                     </FormItem>
                     <FormItem label="合同起始日期">
                         <DatePicker type="date"
                                     placeholder="请选择合同起始日期..."
-                                    style="width: 200px"
+                                    class="form-item-width"
                                     v-model="formItem.contractBeginAt">
                         </DatePicker>
-                    </FormItem>
-                    <FormItem label="暂住证">
-                        <Input v-model="formItem.TemporaryPermit" placeholder="请输入..."></Input>
                     </FormItem>
                     <FormItem label="合同终止日期">
                         <DatePicker type="date"
                                     placeholder="请选择合同终止日期..."
-                                    style="width: 200px"
+                                    class="form-item-width"
                                     v-model="formItem.contractEndAt">
                         </DatePicker>
+                    </FormItem>
+                    <FormItem label="暂住证">
+                        <Upload action="//jsonplaceholder.typicode.com/posts/">
+                            <Button icon="ios-cloud-upload-outline">上传证件</Button>
+                        </Upload>
+                    </FormItem>
+                    <FormItem label="暂住证号">
+                        <Input v-model="formItem.TemporaryPermit" placeholder="请输入..."  class="form-item-width"></Input>
                     </FormItem>
                     <FormItem label="暂住证有效期">
                         <DatePicker type="date"
                                     placeholder="请选择合同终止日期..."
-                                    style="width: 200px"
+                                    class="form-item-width"
                                     v-model="formItem.TemporaryPermitExpre">
                         </DatePicker>
                     </FormItem>
+                    <FormItem label="任职状态">
+                        <Select v-model="formItem.status" class="form-item-width" placeholder="请选择...">
+                            <Option value="1" >在职</Option>
+                            <Option value="0" >离职</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="是否黑名单">
+                        <Select v-model="formItem.blacklist" class="form-item-width" placeholder="请选择...">
+                            <Option value="1" >是</Option>
+                            <Option value="0" >否</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="背景调查">
+                        <Input v-model="formItem.referenceCheck" placeholder="请输入背景调查结果..."
+                               type="textarea" :autosize="{minRows: 2,maxRows: 5}" class="form-item-width"></Input>
+                    </FormItem>
                 </Form>
+            </div>
+            <div v-else-if="tableModal.state === 3">
+                <div style="text-align:center" >
+                    <p>是否删除当前用户？</p>
+                </div>
             </div>
         </Modal>
     </main>
@@ -286,8 +292,9 @@
                     state: 1
                 },
                 tableModal: {
+                    loading: false,
                     status: false,
-                    state: 1, // 1查看2 编辑 3 添加 4 删除
+                    state: 2, // 1查看2 编辑 3 删除  0 添加
                     cache: undefined,
                     title: '添加用户'
                 },
@@ -315,7 +322,7 @@
                         data: [0, 0, 0, 0, 0]
                     }
                 },
-                isTable: true,
+                isTable: false,
                 loading: false,
                 pageSize: 100,
                 total: 0,
@@ -327,6 +334,7 @@
                     sortWay: ''
                 },
                 table: {
+                    loading: true,
                     columns: [
                         {
                             title: '序号',
@@ -531,7 +539,6 @@
             ])
         },
         created () {
-            this.showTable()
             let that = this
             getPersonnelInformation()
                 .then(async res => {
@@ -979,10 +986,12 @@
             },
             tableSubmit () {
                 if (this.tableModal.state === 1) {
-                } else if (this.modal.modal2.state === 2) {
+                } else if (this.tableModal.state === 2) {
                     this.$Message.success('编辑成功');
-                } else {
+                } else if (this.tableModal.state === 3) {
                     this.$Message.success('删除成功');
+                } else if (this.tableModal.state === 0) {
+                    this.$Message.success('添加成功');
                 }
             },
             setPageSize () {
@@ -999,8 +1008,9 @@
             },
             showTable () {
                 // 显示人员名录的表格
+                this.table.loading = true
+                this.isTable = true
                 getPersonnelList().then(async res => {
-                    console.log('res----', res)
                     this.table.data = res.tableData.data
                 })
             },
@@ -1013,22 +1023,40 @@
                     this.tableModal.state = 1
                     getUserInfoById().then(async res => {
                         that.userDetail.info = res.baseInfo
+                        console.log('res.baseInfo', res.baseInfo)
                         that.userDetail.certificate = res.certificate
                     })
                 } else if (state === 2) {
                     // 编辑信息
                     this.tableModal.title = '编辑用户'
                     this.tableModal.state = 2
-                } else {
+                } else if (state === 3) {
                     this.tableModal.title = '删除当前行数据?'
                     this.tableModal.state = 3
+                } else {
+                    this.tableModal.title = '添加用户'
+                    this.tableModal.state = 0
                 }
                 this.tableModal.status = true
+            },
+            back () {
+                this.isTable = false
+            },
+            exportData () {
+                this.$refs.table.exportCsv({
+                    filename: 'Custom data',
+                    original: false,
+                    columns: this.table.columns.filter((col, index) => index < 26),
+                    data: this.table.data
+                });
             }
         }
     }
 </script>
 <style lang="scss" scoped>
+    .form-item-width {
+        width: 200px;
+    }
     .ivu-block {
         .echart-box {
             height: 300px;

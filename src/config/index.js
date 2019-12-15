@@ -156,6 +156,21 @@ const Config = {
             alias: '获取-实名进出管理-进出记录-的数据',
             url: '/response/实名进出管理/进出记录/response.json',
             method: 'get'
+        },
+        getVisitorRegistration: {
+            alias: '获取-访客登记管理-的数据',
+            url: '/response/访客登记管理/response.json',
+            method: 'get'
+        },
+        getregistrationLog: {
+            alias: '获取-访客登记管理-登记记录-的数据',
+            url: '/response/访客登记管理/登记记录/response.json',
+            method: 'get'
+        },
+        getVehicleReInspection: {
+            alias: '获取-车辆登记检查-的数据',
+            url: '/response/车辆登记检查/response.json',
+            method: 'get'
         }
 
     },

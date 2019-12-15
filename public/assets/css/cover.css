@@ -311,3 +311,11 @@
 .ivu-float-left {
     float: left;
 }
+
+.ivu-hidden {
+    display: none !important;
+}
+
+.ivu-show {
+    display: block !important;
+}
