@@ -9,7 +9,7 @@ const Config = {
     logo: {
         logoPath: '/assets/images/logo.jpg',
         // 由于LOGO旁边的文字是有 -- 两行 --  在此处请使用换行符(\n)分开
-        logoDesc: '张家港龙亿智慧仓库\n安全管理系统'
+        logoDesc: '龙亿智慧仓库安全管理系统'
     },
     // 请求域名设置
     apiBaseURL: env === 'development' ? 'http://localhost:8080/' : '/',

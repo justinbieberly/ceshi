@@ -20,7 +20,7 @@
         <div class="i-layout-header-trigger-no-height nav-btn-color ivu-header" v-else>
             <Dropdown placement="bottom-start" style="margin-left: 10px"
                       v-for="(item, key) in menuList" :key="key" :name="key"
-                      :class="{ 'iuv-user-header-select': menuList[key]['isSelect'] }" >
+                      :class="headerMenuSelect[key]" >
                 <Button type="primary">
                      {{ item.name }}
                     <Icon type="ios-arrow-down"></Icon>
@@ -45,6 +45,7 @@
                 isSelect: false,
                 isCollapse: false,
                 menuList: [],
+                headerMenuSelect: [],
                 screenWidth: document.body.clientWidth // 屏幕宽度
             }
         },
@@ -60,6 +61,7 @@
                 console.log('执行了')
                 this.headerSelect()
                 console.log(this.menuList)
+                console.log(this.headerMenuSelect)
             }
         },
         created () {
@@ -78,15 +80,12 @@
             },
             headerSelect () {
                 let menu = this.menuList
+                this.headerMenuSelect = []
                 menu.some((value, index, arr) => {
-                    Object.assign(this.menuList[index], {
-                        isSelect: false
-                    })
+                    this.headerMenuSelect.push('not-select')
                     value['children'].some((item, key, arrs) => {
                         if (item['path'] === this.$route.path) {
-                            Object.assign(this.menuList[index], {
-                                isSelect: true
-                            })
+                            this.headerMenuSelect[index] = 'ivu-user-header-select'
                         }
                     })
                 })

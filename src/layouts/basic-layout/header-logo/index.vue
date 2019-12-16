@@ -3,9 +3,9 @@
         <img :src="logo.logoPath" v-if="isMobile">
         <img :src="logo.logoPath" v-else-if="headerTheme === 'light'">
         <img :src="logo.logoPath" v-else>
-        <span class="logo-words-desc" v-if="!isMobile & !isTablet">
-           <span v-for="(item, key) in logo.logoDesc" :key="key" :name="key" > {{ item }} </span>
-        </span>
+<!--        <span class="logo-words-desc" v-if="!isMobile & !isTablet">-->
+<!--           <span v-for="(item, key) in logo.logoDesc" :key="key" :name="key" > {{ item }} </span>-->
+<!--        </span>-->
     </i-link>
 </template>
 <script>
@@ -32,7 +32,7 @@
         },
         created () {
             this.logo.logoPath = Config.logo.logoPath
-            this.logo.logoDesc = Config.logo.logoDesc.split('\n')
+            this.logo.logoDesc = Config.logo.logoDesc
         }
     }
 </script>

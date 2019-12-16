@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  :padding="0" shadow >
                     <CellGroup>
@@ -22,11 +23,12 @@
 <script>
     import { mapState } from 'vuex';
     import { getGoodsStored } from '@api/account';
-
+    import Config from '@/config';
     export default {
         name: 'dashboard-goods-stored',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '货物存储',
                 modelImg: '/assets/images/u393.svg',
                 pageData: {},
