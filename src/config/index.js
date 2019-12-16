@@ -7,7 +7,7 @@ const env = process.env.NODE_ENV;
 const Config = {
     // logo地址
     logo: {
-        logoPath: '/assets/images/logo.jpg',
+        logoPath: '/assets/images/logo.png',
         // 由于LOGO旁边的文字是有 -- 两行 --  在此处请使用换行符(\n)分开
         logoDesc: '龙亿智慧仓库安全管理系统'
     },
