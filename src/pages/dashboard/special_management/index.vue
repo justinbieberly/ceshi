@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Button slot="extra" size="small" @click="showHistory(true)" style="margin-left: 10px;">历史数据</Button>
@@ -76,12 +77,14 @@
     import { mapState } from 'vuex';
     import { getSpecialManagement, getSpecialManagementHistory } from '@api/account';
     import 'echarts-liquidfill';
-
+    import Config from '@/config';
     const echarts = require('echarts');
+
     export default {
         name: 'dashboard-temporary-storage',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '特种设备管理',
                 isHistory: false,
                 infoData: [],

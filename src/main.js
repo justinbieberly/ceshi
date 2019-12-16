@@ -20,6 +20,7 @@ import store from '@/store/index';
 // iView 和 iView Pro
 import ViewUI from 'view-design';
 import iViewPro from '@/libs/iview-pro/iview-pro.min.js';
+import '../theme/index.less';
 
 // 菜单和路由
 import router from './router';

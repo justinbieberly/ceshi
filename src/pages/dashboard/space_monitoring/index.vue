@@ -1,11 +1,14 @@
 <template>
     <main class="body-content-main">
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
-            <Card :bordered="false" class="i-admin-left-menu">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
+            <Card :bordered="false" class="i-admin-left-menu ivu-user-theme">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Button slot="extra" size="small" @click="spaceMonitoringShow">显示所选</Button>
+                    <Button slot="extra" size="small"  @click="spaceMonitoringShow">显示所选</Button>
                     <Button slot="extra" size="small" style="margin-left: 10px;"  @click="spaceMonitoringShow(1)">显示全部</Button>
-                    <Tree :data="treeData" show-checkbox class="env-air-tree" ref="tree"></Tree>
+                    <div class="ivu-block ivu-p-8">
+                        <Tree :data="treeData" show-checkbox class="env-air-tree" ref="tree"></Tree>
+                    </div>
                 </Card>
             </Card>
         </div>
@@ -17,10 +20,12 @@
 <script>
     import { mapState } from 'vuex';
     import { getSpaceMonitoring } from '@api/account';
+    import Config from '@/config';
     export default {
         name: 'dashboard-space-monitoring-show',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '空间监测',
                 modelImg: '/assets/images/u957.svg',
                 treeData: [],
