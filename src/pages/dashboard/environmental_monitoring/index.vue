@@ -1,9 +1,11 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Tabs type="card" style="margin-top: 40px;">
+                    <Tabs type="card" style="margin-top: 20px;">
                         <TabPane label="可燃气体监测">
                             <Tree :data="data5" :render="renderContent" class="env-air-tree"></Tree>
                         </TabPane>
@@ -14,7 +16,9 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img"
+             :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <img :src="modelImg" alt="">
         </div>
     </main>
@@ -22,10 +26,12 @@
 <script>
     import { mapState } from 'vuex';
     import { getEnvironmentalMonitoring } from '@api/account';
+    import Config from '@/config';
     export default {
         name: 'dashboard-environmental-monitoring',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '环境监测',
                 modelImg: '/assets/images/u957.svg',
                 data5: [],
@@ -41,8 +47,14 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         created () {
             let that = this;

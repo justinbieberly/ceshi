@@ -1,15 +1,18 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Button slot="extra" size="small" to="real_time_monitor">实时监测</Button>
                     <Button slot="extra" size="small" to="electricity_history" style="margin-left: 10px;">历史数据</Button>
-                    <Tree :data="data5" :render="renderContent" class="env-air-tree tree-color-black"></Tree>
+                    <Tree :data="data5" :render="renderContent" class="ydjc-tree tree-color-gray"></Tree>
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <img :src="modelImg" alt="">
         </div>
         <Modal v-model="modalInfo.modalState" width="360">
@@ -43,10 +46,12 @@
 <script>
     import { mapState } from 'vuex';
     import { getElectricityMonitoring } from '@api/account';
+    import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '用电监测',
                 modelImg: '/assets/images/u1176.svg',
                 modalInfo: {
@@ -73,6 +78,7 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -81,6 +87,11 @@
             console.log('before', that.data5);
             getElectricityMonitoring()
                 .then(async res => { that.data5 = that.dealTableData(res.tableData); }).catch(err => { console.log('err: ', err) });
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
             renderContent (h, { root, node, data }) {

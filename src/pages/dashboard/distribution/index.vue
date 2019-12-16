@@ -1,13 +1,19 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Table border :columns="reservoirData.columns" :data="reservoirData.data" class="temporary_table fb-table" ></Table>
+                    <Table border :columns="reservoirData.columns"
+                           :data="reservoirData.data"
+                           size="small"
+                           class="temporary_table fb-table" ></Table>
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <img :src="modelImg" alt="模型视图">
         </div>
     </main>
@@ -15,11 +21,12 @@
 <script>
     import { mapState } from 'vuex';
     import { getDistributionData } from '@api/account';
-
+    import Config from '@/config';
     export default {
         name: 'dashboard-distribution',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '分布状况',
                 modelImg: '/assets/images/u666.svg',
                 reservoirData: {
@@ -54,8 +61,14 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         created () {
             let that = this;

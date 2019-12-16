@@ -13,7 +13,8 @@ export default {
         isTablet: false, // 是否为平板
         isDesktop: true, // 是否为桌面
         isShowUser: true, // 是否显示用户名
-        isFullscreen: false // 是否切换到了全屏
+        isFullscreen: false, // 是否切换到了全屏
+        screenHeight: 0 // 当前设备的高度
     },
     mutations: {
         /**
@@ -27,6 +28,14 @@ export default {
             state.isDesktop = false;
             state.isShowUser = false;
             state[`is${type}`] = true;
+        },
+        /**
+         * @description 设置屏幕的参数
+         * @param {Object} state vuex state
+         * @param {String} value 尺寸值
+         */
+        setScreen (state, value) {
+            state.screenHeight = value
         },
         /**
          * @description 修改 menuCollapse

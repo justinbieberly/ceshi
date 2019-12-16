@@ -5,6 +5,7 @@
 body {
   background-color: @background-color-base;
   font-size: 14px;
+  overflow: hidden;
 }
 
 // 隐藏滚动条样式
@@ -95,9 +96,8 @@ body {
 
 /*内容板块左右宽度布局*/
 .content-layout-left {
-  margin-left: 10px;
-  min-width: 22.4%;
-  height: 750px;
+  margin-left: 8px;
+  width: 22.4%;
   //flex: 1;
   overflow: auto;
   float: left;
@@ -107,8 +107,6 @@ body {
   width: 76.56% !important;
   padding: 10px;
   float: right;
-  height: 750px;
-  overflow: auto;
   margin-left: 1%;
   background: #fff;
   border-radius: 2px;
@@ -136,7 +134,8 @@ body {
 
 /*左侧的flex沾满布局s*/
 .i-admin-left-menu {
-  height: 718px;
+  height: 95%;
+  overflow: auto;
 }
 
 .user-full-img img {
@@ -194,6 +193,12 @@ body {
   color: #272927 !important;
 }
 
+.tree-color-gray .ivu-btn > .ivu-icon {
+  color: #959c95 !important;
+  line-height: 24px !important;
+  text-align: center;
+}
+
 /*实时监控 表单的lable大小*/
 .real-time-form .ivu-form-item-label {
   font-size: 12px !important;
@@ -204,6 +209,11 @@ body {
 }
 
 /*用电监测的表格里面span标签 对其*/
+.ydjc-tree {
+  .ivu-tree-arrow i {
+    margin-top: -24px;
+  }
+}
 .user-electricity-span span {
   font-size: 12px;
 }
@@ -431,14 +441,18 @@ body {
 
   .ivu-select-dropdown {
     background-color: #3a3a3a;
+
     .ivu-dropdown-item {
       color: #cbcbcb;
       border-bottom: 1px solid #5e5e5e;
+      font-size: 12px !important;
     }
+
     .ivu-dropdown-item:hover {
       background-color: #d3d1d2;
       color: #3d3d3d;
     }
+
     .ivu-dropdown-item-selected {
       background-color: #d3d1d2;
       color: #3d3d3d;
@@ -479,6 +493,9 @@ body {
       .ivu-tree-title {
         color: #cbcbcb;
       }
+      .ivu-tree ul {
+        font-size: 12px;
+      }
 
       .ivu-card-head p, .ivu-card-head-inner {
         color: #e3e3e3;
@@ -508,5 +525,15 @@ body {
   .ivu-btn-small {
     font-size: 12px;
   }
+
+  // 针对单元格组件的样式覆盖
+  .ivu-cell {
+    color: #cfcfcf;
+  }
+
+  .ivu-cell:hover {
+    background-color: #8b8b8b;
+  }
+
   //针对于表格的样式
 }

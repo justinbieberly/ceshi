@@ -18,14 +18,13 @@
             </DropdownMenu>
         </Dropdown>
         <div class="i-layout-header-trigger-no-height nav-btn-color ivu-header" v-else>
-            <Dropdown placement="bottom-start" style="margin-left: 10px"
+            <Dropdown placement="bottom-end" style="margin-left: 10px"
                       v-for="(item, index) in menuList" :key="index" :name="index"
                       :class="headerMenuSelect[index]" >
                 <Button type="primary">
                      {{ item.name }}
                     <Icon type="ios-arrow-down"></Icon>
                 </Button>
-<!--                ivu-dropdown-item-selected-->
                 <DropdownMenu slot="list">
                     <i-link v-for="(item, key) in item.children" :key="key" :name="key" :to="item.path" >
                         <DropdownItem :class="dropdownItem[index][key]">{{ item.name }}</DropdownItem>

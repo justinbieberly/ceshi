@@ -54,6 +54,7 @@
       },
       {
         "title": "1#乙类库内摄像头",
+        "expand": true,
         "children": [
           {
             "title": "1#乙类库   左上角",

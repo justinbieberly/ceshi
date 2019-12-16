@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
             <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  :padding="0" shadow >
@@ -9,11 +10,12 @@
                     </CellGroup>
                 </Card>
                 <div class="reservoir_table">
-                    <Table border :columns="reservoirData.columns" :data="reservoirData.data"></Table>
+                    <Table border :columns="reservoirData.columns" :data="reservoirData.data" size="small"></Table>
                 </div>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <i-link to="/dashboard/goods_stored_detail">
                 <img :src="modelImg" alt="模型视图">
             </i-link>
@@ -57,8 +59,14 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         created () {
             let that = this;

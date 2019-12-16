@@ -36,7 +36,7 @@
                     </keep-alive>
                 </div>
             </Content>
-            <i-copyright />
+<!--            <i-copyright />-->
         </Layout>
         <div v-if="isMobile && !hideSider">
             <Drawer v-model="showDrawer" placement="left" :closable="false" :class-name="drawerClasses">
@@ -260,6 +260,9 @@
         },
         created () {
             if (this.isTablet && this.showSiderCollapse) this.updateMenuCollapse(true);
+            let screenHeight = document.body.clientHeight
+            let navHeight = 64
+            this.$store.commit('admin/layout/setScreen', screenHeight - navHeight - 12);
         }
     }
 </script>
