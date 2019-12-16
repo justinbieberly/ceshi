@@ -74,7 +74,7 @@
     import { mapState } from 'vuex';
     import { getVehicleReInspection } from '@api/account';
     export default {
-        name: 'dashboard-temporary-storage',
+        name: 'dashboard-vehicle-re-inspection',
         data () {
             return {
                 title: '临时存储',

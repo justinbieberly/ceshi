@@ -17,8 +17,10 @@
                 </Dropdown>
             </DropdownMenu>
         </Dropdown>
-        <div class="i-layout-header-trigger-no-height nav-btn-color" v-else>
-            <Dropdown placement="bottom-start" style="margin-left: 10px" v-for="(item, key) in menuList" :key="key" :name="key" >
+        <div class="i-layout-header-trigger-no-height nav-btn-color ivu-header" v-else>
+            <Dropdown placement="bottom-start" style="margin-left: 10px"
+                      v-for="(item, key) in menuList" :key="key" :name="key"
+                      :class="{ 'iuv-user-header-select': menuList[key]['isSelect'] }" >
                 <Button type="primary">
                      {{ item.name }}
                     <Icon type="ios-arrow-down"></Icon>
@@ -40,6 +42,7 @@
         name: 'iHeaderMenu',
         data () {
             return {
+                isSelect: false,
                 isCollapse: false,
                 menuList: [],
                 screenWidth: document.body.clientWidth // 屏幕宽度
@@ -52,11 +55,19 @@
                 'isTablet'
             ])
         },
+        watch: {
+            $route (to, from) {
+                console.log('执行了')
+                this.headerSelect()
+                console.log(this.menuList)
+            }
+        },
         created () {
             let that = this;
             getHeaderMenu()
                 .then(async res => {
                     that.menuList = res.menu;
+                    that.headerSelect()
                 }).catch(err => { console.log('err: ', err) })
         },
         methods: {
@@ -64,6 +75,21 @@
                 this.$router.push({
                     name: 'log'
                 });
+            },
+            headerSelect () {
+                let menu = this.menuList
+                menu.some((value, index, arr) => {
+                    Object.assign(this.menuList[index], {
+                        isSelect: false
+                    })
+                    value['children'].some((item, key, arrs) => {
+                        if (item['path'] === this.$route.path) {
+                            Object.assign(this.menuList[index], {
+                                isSelect: true
+                            })
+                        }
+                    })
+                })
             }
         }
     }

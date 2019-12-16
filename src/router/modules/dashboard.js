@@ -215,6 +215,16 @@ export default {
                 title: '车辆登记检查'
             },
             component: () => import('@/pages/dashboard/vehicle_re_inspection')
+        },
+        {
+            path: 'management_system',
+            name: `${pre}management-system`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '制度管理'
+            },
+            component: () => import('@/pages/dashboard/management_system')
         }
     ]
 };

@@ -3,7 +3,7 @@
 <!--        <Sider v-if="!isMobile && !hideSider" class="i-layout-sider" :class="siderClasses" :width="menuSideWidth">-->
 <!--            <i-menu-side :hide-logo="isHeaderStick && headerFix && showHeader" />-->
 <!--        </Sider>-->
-        <Layout class="i-layout-inside" :class="insideClasses">
+        <Layout class="i-layout-inside ivu-cover-group" :class="insideClasses">
             <transition name="fade-quick">
                 <Header class="i-layout-header" :class="headerClasses" :style="headerStyle" v-show="showHeader" v-resize="handleHeaderWidthChange">
                     <i-header-logo v-if="isMobile && showMobileLogo" />
@@ -30,7 +30,7 @@
 <!--                <transition name="fade-quick">-->
 <!--                    <i-tabs v-if="tabs" v-show="showHeader" />-->
 <!--                </transition>-->
-                <div class="i-layout-content-main i-layout-content-main-pro">
+                <div class="i-layout-content-main i-layout-content-main-pro ivu-cover-group">
                     <keep-alive :include="keepAlive">
                         <router-view v-if="loadRouter" />
                     </keep-alive>

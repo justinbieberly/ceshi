@@ -95,7 +95,7 @@
     import { mapState } from 'vuex'
     import { getVisitorRegistration, getregistrationLog } from '@api/account'
     export default {
-        name: 'dashboard-temporary-storage',
+        name: 'dashboard-visitor-registration-management',
         data () {
             return {
                 title: '访客登记管理',

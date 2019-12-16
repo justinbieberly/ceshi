@@ -108,7 +108,7 @@
           {
             "name": "制度管理",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/management_system"
           },
           {
             "name": "证件管理",
