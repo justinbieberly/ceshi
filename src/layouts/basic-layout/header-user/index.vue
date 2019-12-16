@@ -2,11 +2,12 @@
     <span class="i-layout-header-trigger i-layout-header-trigger-min">
 
         <Dropdown placement="bottom-end" :trigger="isMobile ? 'click' : 'hover'" class="i-layout-header-user" :class="{ 'i-layout-header-user-mobile': isMobile }" @on-click="handleClick">
-<!--            <Avatar size="small" :src="info.avatar" v-if="info.avatar" />-->
+            <span class="i-layout-header-user-name" v-if="!isMobile & !isShowUser & !isTablet">
+                {{ info.login_time }}
+            </span>
             <span class="ivu-avatar ivu-avatar-circle ivu-avatar-image ivu-avatar-small">
                 <Icon type="md-contact" size="25"/>
             </span>
-            <span class="i-layout-header-user-name" v-if="!isMobile & !isShowUser & !isTablet">{{ info.name }}</span>
             <DropdownMenu slot="list">
                 <i-link to="/setting/user">
                     <DropdownItem>

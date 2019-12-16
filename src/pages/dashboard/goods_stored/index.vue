@@ -24,6 +24,7 @@
     import { mapState } from 'vuex';
     import { getGoodsStored } from '@api/account';
     import Config from '@/config';
+
     export default {
         name: 'dashboard-goods-stored',
         data () {

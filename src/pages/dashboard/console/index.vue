@@ -2,7 +2,7 @@
     <main class="body-content-main">
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
             <div class="logo-words-desc"> {{ logoDesc }} </div>
-            <Card :bordered="false" class="i-admin-left-menu ivu-user-theme">
+            <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow >
                     <Tree :data="listRow" show-checkbox multiple @on-check-change="show"></Tree>
                 </Card>

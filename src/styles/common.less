@@ -95,18 +95,21 @@ body {
 
 /*内容板块左右宽度布局*/
 .content-layout-left {
-  max-width: 29%;
-  height: 100%;
-  flex: 1;
+  margin-left: 10px;
+  min-width: 22.4%;
+  height: 750px;
+  //flex: 1;
+  overflow: auto;
   float: left;
 }
 
 .content-layout-right {
-  width: 70% !important;
+  width: 76.56% !important;
   padding: 10px;
   float: right;
+  height: 750px;
+  overflow: auto;
   margin-left: 1%;
-  margin-right: 1%;
   background: #fff;
   border-radius: 2px;
 }
@@ -131,9 +134,9 @@ body {
   margin-right: 0 !important;
 }
 
-/*左侧的flex沾满布局*/
+/*左侧的flex沾满布局s*/
 .i-admin-left-menu {
-  /*height: 100vh;*/
+  height: 718px;
 }
 
 .user-full-img img {
@@ -338,7 +341,7 @@ body {
 }
 
 .cell-b-color {
-  background-color: #7a621f !important;
+  background-color: #f47c52 !important;
 }
 
 .cell-c-color {
@@ -389,7 +392,7 @@ body {
   .logo-words-desc {
     color: #a2a2a2;
     font-weight: bolder;
-    padding-left: 20px;
+    padding-left: 8px;
     padding-bottom: 8px;
   }
 
@@ -403,8 +406,9 @@ body {
   .nav-btn-color .ivu-btn {
     background-color: #3a3a3a;
     border: 1px solid #828282;
-    .ivu-btn-primary {
-      color: #707070 !important;
+
+    span {
+      color: #dadada;
     }
   }
 
@@ -414,10 +418,31 @@ body {
     //background-color: #3a3a3a;
     background: transparent;
     border: 1px solid #47ecef;
+
+    span {
+      color: #47ecef;
+    }
+
     color: #47ecef;
     -webkit-box-shadow: 0 0 8px #11f3c9 inset;
     -moz-box-shadow: 0 0 8px #11f3c9 inset;
     box-shadow: 0 0 8px #11f3c9 inset;
+  }
+
+  .ivu-select-dropdown {
+    background-color: #3a3a3a;
+    .ivu-dropdown-item {
+      color: #cbcbcb;
+      border-bottom: 1px solid #5e5e5e;
+    }
+    .ivu-dropdown-item:hover {
+      background-color: #d3d1d2;
+      color: #3d3d3d;
+    }
+    .ivu-dropdown-item-selected {
+      background-color: #d3d1d2;
+      color: #3d3d3d;
+    }
   }
 
   // 菜单栏选中css效果
@@ -426,7 +451,12 @@ body {
       //background-color: #3a3a3a;
       background: transparent !important;
       border: 1px solid #47ecef !important;
-      color: #47ecef !important;
+      color: #47ecef;
+
+      span {
+        color: #47ecef;
+      }
+
       -webkit-box-shadow: 0 0 8px #11f3c9 inset !important;
       -moz-box-shadow: 0 0 8px #11f3c9 inset !important;
       box-shadow: 0 0 8px #11f3c9 inset !important;
@@ -454,6 +484,7 @@ body {
         color: #e3e3e3;
       }
     }
+
     .ivu-btn-default {
       background: transparent !important;
       color: #b5b5b5;
@@ -462,6 +493,20 @@ body {
 
   .ivu-checkbox-inner {
     //background-color: #6de5e9;
-    //border-color: #6de5e9;
+    background-color: #353535;
+    border-color: #6de5e9;
   }
+
+  .ivu-card-head {
+    border-bottom: 1px solid #666;
+  }
+
+  .env-air-tree .ivu-icon-ios-arrow-forward {
+    margin-top: 0;
+  }
+
+  .ivu-btn-small {
+    font-size: 12px;
+  }
+  //针对于表格的样式
 }

@@ -2,7 +2,7 @@
     <main class="body-content-main">
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
             <div class="logo-words-desc"> {{ logoDesc }} </div>
-            <Card :bordered="false" class="i-admin-left-menu ivu-user-theme">
+            <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Button slot="extra" size="small"  @click="spaceMonitoringShow">显示所选</Button>
                     <Button slot="extra" size="small" style="margin-left: 10px;"  @click="spaceMonitoringShow(1)">显示全部</Button>

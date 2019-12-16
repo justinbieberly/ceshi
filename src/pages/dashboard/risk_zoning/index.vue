@@ -1,9 +1,10 @@
 <template>
     <main class="body-content-main">
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
-                    <Table border :columns="reservoirData.columns" :data="reservoirData.data" class="temporary_table" ></Table>
+                    <Table border :columns="reservoirData.columns" :data="reservoirData.data" class="temporary_table" size="small"></Table>
                 </Card>
             </Card>
         </div>
@@ -15,23 +16,25 @@
 <script>
     import { mapState } from 'vuex';
     import { getRiskZoningData } from '@api/account';
+    import Config from '@/config'
 
     export default {
         name: 'dashboard-risk-zoning',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '风险分区',
                 reservoirData: {
                     columns: [
                         {
-                            title: '库房',
+                            title: '风险分区',
                             width: '94px',
                             align: 'center',
                             key: 'name'
                         },
                         {
                             title: '防火分区',
-                            width: '66px',
+                            width: '96px',
                             align: 'center',
                             key: 'zoning'
                         },
@@ -42,32 +45,48 @@
                             render: (h, params) => {
                                 let info = params.row.level;
                                 if (info === 1) {
-                                    params.row.cellClassName = {
-                                        graphic: 'cell-other-color'
-                                    }
                                     return h('span', '低风险');
                                 } else if (info === 2) {
-                                    params.row.cellClassName = {
-                                        graphic: 'cell-c-color'
-                                    }
                                     return h('span', '一般风险');
                                 } else if (info === 3) {
-                                    params.row.cellClassName = {
-                                        graphic: 'cell-b-color'
-                                    }
                                     return h('span', '较大风险');
                                 } else if (info === 4) {
-                                    params.row.cellClassName = {
-                                        graphic: 'cell-a-color'
-                                    }
                                     return h('span', '重大风险');
                                 }
                             }
                         },
                         {
                             title: '图示',
-                            width: '50px',
-                            key: 'graphic'
+                            width: '70px',
+                            key: 'graphic',
+                            render: (h, params) => {
+                                let color = {}
+                                let info = params.row.level;
+                                if (info === 1) {
+                                    color = {
+                                        backgroundColor: '#3f3a94 !important'
+                                    }
+                                } else if (info === 2) {
+                                    color = {
+                                        backgroundColor: '#fdf003 !important'
+                                    }
+                                } else if (info === 3) {
+                                    color = {
+                                        backgroundColor: '#fc8a03 !important'
+                                    }
+                                } else if (info === 4) {
+                                    color = {
+                                        backgroundColor: '#fb1010 !important'
+                                    }
+                                }
+                                console.log(params.row)
+                                return h('div', {
+                                    style: Object.assign({
+                                        width: '20px',
+                                        height: '20px'
+                                    }, color)
+                                }, '');
+                            }
                         }
                     ],
                     data: []
@@ -97,6 +116,6 @@
 </script>
 <style lang="scss" scoped>
     .temporary_table {
-        margin-top: 40px;
+        margin-top: 20px;
     }
 </style>

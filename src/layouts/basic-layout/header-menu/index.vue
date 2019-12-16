@@ -19,15 +19,16 @@
         </Dropdown>
         <div class="i-layout-header-trigger-no-height nav-btn-color ivu-header" v-else>
             <Dropdown placement="bottom-start" style="margin-left: 10px"
-                      v-for="(item, key) in menuList" :key="key" :name="key"
-                      :class="headerMenuSelect[key]" >
+                      v-for="(item, index) in menuList" :key="index" :name="index"
+                      :class="headerMenuSelect[index]" >
                 <Button type="primary">
                      {{ item.name }}
                     <Icon type="ios-arrow-down"></Icon>
                 </Button>
+<!--                ivu-dropdown-item-selected-->
                 <DropdownMenu slot="list">
                     <i-link v-for="(item, key) in item.children" :key="key" :name="key" :to="item.path" >
-                        <DropdownItem>{{ item.name }}</DropdownItem>
+                        <DropdownItem :class="dropdownItem[index][key]">{{ item.name }}</DropdownItem>
                     </i-link>
                 </DropdownMenu>
             </Dropdown>
@@ -46,6 +47,7 @@
                 isCollapse: false,
                 menuList: [],
                 headerMenuSelect: [],
+                dropdownItem: [],
                 screenWidth: document.body.clientWidth // 屏幕宽度
             }
         },
@@ -58,10 +60,7 @@
         },
         watch: {
             $route (to, from) {
-                console.log('执行了')
                 this.headerSelect()
-                console.log(this.menuList)
-                console.log(this.headerMenuSelect)
             }
         },
         created () {
@@ -81,11 +80,15 @@
             headerSelect () {
                 let menu = this.menuList
                 this.headerMenuSelect = []
+                this.dropdownItem = []
                 menu.some((value, index, arr) => {
+                    this.dropdownItem.push([])
                     this.headerMenuSelect.push('not-select')
                     value['children'].some((item, key, arrs) => {
+                        this.dropdownItem[index].push('')
                         if (item['path'] === this.$route.path) {
                             this.headerMenuSelect[index] = 'ivu-user-header-select'
+                            this.dropdownItem[index][key] = 'ivu-dropdown-item-selected'
                         }
                     })
                 })

@@ -30,7 +30,7 @@
 <!--                <transition name="fade-quick">-->
 <!--                    <i-tabs v-if="tabs" v-show="showHeader" />-->
 <!--                </transition>-->
-                <div class="i-layout-content-main i-layout-content-main-pro ivu-cover-group">
+                <div class="i-layout-content-main i-layout-content-main-pro ivu-cover-group ivu-user-theme">
                     <keep-alive :include="keepAlive">
                         <router-view v-if="loadRouter" />
                     </keep-alive>
