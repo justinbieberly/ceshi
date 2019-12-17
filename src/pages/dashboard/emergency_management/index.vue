@@ -1,15 +1,17 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Tabs type="card" class="ivu-mt"  @on-click="changeTabs" >
                         <TabPane label="应急预案">
-                            <div style="width: 100%" class="hzyj-btn ivu-btn"
+                            <div style="width: 100%" class="hzyj-btn ivu-btn ivu-btn-primary"
                                     v-for="(item, key) in menuList"
                                     :key="key"
                                     :type="btnArr[key].state"
-                                 :class="{ 'ivu-btn-warning': btnArr[key].state }"
+                                 :class="{ 'ivu-btn-selected': btnArr[key].state }"
                                  @click="selectThisBtn(key)">
                                 <div class="ivu-block hzjjya-list">
                                     <div class="ivu-inline-block">{{ item.title }}</div>
@@ -23,11 +25,11 @@
                             </div>
                         </TabPane>
                         <TabPane label="预案演练">
-                            <div style="width: 100%" class="hzyj-btn ivu-btn"
+                            <div style="width: 100%" class="hzyj-btn ivu-btn ivu-btn-primary"
                                  v-for="(item, key) in menuList"
                                  :key="key"
                                  :type="btnArr[key].state"
-                                 :class="{ 'ivu-btn-warning': btnArr[key].state }"
+                                 :class="{ 'ivu-btn-selected': btnArr[key].state }"
                                  @click="selectThisBtn(key)">
                                 <div class="ivu-block hzjjya-list">
                                     <div class="ivu-inline-block">{{ item.title }}</div>
@@ -44,11 +46,15 @@
                             <div class="ivu-block">
                                 <Button type="default" long>SDMS</Button>
                                 <div class="ivu-block ivu-mt-16">
-                                    <div class="ivu-text-center item-jywz" v-for="(item, key) in emergency.emergencyRow" :key="key">
-                                        <h3>{{ item.title }}</h3>
-                                        <ButtonGroup v-for="(value, index) in item.data" :key="index" class="ivu-mb-8">
-                                            <Button type="primary" style="width: 130px">{{ value.name }}</Button>
-                                            <Button style="width: 250px">{{ value.number }}</Button>
+                                    <div class="ivu-text-center item-jywz"
+                                         v-for="(item, key) in emergency.emergencyRow"
+                                         :key="key">
+                                        <h3 class="ivu-text-color">{{ item.title }}</h3>
+                                        <ButtonGroup v-for="(value, index) in item.data" :key="index"
+                                                     class="ivu-mb-8 user-full-screen">
+                                            <Button type="primary" class="ivu-btn-custom"
+                                                    style="width: 40%">{{ value.name }}</Button>
+                                            <Button style="width: 60%">{{ value.number }}</Button>
                                         </ButtonGroup>
                                     </div>
                                 </div>
@@ -58,7 +64,8 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
            <div class="ivu-block" v-if="!emergency.isEmergency">
                <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
                    <div class="ivu-form-item" style="line-height: 32px;">
@@ -71,29 +78,30 @@
                        <Select v-model="formItem.category" size="small"  style="width:100px">
                            <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>
                        </Select>
-                       <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
-                       <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
                    </FormItem>
                    <FormItem label="文档格式">
                        <Select v-model="formItem.fileType" size="small"  style="width:100px">
                            <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>
                        </Select>
-                       <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
+                       <Button type="primary" size="small" @click="doQuery"
+                               class="ivu-ml ivu-query-btn">查询结果</Button>
                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
                        <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
                    </FormItem>
-                   <FormItem label="显示条数">
-                       <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                   <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
+                       <Select v-model="formItem.showNum" size="small"
+                               placeholder="显示条数"
+                               @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
                            <Option value="20">20条/页</Option>
                            <Option value="50">50条/页</Option>
                            <Option value="100">100条/页</Option>
                        </Select>
-                   </FormItem>
-                   <FormItem label="排序方式">
-                       <Select v-model="formItem.sortWay" size="small">
-                           <Option :value="item.key" v-for="(item, key) in table.columns" :key="key">{{ item.title }}</Option>
+                       <Select v-model="formItem.sortWay" size="small"
+                               placeholder="排序方式"
+                               style="width: 110px;margin-left: 10px; margin-top: 4px;">
+                           <Option value="errorInfo">报警内容</Option>
                        </Select>
-                   </FormItem>
+                   </div>
                </Form>
                <Table border :columns="table.columns" :data="table.data" class="ivu-mt">
                    <template slot-scope="{ row, index }" slot="action">
@@ -167,10 +175,12 @@
 <script>
     import { mapState } from 'vuex';
     import { getEmergencyResponsePlan, getPreparednessDrill, getEmergencyTreatment } from '@api/account';
+    import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '应急管理',
                 loading: false,
                 menuList: [],
@@ -260,6 +270,7 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -273,6 +284,11 @@
                 }).catch(err => {
                     console.log('err: ', err)
                 })
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
             changeTabs (index) {
@@ -465,9 +481,12 @@
         width: 100%;
         line-height: 32px;
         margin-bottom: 10px;
+        background-color: #3a3a3a;
+        border: 1px solid #828282;
     }
     .hzjjya-list {
         width: 100%;
+        font-size: 12px;
         div:nth-child(1) {
             width: 50%;
             text-align: left;
@@ -483,7 +502,7 @@
         .do-action-btn {
             z-index: 6;
             i {
-                margin-right: 5px;
+                margin-right: 3px;
                 display: inline-block;
             }
         }
@@ -496,9 +515,10 @@
     }
 
     .item-jywz {
-        width: 380px;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 8px;
         h3 {
             text-align: left;
         }

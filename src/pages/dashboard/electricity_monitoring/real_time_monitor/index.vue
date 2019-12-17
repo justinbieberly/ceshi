@@ -1,25 +1,25 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-screen ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
            <div class="ivu-block">
-               <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+               <Form :model="formItem" :label-width="70"  inline :label-colon="true"
+                     class="real-time-form ivu-inline-block user-full-screen">
                    <div class="ivu-form-item" style="line-height: 32px;">
                        功能操作
                    </div>
                    <FormItem label="输入搜索">
-                       <Input v-model="formItem.input" placeholder="序号/名称" size="small"></Input>
+                       <Input v-model="formItem.input" placeholder="序号/名称" size="small" style="width: 150px"></Input>
                    </FormItem>
                    <FormItem label="监测状态">
-                       <Select v-model="formItem.select" size="small">
+                       <Select v-model="formItem.select" size="small" style="width: 150px">
                            <Option value="1">正常</Option>
                            <Option value="0">异常</Option>
                        </Select>
                    </FormItem>
                    <FormItem>
-                       <Button type="primary" size="small" @click="doQuery">查询结果</Button>
-                       <i-link to="/dashboard/real_time_monitor">
-                           <Button style="margin-left: 8px" size="small" >重置查询</Button>
-                       </i-link>
+                       <Button type="primary" size="small" @click="doQuery" class="ivu-query-btn">查询结果</Button>
+                       <Button style="margin-left: 18px" size="small">重置查询</Button>
                    </FormItem>
                    <div class="ivu-inline-block" style="float: right">
                        <FormItem>
@@ -28,23 +28,20 @@
                                返回
                            </Button>
                        </FormItem>
-                       <FormItem label="显示条数">
-                           <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                       <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
+                           <Select v-model="formItem.showNum" size="small"
+                                   placeholder="显示条数"
+                                   @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
                                <Option value="20">20条/页</Option>
                                <Option value="50">50条/页</Option>
                                <Option value="100">100条/页</Option>
                            </Select>
-                       </FormItem>
-                       <FormItem label="排序方式">
-                           <Select v-model="formItem.sortWay" size="small">
-                               <Option value="id">序号</Option>
-                               <Option value="name">回路名称</Option>
-                               <Option value="time">监测时间</Option>
-                               <Option value="status">状态</Option>
-                               <Option value="dataInfo">监测数据</Option>
+                           <Select v-model="formItem.sortWay" size="small"
+                                   placeholder="排序方式"
+                                   style="width: 110px;margin-left: 10px; margin-top: 4px;">
                                <Option value="errorInfo">报警内容</Option>
                            </Select>
-                       </FormItem>
+                       </div>
                    </div>
                </Form>
                <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
@@ -137,6 +134,7 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -147,6 +145,10 @@
                     that.total = res.tableData.data.length;
                     that.reservoirData.data = res.tableData.data;
             }).catch(err => { console.log('err: ', err) });
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
             setPageSize () {

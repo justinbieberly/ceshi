@@ -12,7 +12,6 @@
             {
               "id": 166002,
               "title": "秘书",
-              "expand": true,
               "children": [
                 {
                   "id": 166003,
@@ -20,7 +19,6 @@
                   "sex": 1,
                   "age": 23,
                   "workTime": 1,
-                  "expand": true,
                   "phone": "24102438102"
                 },
                 {
@@ -29,7 +27,6 @@
                   "sex": 2,
                   "age": 22,
                   "workTime": 2,
-                  "expand": true,
                   "phone": "15084360833"
                 }
               ]
@@ -37,7 +34,6 @@
             {
               "id": 166005,
               "title": "助理",
-              "expand": true,
               "children": [
                 {
                   "id": 1660051,
@@ -45,7 +41,6 @@
                   "sex": 2,
                   "age": 22,
                   "workTime": 3,
-                  "expand": true,
                   "phone": "15874569984"
                 }
               ]
@@ -53,7 +48,6 @@
             {
               "id": 166006,
               "title": "司机",
-              "expand": true,
               "children": [
                 {
                   "id": 1660061,
@@ -61,7 +55,6 @@
                   "sex": 1,
                   "age": 38,
                   "workTime": 4,
-                  "expand": true,
                   "phone": "15874569984"
                 }
               ]

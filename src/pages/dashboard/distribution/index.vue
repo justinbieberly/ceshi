@@ -12,8 +12,26 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+        <div class="content-layout-right user-full-img father-position" :class="{ 'content-layout-right-pro': this.menuCollapse }"
              ref="right">
+            <div class="ivu-block child-position user-note-box">
+                <Button type="default" size="small">
+                    一级
+                    <i class="user-square-in-btn cell-a-color"></i>
+                </Button>
+                <Button type="default" size="small">
+                    二级
+                    <i class="user-square-in-btn cell-b-color"></i>
+                </Button>
+                <Button type="default" size="small">
+                    三级
+                    <i class="user-square-in-btn cell-c-color"></i>
+                </Button>
+                <Button type="default" size="small">
+                    四级
+                    <i class="user-square-in-btn cell-other-color"></i>
+                </Button>
+            </div>
             <img :src="modelImg" alt="模型视图">
         </div>
     </main>
@@ -33,23 +51,54 @@
                     columns: [
                         {
                             title: '库房',
+                            width: '86px',
+                            align: 'center',
                             key: 'name'
                         },
                         {
                             title: '防火分区',
-                            width: '70px',
+                            width: '85px',
+                            align: 'center',
                             key: 'partition'
                         },
                         {
                             title: '危险源',
-                            align: 'left',
+                            align: 'center',
                             type: 'html',
                             key: 'hazards'
                         },
                         {
                             title: '图示',
                             width: '50px',
-                            key: 'graphic'
+                            key: 'graphic',
+                            render: (h, params) => {
+                                let color = {}
+                                let info = params.row.level;
+                                if (info === 1) {
+                                    color = {
+                                        backgroundColor: '#3f3a94 !important'
+                                    }
+                                } else if (info === 2) {
+                                    color = {
+                                        backgroundColor: '#fdf003 !important'
+                                    }
+                                } else if (info === 3) {
+                                    color = {
+                                        backgroundColor: '#fc8a03 !important'
+                                    }
+                                } else if (info === 4) {
+                                    color = {
+                                        backgroundColor: '#fb1010 !important'
+                                    }
+                                }
+                                console.log(params.row)
+                                return h('div', {
+                                    style: Object.assign({
+                                        width: '18px',
+                                        height: '18px'
+                                    }, color)
+                                }, '');
+                            }
                         }
                     ],
                     data: []
@@ -84,6 +133,6 @@
 </script>
 <style lang="scss" scoped>
     .temporary_table {
-        margin-top: 40px;
+        margin-top: 2   0px;
     }
 </style>

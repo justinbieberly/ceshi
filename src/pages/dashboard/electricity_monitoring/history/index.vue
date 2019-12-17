@@ -1,7 +1,8 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
-            <Card :bordered="false" class="i-admin-left-menu">
+        <div class="content-layout-right user-full-screen ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
+            <Card :bordered="false">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Button slot="extra" size="small" @click.prevent="$router.go(-1)">
                         <Icon type="ios-arrow-back" />
@@ -76,6 +77,7 @@
                             },
                             {
                                 title: '监测数据',
+                                align: 'left',
                                 slot: 'detail'
                             }
                         ],
@@ -97,7 +99,6 @@
                         data: []
                     }
                 },
-
                 echartsData: {
                     chartLineBox: {
                         data: []
@@ -115,6 +116,7 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -133,6 +135,8 @@
                 }).catch(err => { console.log('err: ', err) })
         },
         mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
             drawLDEchars () {
@@ -140,7 +144,10 @@
                 let myChart = echarts.init(document.getElementById('chartLineBox'));
                 myChart.setOption({
                     title: {
-                        text: '漏电曲线'
+                        text: '漏电曲线',
+                        textStyle: {
+                            color: '#cfcfcf'
+                        }
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -162,6 +169,17 @@
                         type: 'time',
                         splitLine: {
                             show: false
+                        },
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#cfcfcf'
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#cfcfcf' // 更改坐标轴颜色
+                            }
                         }
                     },
                     yAxis: {
@@ -169,6 +187,17 @@
                         boundaryGap: [0, '100%'],
                         splitLine: {
                             show: false
+                        },
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#cfcfcf'
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#cfcfcf' // 更改坐标轴颜色
+                            }
                         }
                     },
                     series: [{
@@ -185,13 +214,19 @@
                 let myChart1 = echarts.init(document.getElementById('chartLineBox1'));
                 myChart1.setOption({
                     title: {
-                        text: '温度曲线'
+                        text: '温度曲线',
+                        textStyle: {
+                            color: '#cfcfcf'
+                        }
                     },
                     tooltip: {
                         trigger: 'axis'
                     },
                     legend: {
-                        data: this.echartsData.chartLineBox1.nameRow
+                        data: this.echartsData.chartLineBox1.nameRow,
+                        textStyle: {
+                            color: '#cfcfcf'
+                        }
                     },
                     grid: {
                         left: '3%',
@@ -207,10 +242,32 @@
                     xAxis: {
                         type: 'category',
                         boundaryGap: false,
-                        data: this.echartsData.chartLineBox1.xAxis
+                        data: this.echartsData.chartLineBox1.xAxis,
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#cfcfcf'
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#cfcfcf' // 更改坐标轴颜色
+                            }
+                        }
                     },
                     yAxis: {
-                        type: 'value'
+                        type: 'value',
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#cfcfcf'
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#cfcfcf' // 更改坐标轴颜色
+                            }
+                        }
                     },
                     series: this.echartsData.chartLineBox1.data
                 })
@@ -226,7 +283,10 @@
                 let myChart = echarts.init(document.getElementById('chartLineBox5'));
                 myChart.setOption({
                     title: {
-                        text: '负载曲线'
+                        text: '负载曲线',
+                        textStyle: {
+                            color: '#cfcfcf'
+                        }
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -248,6 +308,17 @@
                         type: 'time',
                         splitLine: {
                             show: false
+                        },
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#cfcfcf'
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#cfcfcf' // 更改坐标轴颜色
+                            }
                         }
                     },
                     yAxis: {
@@ -255,6 +326,17 @@
                         boundaryGap: [0, '100%'],
                         splitLine: {
                             show: false
+                        },
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#cfcfcf'
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#cfcfcf' // 更改坐标轴颜色
+                            }
                         }
                     },
                     series: [{

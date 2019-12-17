@@ -17,7 +17,14 @@
           {
             "name": "临时存储",
             "id": 1002,
-            "path": "/dashboard/temporary_storage"
+            "path": "/dashboard/temporary_storage",
+            "secondaryMenu": [
+              {
+                "name": "货物存储",
+                "id": 1009,
+                "path": "/dashboard/goods_stored_detail"
+              }
+            ]
           },
           {
             "name": "分布状况",
@@ -27,12 +34,31 @@
           {
             "name": "环境监测",
             "id": 1002,
-            "path": "/dashboard/environmental_monitoring"
+            "path": "/dashboard/environmental_monitoring",
+            "secondaryMenu": [
+              {
+                "name": "实时监测",
+                "id": 1009,
+                "path": "/dashboard/real_time_monitor"
+              },
+              {
+                "name": "历史数据",
+                "id": 1009,
+                "path": "/dashboard/electricity_history"
+              }
+            ]
           },
           {
             "name": "用电监测",
             "id": 1002,
-            "path": "/dashboard/electricity_monitoring"
+            "path": "/dashboard/electricity_monitoring",
+            "secondaryMenu": [
+              {
+                "name": "显示监控",
+                "id": 1009,
+                "path": "/dashboard/space_monitoring_show"
+              }
+            ]
           },
           {
             "name": "空间监测",
@@ -54,12 +80,26 @@
           {
             "name": "风险预警",
             "id": 1001,
-            "path": "/dashboard/risk_early_warning"
+            "path": "/dashboard/risk_early_warning",
+            "secondaryMenu": [
+              {
+                "name": "风险预警-历史数据",
+                "id": 1009,
+                "path": "/dashboard/risk_warning_history"
+              }
+            ]
           },
           {
             "name": "特种设备管理",
             "id": 1001,
-            "path": "/dashboard/special_management"
+            "path": "/dashboard/special_management",
+            "secondaryMenu": [
+              {
+                "name": "特种设备管理-历史数据",
+                "id": 1009,
+                "path": "/dashboard/special_management"
+              }
+            ]
           },
           {
             "name": "控制室值班",

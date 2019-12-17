@@ -1,32 +1,36 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options" shadow class="temporary_table_nopadding">
                     <Tabs type="card" class="ivu-mt" @on-click="tabsChange">
                         <TabPane label="中控室值班">
                             <div class="ivu-block kzs-menu-smail-btn">
-                                <Button to="#" size="small" style="width: 15%;font-size: 10px" v-if="isExport"
+                                <Button to="#" size="small" style="font-size: 10px" v-if="isExport"
                                         @click="exportData">
                                     <Icon type="md-arrow-round-down" />
                                     导出
                                 </Button>
-                                <Button to="#" size="small" style="width: 15%;font-size: 10px"
-                                        @click="showRightTable(1)" v-if="!isExport">值班情况</Button>
-                                <Button to="#" size="small" style="width: 17%;font-size: 10px"
-                                        v-if="!isExport" @click="showRightTable(2)">未打卡记录</Button>
-                                <Button size="small" style="width: 17%;font-size: 10px" v-if="isExport" @click="back">
+                                <div v-if="!isExport && !isBack">
+                                    <Button to="#" size="small" style="font-size: 10px"
+                                            @click="showRightTable(1)">值班情况</Button>
+                                    <Button to="#" size="small" style="font-size: 10px"
+                                            @click="showRightTable(2)">未打卡记录</Button>
+                                </div>
+                                <Button size="small" style="font-size: 10px" v-if="isExport || isPunchCardLog" @click="back">
                                     <Icon type="ios-arrow-back" />
                                     返回
                                 </Button>
                             </div>
-                            <Table :columns="onDutyTable.columns" :data="onDutyTable.data" class="ivu-mt"></Table>
+                            <Table border :columns="onDutyTable.columns" :data="onDutyTable.data" class="ivu-mt"></Table>
                         </TabPane>
                         <TabPane label="报警故障信号">
-                            <div class="ivu-block ivu-b ivu-p-8"  v-for="(items, key) in alarmFaultSignal" :key="key">
-                                <div class="ivu-text-center">{{ items.name }}</div>
-                                <div class="ivu-block">
-                                    <div class="ivu-block">
+                            <div class="ivu-block ivu-border ivu-p-8 ivu-mb-8"  v-for="(items, key) in alarmFaultSignal" :key="key">
+                                <div class="ivu-text-center ivu-text-color">{{ items.name }}</div>
+                                <div class="ivu-block ivu-text-color ivu-font-size-small">
+                                    <div class="ivu-block ">
                                         <span>时间:</span>
                                         <span class="tzsb-info-value">{{ items.dateTime }}</span>
                                     </div>
@@ -41,9 +45,11 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <div class="ivu-block" v-if="onDutySituation">
-                <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+                <Form :model="formItem" :label-width="70"  inline :label-colon="true"
+                      class="real-time-form ivu-inline-block user-full-screen">
                     <div class="ivu-form-item" style="line-height: 32px;">
                         功能操作
                     </div>
@@ -51,28 +57,31 @@
                         <Input v-model="formItem.condition" placeholder="名字/序号/..." size="small" style="width: 120px" />
                     </FormItem>
                     <FormItem label="异常事宜">
-                        <Select v-model="formItem.abnormalMatters" size="small"  style="width:100px">
+                        <Select v-model="formItem.abnormalMatters" size="small"  style="width:120px">
                             <Option value="all">全部</Option>
-<!--                            <Option :value="item.value" v-for="(item, key) in formItem.stateRow" :key="key">{{ item.name }}</Option>-->
                         </Select>
                     </FormItem>
                     <FormItem label="时间">
-                        <DatePicker type="daterange" size="small" placement="bottom-end" placeholder="请选择日期" style="width: 200px" v-model="formItem.dateRange"></DatePicker>
-                        <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
+                        <DatePicker type="daterange" size="small" placement="bottom-end" placeholder="请选择日期"
+                                    style="width: 120px" v-model="formItem.dateRange"></DatePicker>
+                        <Button type="primary" size="small" @click="doQuery"
+                                class="ivu-ml ivu-query-btn">查询结果</Button>
                         <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
                     </FormItem>
-                    <FormItem label="显示条数">
-                        <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                    <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
+                        <Select v-model="formItem.showNum" size="small"
+                                placeholder="显示条数"
+                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
-                    </FormItem>
-                    <FormItem label="排序方式">
-                        <Select v-model="formItem.sortWay" size="small">
-                            <Option :value="item.key" v-for="(item, key) in onDutyTable.columns1" :key="key">{{ item.title }}</Option>
+                        <Select v-model="formItem.sortWay" size="small"
+                                placeholder="排序方式"
+                                style="width: 110px;margin-left: 10px; margin-top: 4px;">
+                            <Option value="errorInfo">报警内容</Option>
                         </Select>
-                    </FormItem>
+                    </div>
                 </Form>
                 <Table border :columns="onDutyTable.columns1" :data="onDutyTable.data1" class="ivu-mt" ref="table"></Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
@@ -80,33 +89,38 @@
                 </div>
             </div>
             <div class="ivu-block" v-else-if="isPunchCardLog">
-                <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+                <Form :model="formItem" :label-width="70"  inline :label-colon="true"
+                      class="real-time-form ivu-inline-block user-full-screen">
                     <div class="ivu-form-item" style="line-height: 32px;">
                         功能操作
                     </div>
                     <FormItem label="值班人员">
-                        <Input v-model="formItem.condition" placeholder="名字/序号/..." size="small" style="width: 120px" />
+                        <Input v-model="formItem.condition" placeholder="名字/序号/..." size="small" style="width: 150px" />
                     </FormItem>
                     <FormItem label="岗位">
-                        <Select v-model="formItem.abnormalMatters" size="small"  style="width:100px">
+                        <Select v-model="formItem.abnormalMatters" size="small"  style="width:150px">
                             <Option value="all">全部</Option>
-<!--                            <Option :value="item.value" v-for="(item, key) in formItem.stateRow" :key="key">{{ item.name }}</Option>-->
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
+                        </FormItem>
+                    <FormItem label="">
+                        <Button type="primary" size="small" @click="doQuery"
+                                class="ivu-ml ivu-query-btn" style="margin-left: 50px;">查询结果</Button>
                         <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
                     </FormItem>
-                    <FormItem label="显示条数">
-                        <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                    <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
+                        <Select v-model="formItem.showNum" size="small"
+                                placeholder="显示条数"
+                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
-                    </FormItem>
-                    <FormItem label="排序方式">
-                        <Select v-model="formItem.sortWay" size="small">
-                            <Option :value="item.key" v-for="(item, key) in onDutyTable.columns1" :key="key">{{ item.title }}</Option>
+                        <Select v-model="formItem.sortWay" size="small"
+                                placeholder="排序方式"
+                                style="width: 110px;margin-left: 10px; margin-top: 4px;">
+                            <Option value="errorInfo">报警内容</Option>
                         </Select>
-                    </FormItem>
+                    </div>
                 </Form>
                 <Table border :columns="onDutyTable.columns2" :data="onDutyTable.data2" class="ivu-mt"></Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
@@ -128,16 +142,19 @@
 <script>
     import { mapState } from 'vuex';
     import { getConsoleRoomData, getOnDutySituation, getPunchCardLog } from '@api/account';
+    import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '控制室值班管理',
                 modelImg: '/assets/images/u3190.svg',
                 loading: false,
                 isExport: false,
                 onDutySituation: false,
                 isPunchCardLog: false,
+                isBack: false,
                 isAlarmFailure: false,
                 pageSize: 100,
                 total: 0,
@@ -156,7 +173,6 @@
                             title: '打卡时间',
                             key: 'duty_time',
                             align: 'center',
-                            className: 'cell-q-gray-color',
                             render: (h, params) => {
                                 let date = new Date(params.row.duty_time * 1000);
                                 let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
@@ -172,7 +188,6 @@
                         {
                             title: '状态',
                             key: 'status',
-                            className: 'cell-q-gray-color',
                             render: (h, params) => {
                                 if (params.row.status === 0) {
                                     return h('div', {
@@ -296,6 +311,7 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -308,6 +324,11 @@
                 }).catch(err => {
                     console.log('err: ', err)
                 })
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
             showRightTable (state) {
@@ -325,6 +346,7 @@
                             console.log('err: ', err)
                         })
                 } else {
+                    that.isBack = true
                     that.isPunchCardLog = true
                     getPunchCardLog()
                         .then(async res => {
@@ -371,6 +393,7 @@
             back () {
                 // 返回
                 this.isExport = false
+                this.isBack = false
                 this.onDutySituation = false
                 this.isPunchCardLog = false
                 this.modelImg = '/assets/images/u3190.svg'

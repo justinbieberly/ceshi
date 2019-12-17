@@ -88,6 +88,17 @@
                         if (item['path'] === this.$route.path) {
                             this.headerMenuSelect[index] = 'ivu-user-header-select'
                             this.dropdownItem[index][key] = 'ivu-dropdown-item-selected'
+                        } else {
+                            // 可能就是二级菜单了 secondaryMenu
+                            if (item['secondaryMenu']) {
+                                let secondaryMenu = item['secondaryMenu']
+                                secondaryMenu.some((v, i, a) => {
+                                    if (v['path'] === this.$route.path) {
+                                        this.headerMenuSelect[index] = 'ivu-user-header-select'
+                                        this.dropdownItem[index][key] = 'ivu-dropdown-item-selected'
+                                    }
+                                })
+                            }
                         }
                     })
                 })

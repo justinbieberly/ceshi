@@ -60,7 +60,7 @@ body {
   padding: 0 !important;
 }
 
-/*整体页面的行高 在导航 那个缝隙 有影响*/
+//整体页面的行高 在导航 那个缝隙 有影响
 .user-header-recover .i-layout-header-trigger-no-height .ivu-dropdown {
   line-height: 20px !important;
 }
@@ -70,39 +70,39 @@ body {
 }
 
 .re-header-size {
-  /*height: 20px !important;*/
+  //height: 20px !important;
 }
 
-/*隐藏LOGO的文字*/
+//隐藏LOGO的文字
 .i-header-logo-no-words {
   width: auto !important;
 }
 
-/*内容板块边距设置*/
+//内容板块边距设置
 .i-layout-content-main-pro {
   margin-top: 9px !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
 
-/*内容板块 左边板块缩小样式*/
+//内容板块 左边板块缩小样式
 .i-layout-slider-min {
   display: none;
   width: 80px !important;
   transition: all 0.5s;
 }
 
-/*内容整体flex布局*/
+//内容整体flex布局
 .body-content-main {
   display: flex;
-  /*height: 100vh;*/
+  //height: 100vh;
 }
 
-/*内容板块左右宽度布局*/
+//内容板块左右宽度布局
 .content-layout-left {
   margin-left: 8px;
   width: 22.4%;
-  height:  calc(100vh - 7);
+  height: calc(100vh - 7);
   //flex: 1;
   overflow: auto;
   float: left;
@@ -117,7 +117,7 @@ body {
   border-radius: 2px;
 }
 
-/*清楚浮动造成的页面背景不能覆盖*/
+//清楚浮动造成的页面背景不能覆盖
 .content-layout-right:after {
   clear: both;
 }
@@ -126,7 +126,7 @@ body {
   width: 100% !important;
 }
 
-/*左边的title*/
+//左边的title
 .i-admin-title {
   margin-bottom: 20px;
   display: block;
@@ -137,7 +137,7 @@ body {
   margin-right: 0 !important;
 }
 
-/*左侧的flex沾满布局s*/
+//左侧的flex沾满布局s
 .i-admin-left-menu {
   height: 95.5%;
   overflow: auto;
@@ -152,37 +152,37 @@ body {
   margin: 15px 0 24px 0 !important;
 }
 
-/*存储页面的分割设置*/
+//存储页面的分割设置
 .demo-split-pane .ivu-cell-title {
   font-size: 12px !important;
   line-height: 18px;
 }
 
 
-/*临时存储 表格删除padding*/
+//临时存储 表格删除padding
 .temporary_table_nopadding .ivu-card-body {
   padding: 0 !important;
 }
 
-/*分布状况页面的表格 第三列 字体-宽度设置*/
+//分布状况页面的表格 第三列 字体-宽度设置
 .fb-table .ivu-table-row > td:nth-child(3) > .ivu-table-cell {
   padding: 2px !important;
   font-size: 12px;
 }
 
-/*环境监测的数形结构 里面的i标签设置*/
+//环境监测的数形结构 里面的i标签设置
 .env-air-tree .ivu-btn > .ivu-icon {
   line-height: normal;
   color: #ff5741;
   margin-top: -3px;
 }
 
-/*修改了色块 导致树形结构展开关闭图标异常 修复*/
+//修改了色块 导致树形结构展开关闭图标异常 修复
 .env-air-tree .ivu-icon-ios-arrow-forward {
   margin-top: -20px;
 }
 
-/*环境监测的数形结构 隐藏 按钮*/
+//环境监测的数形结构 隐藏 按钮
 .env-air-tree .ivu-btn-primary {
   background-color: unset !important;
   border-color: unset !important;
@@ -193,7 +193,12 @@ body {
   border-color: unset;
 }
 
-/*用于覆盖树形结构覆盖颜色*/
+.ydjc-tree .ivu-btn-text:hover {
+  background-color: unset !important;
+  border-color: unset !important;
+}
+
+//用于覆盖树形结构覆盖颜色
 .tree-color-black .ivu-btn > .ivu-icon {
   color: #272927 !important;
 }
@@ -204,7 +209,7 @@ body {
   text-align: center;
 }
 
-/*实时监控 表单的lable大小*/
+//实时监控 表单的lable大小
 .real-time-form .ivu-form-item-label {
   font-size: 12px !important;
 }
@@ -213,7 +218,7 @@ body {
   width: 180px;
 }
 
-/*用电监测的表格里面span标签 对其*/
+//用电监测的表格里面span标签 对其
 .ydjc-tree {
   .ivu-tree-arrow i {
     margin-top: -24px;
@@ -230,21 +235,21 @@ body {
   display: inline-block;
 }
 
-/*父级定位器*/
+//父级定位器
 .father-position {
   position: relative;
 }
 
-/*子级定位器*/
+//子级定位器
 .child-position {
   position: absolute;
 }
 
-/*特种设备*/
+//特种设备
 .tzsb-er-min {
   height: 116px;
   overflow: hidden;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #7e7e7e;
   margin-bottom: 15px;
   margin-top: 10px;
 }
@@ -260,17 +265,17 @@ body {
 }
 
 .tzsb-child-info {
-  left: 30%;
+  left: 28%;
   top: 3%;
 }
 
 .tzsb-child-info .left-content {
-  width: 48%;
+  width: 43%;
   float: left;
 }
 
 .tzsb-child-info .right-content {
-  width: 51%;
+  width: 53%;
   float: left;
 }
 
@@ -283,25 +288,25 @@ body {
 }
 
 .tzsb-group span {
-  font-size: 12px;
+  font-size: 11px;
   line-height: 15px;
 }
 
 .tzsb-info-value {
-  padding-left: 7px;
-  color: #006F04;
+  padding-left: 8px;
+  //color: #47ecef;
 }
 
 .tzsb-history-search-bt {
   margin-left: 10px;
 }
 
-/*控制室管理*/
+//控制室管理
 .kzs-menu-btn {
   text-align: center;
 }
 
-/*应管理*/
+//应管理
 .hzyj-btn > span {
   width: 100%;
 }
@@ -322,12 +327,12 @@ body {
   margin-top: 20px;
 }
 
-/*人员管理页面*/
-/*.echart-box #chartLineBox2 canvas, .echart-box #chartLineBox3 canvas  {*/
-/*    top: -50px !important;*/
-/*}*/
+//人员管理页面
+//.echart-box #chartLineBox2 canvas, .echart-box #chartLineBox3 canvas  {
+//    top: -50px !important;
+//}
 
-/*属性结构*/
+//属性结构
 .ryxxgl-tree .ivu-btn-icon-only {
   height: 25px !important;
 }
@@ -340,6 +345,7 @@ body {
   margin-top: -20px;
 }
 
+// Tool类别
 .cell-normal-color {
   background-color: #0feb16 !important;
 }
@@ -357,20 +363,28 @@ body {
 }
 
 .cell-b-color {
-  background-color: #f47c52 !important;
+  background-color: #fc8a03 !important;
 }
 
 .cell-c-color {
-  background-color: #fbf374 !important;
+  background-color: #fdf003 !important;
 }
 
 .cell-other-color {
-  background-color: #3123fb !important;
+  background-color: #3f3a94 !important;
 }
 
 .cell-q-gray-color {
   background-color: #f5f5f5 !important;
 }
+
+.ivu-flex-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .half-width {
   width: 49% !important;
@@ -417,7 +431,7 @@ body {
     background: #262626 !important;
   }
 
-  /*覆盖导航 按钮 颜色*/
+  //覆盖导航 按钮 颜色
 
   .nav-btn-color .ivu-btn {
     background-color: #3a3a3a;
@@ -428,7 +442,7 @@ body {
     }
   }
 
-  /*覆盖导航 按钮 颜色 hover颜色*/
+  //覆盖导航 按钮 颜色 hover颜色
 
   .nav-btn-color .ivu-btn:hover {
     //background-color: #3a3a3a;
@@ -483,13 +497,13 @@ body {
     }
   }
 
-  /*内容板块的色调*/
+  //内容板块的色调
 
   .i-admin-left-menu, .content-layout-right {
     background: #262626;
   }
 
-  /*定义用户主题 在这个下面的某些组件样式需要求改成对应的颜色*/
+  //定义用户主题 在这个下面的某些组件样式需要求改成对应的颜色
 
   .ivu-user-theme {
     .ivu-card {
@@ -502,6 +516,7 @@ body {
         letter-spacing: 1px;
         padding: 3px 0;
         border: 1px solid transparent !important;
+
         &:hover {
           // background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #333), color-stop(1, #3b979b));
           background: linear-gradient(to bottom, #333, #3b979b);
@@ -514,7 +529,7 @@ body {
       }
 
       .ivu-tree ul {
-        //font-size: 12px;
+        font-size: 13px;
       }
 
       .ivu-card-head p, .ivu-card-head-inner {
@@ -523,8 +538,10 @@ body {
     }
 
     .ivu-btn-default {
-      background: transparent !important;
+      //background: transparent !important;
+      background: linear-gradient(to bottom, #3F3F3F, #1E1E1E) !important;
       color: #b5b5b5;
+      border: 1px solid #7e7e7e;
     }
   }
 
@@ -534,12 +551,42 @@ body {
     border-color: #6de5e9;
   }
 
+  //form表单样式
+
+  .ivu-form-item-label, .ivu-form-item {
+    color: #e3e3e3;
+  }
+
+  .ivu-form-item {
+    margin-bottom: 15px;
+  }
+
+  .ivu-select-item {
+    color: #e3e3e3;
+  }
+
+  .ivu-select-item:hover {
+    background-color: #d3d1d2;
+    color: #3d3d3d;
+  }
+
   .ivu-card-head {
     border-bottom: 1px solid #666;
   }
 
   .env-air-tree .ivu-icon-ios-arrow-forward {
     margin-top: 0;
+  }
+
+  .i-ctr-hj{
+
+    .ivu-icon-ios-arrow-forward {
+      margin-top: -18px;
+    }
+
+    .ivu-btn-icon-only.ivu-btn-small:hover {
+      background: transparent !important;
+    }
   }
 
   .ivu-btn-small {
@@ -555,15 +602,137 @@ body {
     background-color: #8b8b8b;
   }
 
+
+  // 风险分区里面的色块居中
+  .user-note-box > .ivu-btn > span, .ivu-btn > i {
+    display: unset !important;
+  }
+
   //针对于表格的样式
+  // 修改背景色
   .ivu-table td, .ivu-table th {
     background-color: #353535;
   }
+
+  .ivu-table {
+    font-size: 11px;
+    color: #cfcfcf;
+  }
+
+  .ivu-table-wrapper-with-border {
+    border: 1px solid #7e7e7e;
+    border-bottom: 0;
+    border-right: 0;
+  }
+
+  // 隐藏table底部的线条
+  .ivu-table:before, .ivu-table:after {
+    display: none;
+  }
+
+
+  //定义用户的边框色
+  .ivu-border {
+    border: 1px solid #7e7e7e;
+  }
+
+  .ivu-text-color {
+    color: #cfcfcf;
+  }
+
+  .ivu-font-size-small {
+    font-size: 12px;
+  }
+  .ivu-theme-color {
+    color: #6de5e9
+  }
+
+  .ivu-bg-gray {
+    background: linear-gradient(to bottom, #3B3B3B, #262626);
+  }
+
+  .ivu-date-picker-cells-cell-range:before {
+    background: #5f5f5f;
+  }
+
+  .ivu-table-border th, .ivu-table-border td {
+    border-right: 1px solid #7e7e7e;
+  }
+
+  .ivu-table th, .ivu-table td {
+    border-bottom: 1px solid #7e7e7e;
+  }
+
+  // 页面辅助
+  .user-note-box {
+    width: 90px;
+    top: 8px;
+    left: 8px;
+    .ivu-btn {
+      width: 89px;
+      margin-bottom: 8px;
+    }
+  }
+  // 正方形的色块
+  .user-square-in-btn {
+    float: right;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+  }
+
+  .ivu-border-none {
+    border: none !important;
+  }
+
+  // 超出部分 显示滑动条
+  .ivu-overflow-auto {
+    overflow: auto;
+  }
+
+  .ivu-btn-selected {
+    background: linear-gradient(to bottom, #333, #3b979b);
+    border: 1px solid #47ecef !important;
+    -webkit-box-shadow: 0 0 8px #11f3c9 inset !important;
+    -moz-box-shadow: 0 0 8px #11f3c9 inset !important;
+    box-shadow: 0 0 8px #11f3c9 inset !important;
+    color: #6de5e9
+  }
+
+  .ivu-btn-custom {
+    background: linear-gradient(to bottom, #333, #3b979b) !important;
+    border: 1px solid #47ecef !important;
+    -webkit-box-shadow: 0 0 8px #11f3c9 inset !important;
+    -moz-box-shadow: 0 0 8px #11f3c9 inset !important;
+    box-shadow: 0 0 8px #11f3c9 inset !important;
+    color: #6de5e9
+  }
+
+  //针对表单 input select 更改
+  .ivu-input, .ivu-select-selection {
+    background-color: #D2D2D2;
+  }
+
+  .ivu-no-lable {
+    .ivu-select-selection {
+      background: linear-gradient(to bottom, #3F3F3F, #1E1E1E) !important;
+      border: 1px solid #7e7e7e;
+    }
+  }
+
+  // 表单查询按钮
+  .ivu-query-btn {
+    background: linear-gradient(to bottom, #333, #355478) !important;
+    color: #5C98F1;
+    border: 1px solid #5C98F1 !important;
+  }
+
 }
 
-.ivu-tree-title-selected{
-  background:linear-gradient(to bottom, #333, #3b979b);
+.ivu-tree-title-selected {
+  background: linear-gradient(to bottom, #333, #3b979b);
   border: 1px solid #47ecef !important;
   box-shadow: 0 0 1px #2b8f92;
-  color:#6de5e9 !important
+  color: #6de5e9 !important
 }
+

@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="left">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Button slot="extra" size="small" to="risk_warning_history" style="margin-left: 10px;">历史数据</Button>
@@ -10,7 +11,8 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <img :src="modelImg" alt="模型视图">
         </div>
     </main>
@@ -18,11 +20,12 @@
 <script>
     import { mapState } from 'vuex';
     import { getRiskEarlyWarning } from '@api/account';
-
+    import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '风险预警',
                 modelImg: '/assets/images/u2224.svg',
                 checkBox: [],
@@ -33,6 +36,7 @@
             ...mapState('admin/layout', [
                 'isMobile',
                 'isTablet',
+                'screenHeight',
                 'isDesktop',
                 'menuCollapse'
             ])
@@ -45,6 +49,11 @@
                     that.checkInfo = res.checked;
                     console.log(that.checkInfo)
                 }).catch(err => { console.log('err: ', err) })
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
             select () {

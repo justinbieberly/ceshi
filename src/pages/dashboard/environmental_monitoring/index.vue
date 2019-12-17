@@ -7,7 +7,7 @@
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Tabs type="card" style="margin-top: 20px;">
                         <TabPane label="可燃气体监测">
-                            <Tree :data="data5" :render="renderContent" class="env-air-tree"></Tree>
+                            <Tree :data="data5" :render="renderContent" class="env-air-tree ivu-text-color i-ctr-hj"></Tree>
                         </TabPane>
                         <TabPane label="环境温度监测">
                             <Tree :data="data6" :render="renderContent" class="env-air-tree"></Tree>

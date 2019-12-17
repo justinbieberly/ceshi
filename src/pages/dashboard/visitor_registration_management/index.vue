@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-screen ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <div class="ivu-block">
                 <Form :model="formItem" :label-width="70"  inline :label-colon="true"
                       class="real-time-form ivu-inline-block user-full-screen">
@@ -21,7 +22,9 @@
                             <Option value="1">男</Option>
                             <Option value="0">女</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery" style="margin-right: 20px;">查询结果</Button>
+                        <Button type="primary" size="small" @click="doQuery"
+                                class="ivu-query-btn"
+                                style="margin-right: 20px;">查询结果</Button>
                         <i-link to="/dashboard/real_time_monitor" style="width: 80px; margin-right: 20px;">
                             <Button style="margin-left: 8px" size="small" >重置查询</Button>
                         </i-link>
@@ -36,7 +39,7 @@
                             返回
                         </Button>
                     </FormItem>
-                    <div class="ivu-inline-block ivu-form-item" style="float: right">
+                    <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
                         <Select v-model="formItem.showNum" size="small"
                                 placeholder="显示条数"
                                 @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
@@ -94,6 +97,7 @@
 <script>
     import { mapState } from 'vuex'
     import { getVisitorRegistration, getregistrationLog } from '@api/account'
+
     export default {
         name: 'dashboard-visitor-registration-management',
         data () {
@@ -224,11 +228,16 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
         created () {
             this.getVisitorData()
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
             setPageSize () {

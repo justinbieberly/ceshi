@@ -11,8 +11,22 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+        <div class="content-layout-right user-full-img father-position" :class="{ 'content-layout-right-pro': this.menuCollapse }"
              ref="right">
+            <div class="ivu-block child-position user-note-box">
+                <Button type="default" size="small">
+                    超量
+                    <i class="user-square-in-btn cell-a-color"></i>
+                </Button>
+                <Button type="default" size="small">
+                    警戒
+                    <i class="user-square-in-btn cell-b-color"></i>
+                </Button>
+                <Button type="default" size="small">
+                    正常
+                    <i class="user-square-in-btn cell-other-color"></i>
+                </Button>
+            </div>
             <img :src="modelImg" alt="模型视图">
         </div>
     </main>
@@ -45,19 +59,10 @@
                             render: (h, params) => {
                                 let info = params.row.state;
                                 if (info === 1) {
-                                    params.row.cellClassName = {
-                                        graphic: 'cell-normal-color'
-                                    }
                                     return h('span', '正常');
                                 } else if (info === 2) {
-                                    params.row.cellClassName = {
-                                        graphic: 'cell-warning-color'
-                                    }
                                     return h('span', '警戒');
                                 } else if (info === 3) {
-                                    params.row.cellClassName = {
-                                        graphic: 'cell-error-color'
-                                    }
                                     return h('span', '超量');
                                 }
                             }
@@ -71,7 +76,31 @@
                             title: '图示',
                             align: 'center',
                             width: '66px',
-                            key: 'graphic'
+                            key: 'graphic',
+                            render: (h, params) => {
+                                let color = {}
+                                let info = params.row.state;
+                                if (info === 1) {
+                                    color = {
+                                        backgroundColor: '#3f3a94 !important'
+                                    }
+                                } else if (info === 2) {
+                                    color = {
+                                        backgroundColor: '#fc8a03 !important'
+                                    }
+                                } else if (info === 3) {
+                                    color = {
+                                        backgroundColor: '#fb1010 !important'
+                                    }
+                                }
+                                console.log(params.row)
+                                return h('div', {
+                                    style: Object.assign({
+                                        width: '18px',
+                                        height: '18px'
+                                    }, color)
+                                }, '');
+                            }
                         }
                     ],
                     data: []

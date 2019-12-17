@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
             <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
@@ -8,7 +9,26 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img father-position" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
+            <div class="ivu-block child-position user-note-box">
+                <Button type="default" size="small">
+                    重大风险
+                    <i class="user-square-in-btn cell-a-color"></i>
+                </Button>
+                <Button type="default" size="small">
+                    较大风险
+                    <i class="user-square-in-btn cell-b-color"></i>
+                </Button>
+                <Button type="default" size="small">
+                    一般风险
+                    <i class="user-square-in-btn cell-c-color"></i>
+                </Button>
+                <Button type="default" size="small">
+                    底风险
+                    <i class="user-square-in-btn cell-other-color"></i>
+                </Button>
+            </div>
             <img :src="modelImg" alt="模型视图">
         </div>
     </main>
@@ -28,13 +48,13 @@
                     columns: [
                         {
                             title: '风险分区',
-                            width: '64px',
+                            width: '86px',
                             align: 'center',
                             key: 'name'
                         },
                         {
                             title: '防火分区',
-                            width: '96px',
+                            width: '66px',
                             align: 'center',
                             key: 'zoning'
                         },
@@ -57,7 +77,8 @@
                         },
                         {
                             title: '图示',
-                            width: '70px',
+                            width: '60px',
+                            align: 'center',
                             key: 'graphic',
                             render: (h, params) => {
                                 let color = {}
@@ -82,8 +103,8 @@
                                 console.log(params.row)
                                 return h('div', {
                                     style: Object.assign({
-                                        width: '20px',
-                                        height: '20px'
+                                        width: '18px',
+                                        height: '18px'
                                     }, color)
                                 }, '');
                             }
@@ -99,6 +120,7 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -109,6 +131,11 @@
                     console.log('pageData', res);
                     that.reservoirData.data = res.tableData.data;
                 }).catch(err => { console.log('err: ', err) })
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
         }

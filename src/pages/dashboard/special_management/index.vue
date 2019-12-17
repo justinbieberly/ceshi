@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
             <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
@@ -28,41 +29,49 @@
 
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <img :src="modelImg" alt="模型视图" v-if="!isHistory">
             <div v-else>
                 <div class="ivu-block">
-                    <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+                    <Form :model="formItem" :label-width="70"  inline :label-colon="true"
+                          class="real-time-form ivu-inline-block user-full-screen">
                         <div class="ivu-form-item" style="line-height: 32px;">
                             功能操作
                         </div>
                         <FormItem label="输入搜索">
-                            <Input v-model="formItem.condition" placeholder="编号/名称/..." size="small" style="width: 120px" />
+                            <Input v-model="formItem.condition" placeholder="编号/名称/..."
+                                   size="small" style="width: 150px" />
                         </FormItem>
                         <FormItem label="充电状态">
-                            <Select v-model="formItem.state" size="small"  style="width:100px">
-                                <Option :value="item.value" v-for="(item, key) in formItem.stateRow" :key="key">{{ item.name }}</Option>
+                            <Select v-model="formItem.state" size="small"  style="width:150px">
+                                <Option :value="item.value"
+                                        v-for="(item, key) in formItem.stateRow" :key="key">{{ item.name }}</Option>
                             </Select>
                         </FormItem>
                         <FormItem label="时间">
-                            <DatePicker type="daterange" size="small" placement="bottom-end" placeholder="请选择日期" style="width: 200px" v-model="formItem.dateRange"></DatePicker>
-                            <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
+                            <DatePicker type="daterange" size="small" placement="bottom-end"
+                                        placeholder="请选择日期" style="width: 150px" v-model="formItem.dateRange"></DatePicker>
+                            <Button type="primary" size="small" @click="doQuery" class="ivu-ml ivu-query-btn">查询结果</Button>
+                            <Button size="small" @click="showHistory(false)" style="margin-left: 18px;">
+                                <Icon type="ios-arrow-back" />
+                                返回
+                            </Button>
                         </FormItem>
-                        <FormItem label="显示条数">
-                            <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                        <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
+                            <Select v-model="formItem.showNum" size="small"
+                                    placeholder="显示条数"
+                                    @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
                                 <Option value="20">20条/页</Option>
                                 <Option value="50">50条/页</Option>
                                 <Option value="100">100条/页</Option>
                             </Select>
-                        </FormItem>
-                        <FormItem label="排序方式">
-                            <Select v-model="formItem.sortWay" size="small">
+                            <Select v-model="formItem.sortWay" size="small"
+                                    placeholder="排序方式"
+                                    style="width: 110px;margin-left: 10px; margin-top: 4px;">
                                 <Option :value="item.key" v-for="(item, key) in reservoirData.columns" :key="key">{{ item.title }}</Option>
                             </Select>
-                        </FormItem>
-                        <FormItem label="排序方式">
-                            <Button type="primary" size="small" @click="showHistory(false)" class="ivu-ml">返回</Button>
-                        </FormItem>
+                        </div>
                     </Form>
                     <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
                 </div>
@@ -207,6 +216,7 @@
         },
         computed: {
             ...mapState('admin/layout', [
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -220,6 +230,11 @@
                         that.drawEchars('chartLineBox' + i, thisItem.progressValue, thisItem.state, thisItem.time);
                     }
                 }).catch(err => { console.log('err: ', err) })
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
             drawEchars (elementId, progressValue, state, times) {
@@ -242,7 +257,7 @@
                         value: progressValue
                     }
                     myChart.setOption({
-                        backgroundColor: '#fff',
+                        backgroundColor: '#353535',
                         title: {
                             text: data.name,
                             textAlign: 'center'

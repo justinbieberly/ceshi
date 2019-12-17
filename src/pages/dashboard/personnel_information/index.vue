@@ -1,6 +1,8 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title='title' icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Button slot="extra" size="small" @click="showTable" v-if="!isTable">
@@ -16,12 +18,13 @@
                         返回
                     </Button>
                     <div class="ivu-block">
-                        <Tree :data="treeData" :render="renderContent" class="tree-color-black ryxxgl-tree"></Tree>
+                        <Tree :data="treeData" :render="renderContent" class="tree-color-gray ydjc-tree ryxxgl-tree"></Tree>
                     </div>
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
             <div class="ivu-block" :class="{ 'ivu-hidden':isTable }">
                 <div class="ivu-block half-width ivu-float-left ivu-text-center echart-box">
                     <div id="chartLineBox" style="width: 80%;height: 300px;" class="ivu-inline-block"> </div>
@@ -37,7 +40,8 @@
                 </div>
             </div>
             <div class="ivu-block ivu-hidden" :class="{ 'ivu-show':isTable }">
-                <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+                <Form :model="formItem" :label-width="70"  inline :label-colon="true"
+                      class="real-time-form ivu-inline-block user-full-screen">
                     <div class="ivu-form-item" style="line-height: 32px;">
                         功能操作
                     </div>
@@ -55,22 +59,25 @@
                             <Option value="1" >男</Option>
                             <Option value="2" >女</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery" class="ivu-ml">查询结果</Button>
+                        <Button type="primary" size="small" @click="doQuery"
+                                class="ivu-ml ivu-query-btn">查询结果</Button>
                         <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
                         <Button size="small" @click="modalTable(0)" class="ivu-ml">添加</Button>
                     </FormItem>
-                    <FormItem label="显示条数">
-                        <Select v-model="formItem.showNum" size="small" @on-change="setPageSize">
+                    <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
+                        <Select v-model="formItem.showNum" size="small"
+                                placeholder="显示条数"
+                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
-                    </FormItem>
-                    <FormItem label="排序方式">
-                        <Select v-model="formItem.sortWay" size="small">
-                            <Option :value="item.key" v-for="(item, key) in table.columns" :key="key">{{ item.title }}</Option>
+                        <Select v-model="formItem.sortWay" size="small"
+                                placeholder="排序方式"
+                                style="width: 110px;margin-left: 10px; margin-top: 4px;">
+                            <Option value="errorInfo">报警内容</Option>
                         </Select>
-                    </FormItem>
+                    </div>
                 </Form>
                 <Table border :columns="table.columns" :data="table.data" :loading="loading" class="ivu-mt" ref="table">
                     <template slot-scope="{ row, index }" slot="action">
@@ -269,11 +276,13 @@
 <script>
     import { mapState } from 'vuex';
     import { getPersonnelInformation, getPersonnelList, getUserInfoById } from '@api/account';
+    import Config from '@/config';
     const echarts = require('echarts');
     export default {
         name: 'dashboard-personnel-information',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '人员信息管理',
                 formData: {
                     name: undefined,
@@ -535,6 +544,7 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -544,13 +554,18 @@
                 .then(async res => {
                     that.treeData = that.dealTableData(res.tableData.data);
                     this.getEcharsData(res.tableData.data)
-                    this.drawPieChart('chartLineBox', this.echarsData.numberEchars.legend, this.echarsData.numberEchars.data)
-                    this.drawPieChart('chartLineBox1', this.echarsData.sexEchars.legend, this.echarsData.sexEchars.data)
-                    this.drawBarChart('chartLineBox2', this.echarsData.ageEchars.xAxis, this.echarsData.ageEchars.data)
-                    this.drawBarChart('chartLineBox3', this.echarsData.workEchars.xAxis, this.echarsData.ageEchars.data)
+                    this.drawPieChart('chartLineBox', this.echarsData.numberEchars.legend, this.echarsData.numberEchars.data, 0)
+                    this.drawPieChart('chartLineBox1', this.echarsData.sexEchars.legend, this.echarsData.sexEchars.data, 1)
+                    this.drawBarChart('chartLineBox2', this.echarsData.ageEchars.xAxis, this.echarsData.ageEchars.data, 0)
+                    this.drawBarChart('chartLineBox3', this.echarsData.workEchars.xAxis, this.echarsData.ageEchars.data, 1)
                 }).catch(err => {
                     console.log('err: ', err)
                 })
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
             renderContent (h, { root, node, data }) {
@@ -914,13 +929,20 @@
                 }
                 this.echarsData.workEchars.data[key] += 1
             },
-            drawPieChart (elementId, legend, data) {
+            drawPieChart (elementId, legend, data, state) {
+                let title = '人员数量'
+                if (state === 1) {
+                    title = '男女比例'
+                }
                 let myChart = echarts.init(document.getElementById(elementId));
                 myChart.setOption({
                     title: {
-                        text: '人员数量',
+                        text: title,
                         subtext: '饼状图',
-                        x: 'center'
+                        x: 'center',
+                        textStyle: {
+                            color: '#cfcfcf'
+                        }
                     },
                     tooltip: {
                         trigger: 'item',
@@ -930,7 +952,10 @@
                         orient: 'vertical',
                         left: 'left',
                         // bottom: 'bottom',
-                        data: legend
+                        data: legend,
+                        textStyle: {
+                            color: '#cfcfcf'
+                        }
                     },
                     series: [
                         {
@@ -950,9 +975,20 @@
                     ]
                 })
             },
-            drawBarChart (elementId, legend, data) {
+            drawBarChart (elementId, legend, data, state) {
+                let title = '年龄分布'
+                if (state === 1) {
+                    title = '在职时长'
+                }
                 let myChart = echarts.init(document.getElementById(elementId));
                 myChart.setOption({
+                    title: {
+                        text: title,
+                        x: 'center',
+                        textStyle: {
+                            color: '#cfcfcf'
+                        }
+                    },
                     color: ['#3398DB'],
                     tooltip: {
                         trigger: 'axis',
@@ -962,13 +998,33 @@
                     },
                     xAxis: {
                         type: 'category',
-                        data: legend
+                        data: legend,
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#cfcfcf'
+                            }
+                        },
+                        lineStyle: {
+                            color: '#cfcfcf' // 更改坐标轴颜色
+                        }
                     },
                     yAxis: {
-                        type: 'value'
+                        type: 'value',
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#cfcfcf'
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#cfcfcf' // 更改坐标轴颜色
+                            }
+                        }
                     },
                     grid: {
-                        top: '0',
+                        top: '15%',
                         left: '3%',
                         right: '4%',
                         bottom: '0%',
@@ -1062,16 +1118,16 @@
             height: 300px;
         }
         .echart-box:nth-child(1) {
-            border-right: 1px solid #c9c1cb;
+            border-right: 1px solid #7e7e7e;
         }
         .echart-box:nth-child(2) {
-            border-bottom: 1px solid #c9c1cb;
+            border-bottom: 1px solid #7e7e7e;
         }
         .echart-box:nth-child(3) {
-            border-top: 1px solid #c9c1cb;
+            border-top: 1px solid #7e7e7e;
         }
         .echart-box:nth-child(4) {
-            border-left: 1px solid #c9c1cb;
+            border-left: 1px solid #7e7e7e;
         }
     }
     .user-info-img {

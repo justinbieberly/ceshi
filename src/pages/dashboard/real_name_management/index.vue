@@ -1,6 +1,8 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }" ref="contentMenu">
+        <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
+             ref="left">
+            <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
                     <Button slot="extra" size="small" @click.prevent="getRecodeOfInOut" v-if="!isTable">
@@ -17,30 +19,30 @@
                     </Button>
                     <Table border :columns="table.tableLeft.columns" :data="table.tableLeft.data" ref="table"></Table>
                     <div class="ivu-block ivu-mt-16">
-                        <div class="ivu-p-8">报警信息</div>
-                        <div class="ivu-block ivu-b ivu-p-8 ivu-mb-8" v-for="(item, key) in alarmInformation" :key="key">
-                            <div class="left-item">
+                        <div style="line-height: 1.8;">报警信息</div>
+                        <div class="ivu-block ivu-border ivu-p-8 ivu-mb-8 ivu-bg-gray" v-for="(item, key) in alarmInformation" :key="key">
+                            <div class="left-item ivu-font-size-small">
                                 <div class="ivu-inline-block bjxx-item">
                                     <span class="ivu-inline-block">姓名:</span>
                                     <span class="ivu-inline-block tzsb-info-value">{{ item.name }}</span>
+                                </div>
+                                <div class="ivu-inline-block bjxx-item">
+                                    <span class="ivu-inline-block">性别:</span>
+                                    <span class="ivu-inline-block tzsb-info-value">{{ item.sex }}</span>
+                                </div>
+                                <div class="ivu-inline-block bjxx-item time-full">
+                                    <span class="ivu-inline-block">时间:</span>
+                                    <span class="ivu-inline-block tzsb-info-value">{{ item.time }}</span>
                                 </div>
                                 <div class="ivu-inline-block bjxx-item">
                                     <span class="ivu-inline-block">状态:</span>
                                     <span class="ivu-inline-block tzsb-info-value">{{ item.status }}</span>
                                 </div>
                                 <div class="ivu-inline-block bjxx-item">
-                                    <span class="ivu-inline-block">性别:</span>
-                                    <span class="ivu-inline-block tzsb-info-value">{{ item.sex }}</span>
-                                </div>
-                                <div class="ivu-inline-block bjxx-item">
-                                    <span class="ivu-inline-block">类别:</span>
+                                    <span class="ivu-inline-block">人员:</span>
                                     <span class="ivu-inline-block tzsb-info-value">{{ item.type }}</span>
                                 </div>
-                                <div class="ivu-inline-block bjxx-item time-full">
-                                    <span class="ivu-inline-block">时间:</span>
-                                    <span class="ivu-inline-block tzsb-info-value">{{ item.time }}</span>
-                                </div>
-                                <div class="ivu-block">置顶：{{ item.info }}</div>
+                                <div class="ivu-block ivu-theme-color">置顶：{{ item.info }}</div>
                             </div>
                             <div class="right-item">
                                 <img :src="item.header" alt="">
@@ -51,8 +53,9 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }">
-            <div v-if="isTable" class="ivu-block">
+        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right">
+            <div v-if="isTable" class="ivu-block user-full-screen ivu-overflow-auto">
                 <div class="ivu-block">
                     <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
                         <div class="ivu-form-item" style="line-height: 32px;">
@@ -72,12 +75,12 @@
                                 <Option value="1">内部</Option>
                                 <Option value="0">外部</Option>
                             </Select>
-                            <Button type="primary" size="small" @click="doQuery">查询结果</Button>
+                            <Button type="primary" size="small" @click="doQuery" class="ivu-query-btn">查询结果</Button>
                             <i-link to="/dashboard/real_time_monitor">
                                 <Button style="margin-left: 8px" size="small" >重置查询</Button>
                             </i-link>
                         </FormItem>
-                        <div class="ivu-inline-block ivu-form-item" style="float: right">
+                        <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
                             <Select v-model="formItem.showNum" size="small"
                                     placeholder="显示条数"
                                     @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
@@ -121,10 +124,12 @@
 <script>
     import { mapState } from 'vuex';
     import { getRealNameManagement, getRecordOfInOut } from '@api/account';
+    import Config from '@/config';
     export default {
         name: 'dashboard-real-name-management',
         data () {
             return {
+                logoDesc: Config.logo.logoDesc,
                 title: '实名进出管理',
                 imgModel: '/assets/images/u5870.svg',
                 isTable: false,
@@ -151,6 +156,7 @@
                             {
                                 title: '类型',
                                 align: 'center',
+                                width: '120px',
                                 key: 'type'
                             },
                             {
@@ -267,6 +273,7 @@
                 'isMobile',
                 'isTablet',
                 'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -276,6 +283,11 @@
                 that.alarmInformation = res.alarmInformation
                 that.table.tableLeft.data = res.data
             })
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
+            this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
             setPageSize () {
@@ -329,17 +341,7 @@
 </script>
 <style lang="scss" scoped>
     .bjxx-item {
-        width: 49%;
-        span:nth-child(1){
-            width: 45%;
-        }
-        margin-bottom: 10px;
-    }
-    .time-full {
-        width: 100% !important;
-        span:nth-child(1){
-            width: 21% !important;
-        }
+        width: 80%;
     }
     .left-item {
         float: left;
@@ -347,7 +349,10 @@
     }
     .right-item {
         float: left;
-        width: 25%;
+        width: 68px;
+        height: 68px;
+        border-radius: 4px;
+        overflow: hidden;
         display: flex;
         flex-direction: row;
         align-items: center;

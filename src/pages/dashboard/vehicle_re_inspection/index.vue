@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-screen ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+            ref="right">
             <div class="ivu-block">
                 <Form :model="formItem" :label-width="70"  inline :label-colon="true"
                       class="real-time-form ivu-inline-block user-full-screen">
@@ -20,7 +21,9 @@
                         <DatePicker type="daterange" placement="bottom-end" placeholder="选择进入时间"
                                     size="small"
                                     style="width: 200px;margin-right: 20px;"></DatePicker>
-                        <Button type="primary" size="small" @click="doQuery" style="margin-right: 20px;">查询结果</Button>
+                        <Button type="primary" size="small" @click="doQuery"
+                                class="ivu-query-btn"
+                                style="margin-right: 20px;">查询结果</Button>
                         <Button size="small" @click="doQuery" style="margin-right: 20px;">重置查询</Button>
                         <Button  size="small" style="margin-right: 8px;"
                                  @click="exportData" >
@@ -28,7 +31,7 @@
                             导出
                         </Button>
                     </FormItem>
-                    <div class="ivu-inline-block ivu-form-item" style="float: right">
+                    <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
                         <Select v-model="formItem.showNum" size="small"
                                 placeholder="显示条数"
                                 @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
@@ -264,6 +267,7 @@
             ...mapState('admin/layout', [
                 'isMobile',
                 'isTablet',
+                'screenHeight',
                 'isDesktop',
                 'menuCollapse'
             ])
@@ -273,6 +277,10 @@
             getVehicleReInspection().then(async res => {
                 that.table.data = res.tableData
             })
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
             setPageSize () {
