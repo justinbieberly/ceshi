@@ -28,7 +28,7 @@
                     columns: [
                         {
                             title: '风险分区',
-                            width: '94px',
+                            width: '64px',
                             align: 'center',
                             key: 'name'
                         },

@@ -262,7 +262,7 @@
             if (this.isTablet && this.showSiderCollapse) this.updateMenuCollapse(true);
             let screenHeight = document.body.clientHeight
             let navHeight = 64
-            this.$store.commit('admin/layout/setScreen', screenHeight - navHeight - 12);
+            this.$store.commit('admin/layout/setScreen', screenHeight - navHeight - 18);
         }
     }
 </script>

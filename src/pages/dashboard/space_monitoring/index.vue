@@ -29,7 +29,7 @@
             return {
                 logoDesc: Config.logo.logoDesc,
                 title: '空间监测',
-                modelImg: '/assets/images/u957.svg',
+                modelImg: '/assets/images/vbg.png',
                 treeData: [],
                 buttonProps: {
                     type: 'primary',

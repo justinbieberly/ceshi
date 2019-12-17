@@ -27,7 +27,7 @@
             return {
                 logoDesc: Config.logo.logoDesc,
                 title: '三维模型',
-                modelImg: '/assets/images/u87.svg',
+                modelImg: '/assets/images/vbg.png',
                 listRow: []
             }
         },

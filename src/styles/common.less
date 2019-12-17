@@ -65,6 +65,10 @@ body {
   line-height: 20px !important;
 }
 
+.user-header-recover:hover {
+  background-color: #262626 !important
+}
+
 .re-header-size {
   /*height: 20px !important;*/
 }
@@ -76,7 +80,7 @@ body {
 
 /*内容板块边距设置*/
 .i-layout-content-main-pro {
-  margin-top: 10px !important;
+  margin-top: 9px !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
@@ -98,6 +102,7 @@ body {
 .content-layout-left {
   margin-left: 8px;
   width: 22.4%;
+  height:  calc(100vh - 7);
   //flex: 1;
   overflow: auto;
   float: left;
@@ -105,9 +110,9 @@ body {
 
 .content-layout-right {
   width: 76.56% !important;
-  padding: 10px;
+  padding: 8px;
   float: right;
-  margin-left: 1%;
+  margin-left: 8px;
   background: #fff;
   border-radius: 2px;
 }
@@ -134,7 +139,7 @@ body {
 
 /*左侧的flex沾满布局s*/
 .i-admin-left-menu {
-  height: 95%;
+  height: 95.5%;
   overflow: auto;
 }
 
@@ -214,6 +219,7 @@ body {
     margin-top: -24px;
   }
 }
+
 .user-electricity-span span {
   font-size: 12px;
 }
@@ -491,10 +497,24 @@ body {
       background: #353535;
 
       .ivu-tree-title {
-        color: #cbcbcb;
-      }
-      .ivu-tree ul {
+        color: #bebebe;
         font-size: 12px;
+        letter-spacing: 1px;
+        padding: 3px 0;
+        border: 1px solid transparent !important;
+        &:hover {
+          // background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #333), color-stop(1, #3b979b));
+          background: linear-gradient(to bottom, #333, #3b979b);
+          border: 1px solid #47ecef !important;
+          -webkit-box-shadow: 0 0 8px #11f3c9 inset !important;
+          -moz-box-shadow: 0 0 8px #11f3c9 inset !important;
+          box-shadow: 0 0 8px #11f3c9 inset !important;
+          color: #6de5e9
+        }
+      }
+
+      .ivu-tree ul {
+        //font-size: 12px;
       }
 
       .ivu-card-head p, .ivu-card-head-inner {
@@ -536,4 +556,14 @@ body {
   }
 
   //针对于表格的样式
+  .ivu-table td, .ivu-table th {
+    background-color: #353535;
+  }
+}
+
+.ivu-tree-title-selected{
+  background:linear-gradient(to bottom, #333, #3b979b);
+  border: 1px solid #47ecef !important;
+  box-shadow: 0 0 1px #2b8f92;
+  color:#6de5e9 !important
 }
