@@ -171,6 +171,26 @@ const Config = {
             alias: '获取-车辆登记检查-的数据',
             url: '/response/车辆登记检查/response.json',
             method: 'get'
+        },
+        getRegimeManagement: {
+            alias: '获取-制度管理-的数据',
+            url: '/response/制度管理/response.json',
+            method: 'get'
+        },
+        getRegimeByParameter: {
+            alias: '获取-制度管理-某一项的文档数据列表-的数据',
+            url: '/response/制度管理/制度文档/response.json',
+            method: 'get'
+        },
+        getCertificateManagement: {
+            alias: '获取-制度管理-某一项的文档数据列表-的数据',
+            url: '/response/证件管理/response.json',
+            method: 'get'
+        },
+        getCertificateByParameter: {
+            alias: '获取-制度管理-某一项的文档数据列表-的数据',
+            url: '/response/证件管理/证件列表/response.json',
+            method: 'get'
         }
 
     },

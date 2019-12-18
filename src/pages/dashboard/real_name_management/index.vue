@@ -57,7 +57,8 @@
              ref="right">
             <div v-if="isTable" class="ivu-block user-full-screen ivu-overflow-auto">
                 <div class="ivu-block">
-                    <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+                    <Form :model="formItem" :label-width="70"  inline :label-colon="true"
+                          class="real-time-form ivu-inline-block user-full-screen">
                         <div class="ivu-form-item" style="line-height: 32px;">
                             功能操作
                         </div>
@@ -65,13 +66,17 @@
                             <Input v-model="formItem.input" placeholder="证件号码/名称" size="small" style="width: 120px"></Input>
                         </FormItem>
                         <FormItem label="进出状态">
-                            <Select v-model="formItem.status" size="small">
+                            <Select v-model="formItem.status"
+                                    class="ivu-nomal-select"
+                                    size="small">
                                 <Option value="1">进入</Option>
                                 <Option value="0">离开</Option>
                             </Select>
                         </FormItem>
                         <FormItem label="人员类型">
-                            <Select v-model="formItem.type" size="small" style="width: 80px; margin-right: 20px;">
+                            <Select v-model="formItem.type" size="small"
+                                    class="ivu-nomal-select"
+                                    style="width: 80px; margin-right: 20px;">
                                 <Option value="1">内部</Option>
                                 <Option value="0">外部</Option>
                             </Select>

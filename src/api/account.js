@@ -288,3 +288,47 @@ export function getVehicleReInspection (data) {
         data
     });
 }
+
+// 获取[制度管理-进出记录]的数据
+export function getRegimeManagement (data) {
+    return request({
+        url: apiConfig.getRegimeManagement.url,
+        method: apiConfig.getRegimeManagement.method,
+        data
+    });
+}
+
+// 获取[制度管理-详情]的数据
+export function getRegimeByParameter (data) {
+    return request({
+        url: apiConfig.getRegimeByParameter.url,
+        method: apiConfig.getRegimeByParameter.method,
+        data
+    });
+}
+
+// 获取[证书管理-menu]的数据
+export function getCertificateManagement (data) {
+    return request({
+        url: apiConfig.getCertificateManagement.url,
+        method: apiConfig.getCertificateManagement.method,
+        data
+    });
+}
+
+// 获取[证书管理-根据参数获取table]的数据
+// todo need delete this example
+export function getCertificateByParameter (data) {
+    if (data.id === 160050114) {
+        return request({
+            url: '/response/证件管理/证件列表/response1.json',
+            method: 'get',
+            data
+        });
+    }
+    return request({
+        url: apiConfig.getCertificateByParameter.url,
+        method: apiConfig.getCertificateByParameter.method,
+        data
+    });
+}

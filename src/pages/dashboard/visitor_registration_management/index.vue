@@ -12,13 +12,17 @@
                         <Input v-model="formItem.input" placeholder="证件号码/名称" size="small" style="width: 120px"></Input>
                     </FormItem>
                     <FormItem label="人员类型" >
-                        <Select v-model="formItem.status" size="small" style="width: 120px">
+                        <Select v-model="formItem.status" size="small"
+                                class="ivu-nomal-select"
+                                style="width: 120px">
                             <Option value="1">内部员工1</Option>
                             <Option value="0">外部人员</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="性别">
-                        <Select v-model="formItem.type" size="small" style="width: 120px; margin-right: 20px;">
+                        <Select v-model="formItem.type" size="small"
+                                class="ivu-nomal-select"
+                                style="width: 120px; margin-right: 20px;">
                             <Option value="1">男</Option>
                             <Option value="0">女</Option>
                         </Select>

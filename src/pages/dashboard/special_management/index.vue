@@ -29,7 +29,7 @@
 
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+        <div class="content-layout-right user-full-img ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
              ref="right">
             <img :src="modelImg" alt="模型视图" v-if="!isHistory">
             <div v-else>
@@ -44,16 +44,23 @@
                                    size="small" style="width: 150px" />
                         </FormItem>
                         <FormItem label="充电状态">
-                            <Select v-model="formItem.state" size="small"  style="width:150px">
+                            <Select v-model="formItem.state" size="small"
+                                    class="ivu-nomal-select"
+                                    style="width:150px">
                                 <Option :value="item.value"
                                         v-for="(item, key) in formItem.stateRow" :key="key">{{ item.name }}</Option>
                             </Select>
                         </FormItem>
                         <FormItem label="时间">
                             <DatePicker type="daterange" size="small" placement="bottom-end"
-                                        placeholder="请选择日期" style="width: 150px" v-model="formItem.dateRange"></DatePicker>
-                            <Button type="primary" size="small" @click="doQuery" class="ivu-ml ivu-query-btn">查询结果</Button>
-                            <Button size="small" @click="showHistory(false)" style="margin-left: 18px;">
+                                        placeholder="请选择日期" style="width: 150px"
+                                        v-model="formItem.dateRange">
+                            </DatePicker>
+                            <Button type="primary" size="small"
+                                    @click="doQuery"
+                                    class="ivu-query-btn ivu-ml-40">查询结果</Button>
+                            <Button size="small" @click="showHistory(false)"
+                                    style="margin-left: 20px;">
                                 <Icon type="ios-arrow-back" />
                                 返回
                             </Button>

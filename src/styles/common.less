@@ -209,6 +209,10 @@ body {
   text-align: center;
 }
 
+.ivu-theme-tree .ivu-tree-title {
+  width: 100%;
+}
+
 //实时监控 表单的lable大小
 .real-time-form .ivu-form-item-label {
   font-size: 12px !important;
@@ -713,6 +717,14 @@ body {
     background-color: #D2D2D2;
   }
 
+  .ivu-input:-ms-input-placeholder, .ivu-nomal-select .ivu-select-placeholder {
+    color: #5b5b5b ;
+  }
+
+  .ivu-input::-webkit-input-placeholder, .ivu-nomal-select .ivu-select-placeholder {
+    color: #5b5b5b ;
+  }
+
   .ivu-no-lable {
     .ivu-select-selection {
       background: linear-gradient(to bottom, #3F3F3F, #1E1E1E) !important;
@@ -725,6 +737,15 @@ body {
     background: linear-gradient(to bottom, #333, #355478) !important;
     color: #5C98F1;
     border: 1px solid #5C98F1 !important;
+  }
+
+  //针对于margin-left
+  .ivu-ml-40 {
+    margin-left: 40px !important;
+  }
+
+  .ivu-mb-30 {
+    margin-bottom: 30px !important;
   }
 
 }

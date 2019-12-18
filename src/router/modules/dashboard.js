@@ -217,14 +217,24 @@ export default {
             component: () => import('@/pages/dashboard/vehicle_re_inspection')
         },
         {
-            path: 'management_system',
-            name: `${pre}management-system`,
+            path: 'regime_management',
+            name: `${pre}regime-management`,
             props: true,
             meta: {
                 ...meta,
                 title: '制度管理'
             },
-            component: () => import('@/pages/dashboard/management_system')
+            component: () => import('@/pages/dashboard/regime_management')
+        },
+        {
+            path: 'certificate_management',
+            name: `${pre}certificate-management`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '证件管理'
+            },
+            component: () => import('@/pages/dashboard/certificate_management')
         }
     ]
 };

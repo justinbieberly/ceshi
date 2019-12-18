@@ -51,7 +51,12 @@
           {
             "name": "用电监测",
             "id": 1002,
-            "path": "/dashboard/electricity_monitoring",
+            "path": "/dashboard/electricity_monitoring"
+          },
+          {
+            "name": "空间监测",
+            "id": 1002,
+            "path": "/dashboard/space_monitoring",
             "secondaryMenu": [
               {
                 "name": "显示监控",
@@ -59,11 +64,6 @@
                 "path": "/dashboard/space_monitoring_show"
               }
             ]
-          },
-          {
-            "name": "空间监测",
-            "id": 1002,
-            "path": "/dashboard/space_monitoring"
           }
         ]
       },
@@ -148,12 +148,12 @@
           {
             "name": "制度管理",
             "id": 1001,
-            "path": "/dashboard/management_system"
+            "path": "/dashboard/regime_management"
           },
           {
             "name": "证件管理",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/certificate_management"
           },
           {
             "name": "职业健康台账",

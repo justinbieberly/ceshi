@@ -1,6 +1,7 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }">
+        <div class="content-layout-right user-full-screen ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+             ref="right" >
             <Grid center square :hover="true" :col="column">
                 <GridItem v-for="(item, key) in gridItems" :key="key" :name="key" class="user-full-img father-position">
                    <span class="child-position"> {{ item }}</span>
@@ -26,7 +27,7 @@
             ...mapState('admin/layout', [
                 'isMobile',
                 'isTablet',
-                'isDesktop',
+                'screenHeight',
                 'menuCollapse'
             ])
         },
@@ -42,6 +43,10 @@
             } else {
                 this.getMonitoringById()
             }
+        },
+        mounted () {
+            // 设置屏幕的宽度高度
+            this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
             getMonitoringById (showIds = []) {

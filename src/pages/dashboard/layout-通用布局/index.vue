@@ -17,7 +17,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { get3dModelInfo } from '@api/account';
+    // import { get3dModelInfo } from '@api/account';
     import Config from '@/config';
 
     export default {
@@ -27,7 +27,6 @@
                 logoDesc: Config.logo.logoDesc,
                 title: '三维模型',
                 modelImg: '/assets/images/vbg.png',
-                listRow: []
             }
         },
         computed: {
@@ -40,11 +39,7 @@
             ])
         },
         created () {
-            let that = this;
-            get3dModelInfo()
-                .then(async res => {
-                    that.listRow = res.list;
-                }).catch(err => { console.log('err: ', err) })
+            // let that = this;
         },
         mounted () {
             // 设置屏幕的宽度高度

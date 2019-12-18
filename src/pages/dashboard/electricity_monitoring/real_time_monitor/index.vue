@@ -9,10 +9,15 @@
                        功能操作
                    </div>
                    <FormItem label="输入搜索">
-                       <Input v-model="formItem.input" placeholder="序号/名称" size="small" style="width: 150px"></Input>
+                       <Input v-model="formItem.input"
+                              placeholder="序号/名称" size="small"
+                              style="width: 200px"></Input>
                    </FormItem>
                    <FormItem label="监测状态">
-                       <Select v-model="formItem.select" size="small" style="width: 150px">
+                       <Select v-model="formItem.select"
+                               size="small"
+                               class="ivu-nomal-select"
+                               style="width: 150px">
                            <Option value="1">正常</Option>
                            <Option value="0">异常</Option>
                        </Select>

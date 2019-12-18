@@ -9,7 +9,10 @@
                         功能操作
                     </div>
                     <FormItem label="报警类型">
-                        <Select v-model="formItem.select" size="small" placeholder="请选择类型" style="width: 150px">
+                        <Select v-model="formItem.select" size="small"
+                                placeholder="请选择类型"
+                                class="ivu-nomal-select"
+                                style="width: 200px">
                             <Option :value="item.id"
                                     v-for="(item, key) in formItem.alarm_type" :key="key">{{ item.name }}</Option>
                             <Option value="0">异常</Option>
@@ -19,9 +22,8 @@
                         <DatePicker type="daterange" size="small" placement="bottom-end"
                                     placeholder="请选择日期" style="width: 150px"
                                     v-model="formItem.dateRange"></DatePicker>
-                    </FormItem>
-                    <FormItem>
-                        <Button type="primary" size="small" @click="doQuery" class="ivu-query-btn">查询结果</Button>
+                        <Button type="primary" size="small" @click="doQuery"
+                                class="ivu-query-btn ivu-ml-40">查询结果</Button>
                         <Button style="margin-left: 18px" size="small" >重置查询</Button>
                     </FormItem>
                     <div class="ivu-inline-block" style="float: right">

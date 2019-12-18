@@ -9,10 +9,13 @@
                         功能操作
                     </div>
                     <FormItem label="输入搜索">
-                        <Input v-model="formItem.input" placeholder="证件号码/名称" size="small" style="width: 120px"></Input>
+                        <Input v-model="formItem.input" placeholder="证件号码/名称" size="small"
+                               style="width: 200px"></Input>
                     </FormItem>
                     <FormItem label="车辆类型" >
-                        <Select v-model="formItem.status" size="small" style="width: 120px">
+                        <Select v-model="formItem.status" size="small"
+                                class="ivu-nomal-select"
+                                style="width: 150px">
                             <Option value="1">内部</Option>
                             <Option value="0">外部</Option>
                         </Select>
@@ -20,9 +23,9 @@
                     <FormItem label="进入时间" >
                         <DatePicker type="daterange" placement="bottom-end" placeholder="选择进入时间"
                                     size="small"
-                                    style="width: 200px;margin-right: 20px;"></DatePicker>
+                                    style="width: 150px;"></DatePicker>
                         <Button type="primary" size="small" @click="doQuery"
-                                class="ivu-query-btn"
+                                class="ivu-query-btn ivu-ml-40"
                                 style="margin-right: 20px;">查询结果</Button>
                         <Button size="small" @click="doQuery" style="margin-right: 20px;">重置查询</Button>
                         <Button  size="small" style="margin-right: 8px;"

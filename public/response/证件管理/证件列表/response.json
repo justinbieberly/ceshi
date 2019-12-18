@@ -1,0 +1,176 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！---每个类别的表头不一样 所以需要返回表头",
+  "data": {
+    "table": {
+      "columns": [
+        {
+          "title": "序号",
+          "key": "id",
+          "width": "80",
+          "align": "center"
+        },
+        {
+          "title": "交管许可字号",
+          "width": "120",
+          "key": "trafficLicenseNo",
+          "align": "center"
+        },
+        {
+          "title": "业户名称",
+          "key": "establishmentName",
+          "width": "170",
+          "align": "center"
+        },
+        {
+          "title": "地址",
+          "key": "address",
+          "width": "170",
+          "align": "center"
+        },
+        {
+          "title": "经营范围",
+          "width": "100",
+          "key": "scopeBusiness",
+          "align": "center"
+        },
+        {
+          "title": "发证机关",
+          "width": "100",
+          "key": "agencies",
+          "align": "center"
+        },
+        {
+          "title": "起始日期",
+          "width": "100",
+          "key": "startTime",
+          "align": "center"
+        },
+        {
+          "title": "有效日期",
+          "width": "100",
+          "key": "effectivDate",
+          "align": "center"
+        },
+        {
+          "title": "临期时间",
+          "width": "100",
+          "key": "periodTime",
+          "align": "center"
+        }
+      ],
+      "data": [
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 01-01"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        },
+        {
+          "id": 101010,
+          "trafficLicenseNo": "CSJH101010",
+          "establishmentName": "乙烯运输",
+          "address": "重庆市南岸区XXX工厂",
+          "scopeBusiness": "运输,物流",
+          "agencies": "重庆市南岸区监察局",
+          "startTime": "2019 12-18",
+          "effectivDate": "2020 1-18",
+          "periodTime": "2020 1-10"
+        }
+      ]
+    }
+  }
+}

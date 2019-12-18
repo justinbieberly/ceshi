@@ -49,13 +49,17 @@
                         <Input v-model="formItem.condition" placeholder="编号/名称/..." size="small" style="width: 120px" />
                     </FormItem>
                     <FormItem label="在职状态">
-                        <Select v-model="formItem.status" size="small"  style="width:100px">
+                        <Select v-model="formItem.status" size="small"
+                                class="ivu-nomal-select"
+                                style="width:100px">
                             <Option value="1" >在职</Option>
                             <Option value="0" >离职</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="性别">
-                        <Select v-model="formItem.sex" size="small"  style="width:100px">
+                        <Select v-model="formItem.sex" size="small"
+                                class="ivu-nomal-select"
+                                style="width:100px">
                             <Option value="1" >男</Option>
                             <Option value="2" >女</Option>
                         </Select>

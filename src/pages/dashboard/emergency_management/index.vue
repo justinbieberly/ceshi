@@ -64,27 +64,33 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+        <div class="content-layout-right user-full-img ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
              ref="right">
            <div class="ivu-block" v-if="!emergency.isEmergency">
-               <Form :model="formItem" :label-width="70"  inline :label-colon="true" class="real-time-form ivu-inline-block">
+               <Form :model="formItem" :label-width="70"  inline :label-colon="true"
+                     class="real-time-form ivu-inline-block user-full-screen">
                    <div class="ivu-form-item" style="line-height: 32px;">
                        功能操作
                    </div>
                    <FormItem label="输入搜索">
-                       <Input v-model="formItem.condition" placeholder="文件名/序号/..." size="small" style="width: 120px" />
+                       <Input v-model="formItem.condition" placeholder="文件名/序号/..." size="small"
+                              style="width: 120px" />
                    </FormItem>
                    <FormItem label="所属类别">
-                       <Select v-model="formItem.category" size="small"  style="width:100px">
+                       <Select v-model="formItem.category"
+                               class="ivu-nomal-select"
+                               size="small"  style="width:100px">
                            <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>
                        </Select>
                    </FormItem>
                    <FormItem label="文档格式">
-                       <Select v-model="formItem.fileType" size="small"  style="width:100px">
+                       <Select v-model="formItem.fileType" size="small"
+                               class="ivu-nomal-select"
+                               style="width:100px">
                            <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>
                        </Select>
                        <Button type="primary" size="small" @click="doQuery"
-                               class="ivu-ml ivu-query-btn">查询结果</Button>
+                               class="ivu-ml-40 ivu-query-btn">查询结果</Button>
                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
                        <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
                    </FormItem>

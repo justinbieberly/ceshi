@@ -1,0 +1,169 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "table": {
+      "columns": [
+        {
+          "title": "序号",
+          "key": "id",
+          "width": "70px",
+          "align": "center"
+        },
+        {
+          "title": "文件名",
+          "key": "file_name",
+          "align": "center"
+        },
+        {
+          "title": "所属类别",
+          "key": "category",
+          "width": "170px",
+          "align": "center"
+        },
+        {
+          "title": "添加时间",
+          "key": "add_time",
+          "width": "170px",
+          "align": "center"
+        },
+        {
+          "title": "文件格式",
+          "width": "100px",
+          "key": "file_type",
+          "align": "center"
+        }
+      ],
+      "data": [
+        {
+          "id": 1,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险识别",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "word"
+        },
+        {
+          "id": 2,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险分级",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "MP4"
+        },
+        {
+          "id": 3,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管控",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 4,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "mp4"
+        },
+        {
+          "id": 5,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "word"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        },
+        {
+          "id": 6,
+          "file_name": "安全风险管理类文档",
+          "category": "安全风险管理类",
+          "add_time": "2017-08-05 15:47:44",
+          "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
+          "file_type": "pdf"
+        }
+      ]
+    }
+  }
+}

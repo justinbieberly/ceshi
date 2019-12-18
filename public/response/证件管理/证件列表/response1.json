@@ -1,0 +1,112 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！---每个类别的表头不一样 所以需要返回表头",
+  "data": {
+    "table": {
+      "columns": [
+        {
+          "title": "序号",
+          "key": "id",
+          "width": "80px",
+          "align": "center"
+        },
+        {
+          "title": "保险单号",
+          "width": "120px",
+          "key": "insuranceNo",
+          "align": "center"
+        },
+        {
+          "title": "被保险人",
+          "key": "insuredUser",
+          "width": "100px",
+          "align": "center"
+        },
+        {
+          "title": "号码号牌",
+          "key": "numberPlate",
+          "width": "170px",
+          "align": "center"
+        },
+        {
+          "title": "厂牌型号",
+          "width": "100px",
+          "key": "labelType",
+          "align": "center"
+        },
+        {
+          "title": "发动机号",
+          "width": "100px",
+          "key": "engineNo",
+          "align": "center"
+        },
+        {
+          "title": "使用性质",
+          "width": "100px",
+          "key": "usingNature",
+          "align": "center"
+        },
+        {
+          "title": "车架号",
+          "width": "100px",
+          "key": "chassisNo",
+          "align": "center"
+        },
+        {
+          "title": "人/千克",
+          "width": "100px",
+          "key": "unit",
+          "align": "center"
+        },
+        {
+          "title": "起始日期",
+          "width": "100px",
+          "key": "startTime",
+          "align": "center"
+        },
+        {
+          "title": "有效日期",
+          "width": "100px",
+          "key": "effectivDate",
+          "align": "center"
+        },
+        {
+          "title": "临期时间",
+          "width": "100px",
+          "key": "periodTime",
+          "align": "center"
+        },
+        {
+          "title": "城保险种",
+          "width": "100px",
+          "key": "cityInsurance",
+          "align": "center"
+        },
+        {
+          "title": "服务报案电话",
+          "width": "180px",
+          "key": "serviceHotline",
+          "align": "center"
+        }
+      ],
+      "data": [
+        {
+          "id": 1,
+          "insuranceNo": "CSJssssH101010",
+          "insuredUser": "吕布",
+          "numberPlate": "渝Ａ８８８８",
+          "labelType": "国产东风",
+          "engineNo": "Ｃｍｄ8u8yuh7ttg",
+          "usingNature": "民用",
+          "chassisNo": "ＨＳＧ９７８９８",
+          "unit": "19",
+          "startTime": "2019-12-18 12:12",
+          "effectivDate": "2019-12-30 12:12",
+          "periodTime": "2019-12-25 12:12",
+          "cityInsurance": "中国平安保险",
+          "serviceHotline": "400-820-8820"
+        }
+      ]
+    }
+  }
+}

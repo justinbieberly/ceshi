@@ -57,7 +57,9 @@
                         <Input v-model="formItem.condition" placeholder="名字/序号/..." size="small" style="width: 120px" />
                     </FormItem>
                     <FormItem label="异常事宜">
-                        <Select v-model="formItem.abnormalMatters" size="small"  style="width:120px">
+                        <Select v-model="formItem.abnormalMatters" size="small"
+                                class="ivu-nomal-select"
+                                style="width:120px">
                             <Option value="all">全部</Option>
                         </Select>
                     </FormItem>
@@ -98,13 +100,13 @@
                         <Input v-model="formItem.condition" placeholder="名字/序号/..." size="small" style="width: 150px" />
                     </FormItem>
                     <FormItem label="岗位">
-                        <Select v-model="formItem.abnormalMatters" size="small"  style="width:150px">
+                        <Select v-model="formItem.abnormalMatters" size="small"
+                                class="ivu-nomal-select"
+                                style="width:150px">
                             <Option value="all">全部</Option>
                         </Select>
-                        </FormItem>
-                    <FormItem label="">
                         <Button type="primary" size="small" @click="doQuery"
-                                class="ivu-ml ivu-query-btn" style="margin-left: 50px;">查询结果</Button>
+                                class="ivu-ml-40 ivu-query-btn">查询结果</Button>
                         <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
