@@ -5,7 +5,7 @@
             <div class="logo-words-desc"> {{ logoDesc }} </div>
             <Card :bordered="false" class="i-admin-left-menu">
                 <Card :title="title" icon="ios-options"  shadow >
-                    <Tree :data="listRow" show-checkbox multiple @on-check-change="show"></Tree>
+                    <Tree :data="listRow" show-checkbox multiple @on-check-change="sendInfo"></Tree>
                 </Card>
             </Card>
         </div>
@@ -19,6 +19,7 @@
 <script>
     import { mapState } from 'vuex';
     import { get3dModelInfo } from '@api/account';
+    import { send3dModelInfo } from '@api/interaction';
     import Config from '@/config';
 
     export default {
@@ -53,10 +54,18 @@
             this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
-            show (info) {
-                console.log('点击了')
-                console.log(info);
-                // TODO info里面包含了所有数据  请求API显示
+            sendInfo (info) {
+                let param = {
+                    id: []
+                }
+                info.some((value, index, arr) => {
+                    param.id.push(value.id)
+                })
+                send3dModelInfo(param).then(async res => {
+                    console.log('do some logic', res)
+                }).catch(err => {
+                    console.log('err', err)
+                })
             }
         }
     }

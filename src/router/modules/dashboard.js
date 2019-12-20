@@ -235,6 +235,36 @@ export default {
                 title: '证件管理'
             },
             component: () => import('@/pages/dashboard/certificate_management')
+        },
+        {
+            path: 'occupational_health_ledger',
+            name: `${pre}occupational-health-ledger`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '职业健康台账'
+            },
+            component: () => import('@/pages/dashboard/occupational_health_ledger')
+        },
+        {
+            path: 'supplies_parameter',
+            name: `${pre}supplies-parameter`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '用品台账'
+            },
+            component: () => import('@/pages/dashboard/occupational_health_ledger/supplies_parameter')
+        },
+        {
+            path: 'operation_log',
+            name: `${pre}operation-log`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '操作日志'
+            },
+            component: () => import('@/pages/dashboard/operation_log')
         }
     ]
 };

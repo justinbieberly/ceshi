@@ -191,6 +191,24 @@ const Config = {
             alias: '获取-制度管理-某一项的文档数据列表-的数据',
             url: '/response/证件管理/证件列表/response.json',
             method: 'get'
+        },
+        getOccupationalHealth: {
+            alias: '获取-职业健康台账-的数据',
+            url: '/response/职业健康台账/response.json',
+            method: 'get'
+        },
+        getSuppliesParameter: {
+            alias: '获取-职业健康台账-用品台账-的数据',
+            url: '/response/职业健康台账/用品台账/response.json',
+            method: 'get'
+        },
+        // todo 分页符
+        // todo 分页符
+        // todo 分页符
+        geToperationLog: {
+            alias: '获取-操作日志-的数据',
+            url: '/response/操作日志/response.json',
+            method: 'get'
         }
 
     },

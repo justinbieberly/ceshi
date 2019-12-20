@@ -1,0 +1,86 @@
+{
+  "code": 200,
+  "msg": "空间监测-数据获取成功！",
+  "data": {
+    "tableData": [
+      {
+        "id": 1,
+        "name": "项羽",
+        "phone": "14658645677",
+        "department": "安防",
+        "isHealth": "是",
+        "medicalType": "入职体检",
+        "medicalTime": "2019.09.31",
+        "effectiveTime": "2020.09.31",
+        "periodTime": "30"
+      },
+      {
+        "id": 2,
+        "name": "虞姬",
+        "phone": "14658645677",
+        "department": "安防",
+        "isHealth": "是",
+        "medicalType": "职业病危害体检",
+        "medicalTime": "2019.09.31",
+        "effectiveTime": "2020.09.31",
+        "periodTime": "30"
+      },
+      {
+        "id": 1,
+        "name": "韩信",
+        "phone": "14658645677",
+        "department": "安防",
+        "isHealth": "是",
+        "medicalType": "入职体检",
+        "medicalTime": "2019.09.31",
+        "effectiveTime": "2020.09.31",
+        "periodTime": "30"
+      },
+      {
+        "id": 1,
+        "name": "苏荷",
+        "phone": "14658645677",
+        "department": "安防",
+        "isHealth": "是",
+        "medicalType": "入职体检",
+        "medicalTime": "2019.09.31",
+        "effectiveTime": "2020.09.31",
+        "periodTime": "30"
+      },
+      {
+        "id": 1,
+        "name": "刘禅",
+        "phone": "14658645677",
+        "department": "安防",
+        "isHealth": "是",
+        "medicalType": "入职体检",
+        "medicalTime": "2019.09.31",
+        "effectiveTime": "2020.09.31",
+        "periodTime": "30"
+      },
+      {
+        "id": 1,
+        "name": "廉颇",
+        "phone": "14658645677",
+        "department": "安防",
+        "isHealth": "是",
+        "medicalType": "入职体检",
+        "medicalTime": "2019.09.31",
+        "effectiveTime": "2020.09.31",
+        "periodTime": "30"
+      },
+      {
+        "id": 1,
+        "name": "蔺相如",
+        "phone": "14658645677",
+        "department": "安防",
+        "isHealth": "是",
+        "medicalType": "入职体检",
+        "medicalTime": "2019.09.31",
+        "effectiveTime": "2020.09.31",
+        "periodTime": "30"
+      }
+    ]
+  }
+}
+

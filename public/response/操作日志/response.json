@@ -1,0 +1,66 @@
+
+{
+  "code": 200,
+  "msg": "特种设备-数据获取成功！",
+  "data": {
+    "tableData": [
+      {
+        "id": 1,
+        "UId": 1341,
+        "operator": "iEfoam",
+        "operateTime": "2017-07-07 16:58:11",
+        "ip": "127.0.0.1",
+        "operateLog": "编辑会员账号: windir"
+      },
+      {
+        "id": 2,
+        "UId": 1341,
+        "operator": "iEfoam",
+        "operateTime": "2017-07-07 16:58:11",
+        "ip": "127.0.0.1",
+        "operateLog": "编辑会员账号: windir"
+      },
+      {
+        "id": 3,
+        "UId": 1341,
+        "operator": "iEfoam",
+        "operateTime": "2017-07-07 16:58:11",
+        "ip": "127.0.0.1",
+        "operateLog": "编辑会员账号: windir"
+      },
+      {
+        "id": 4,
+        "UId": 1341,
+        "operator": "iEfoam",
+        "operateTime": "2017-07-07 16:58:11",
+        "ip": "127.0.0.1",
+        "operateLog": "编辑会员账号: windir"
+      },
+      {
+        "id": 5,
+        "UId": 1341,
+        "operator": "iEfoam",
+        "operateTime": "2017-07-07 16:58:11",
+        "ip": "127.0.0.1",
+        "operateLog": "编辑会员账号: windir"
+      },
+      {
+        "id": 6,
+        "UId": 1341,
+        "operator": "iEfoam",
+        "operateTime": "2017-07-07 16:58:11",
+        "ip": "127.0.0.1",
+        "operateLog": "编辑会员账号: windir"
+      },
+      {
+        "id": 7,
+        "UId": 1341,
+        "operator": "iEfoam",
+        "operateTime": "2017-07-07 16:58:11",
+        "ip": "127.0.0.1",
+        "operateLog": "编辑会员账号: windir"
+      }
+    ]
+  }
+}
+

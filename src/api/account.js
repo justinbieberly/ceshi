@@ -332,3 +332,34 @@ export function getCertificateByParameter (data) {
         data
     });
 }
+
+// 获取[职业健康台账的首页表格数据]的数据
+export function getOccupationalHealth (data) {
+    return request({
+        url: apiConfig.getOccupationalHealth.url,
+        method: apiConfig.getOccupationalHealth.method,
+        data
+    });
+}
+
+// 获取[职业健康台账的首页表格数据]的数据
+export function getSuppliesParameter (data) {
+    return request({
+        url: apiConfig.getSuppliesParameter.url,
+        method: apiConfig.getSuppliesParameter.method,
+        data
+    });
+}
+
+// todo 分页符
+// todo 分页符
+// todo 分页符
+// todo 分页符
+// 获取[操作日志]的数据
+export function geToperationLog (data) {
+    return request({
+        url: apiConfig.geToperationLog.url,
+        method: apiConfig.geToperationLog.method,
+        data
+    });
+}

@@ -1,4 +1,3 @@
-
 {
   "code": 200,
   "msg": "数据获取成功！",
@@ -158,42 +157,49 @@
           {
             "name": "职业健康台账",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/occupational_health_ledger",
+            "secondaryMenu": [
+              {
+                "name": "职业健康台账-用品台账",
+                "id": 1009,
+                "path": "/dashboard/supplies_parameter"
+              }
+            ]
           },
           {
             "name": "安全设备台账",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "日常巡查",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "隐患处置",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "装卸作业",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "特作作业",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "事故管理",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "教育培训",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           }
         ]
       },
@@ -205,27 +211,27 @@
           {
             "name": "数据统计",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "预留页面",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "操作日志",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/operation_log"
           },
           {
             "name": "用户管理",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           },
           {
             "name": "权限分配",
             "id": 1001,
-            "path": ""
+            "path": "/dashboard/"
           }
         ]
       }

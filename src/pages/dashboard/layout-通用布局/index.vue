@@ -26,7 +26,7 @@
             return {
                 logoDesc: Config.logo.logoDesc,
                 title: '三维模型',
-                modelImg: '/assets/images/vbg.png',
+                modelImg: '/assets/images/vbg.png'
             }
         },
         computed: {
