@@ -351,6 +351,33 @@ export function getSuppliesParameter (data) {
     });
 }
 
+// 获取[安全设备设施台账-设备设施种类]的数据
+export function getSafetyEquipmentData (data) {
+    return request({
+        url: apiConfig.getSafetyEquipmentData.url,
+        method: apiConfig.getSafetyEquipmentData.method,
+        data
+    });
+}
+
+// 获取[安全设备设施台账-检测维保记录]的数据
+export function getMaintenanceRecordMenu (data) {
+    return request({
+        url: apiConfig.getMaintenanceRecordMenu.url,
+        method: apiConfig.getMaintenanceRecordMenu.method,
+        data
+    });
+}
+
+// 获取[安全设备设施台账-检测维保记录]的数据
+export function getMaintenanceRecordTable (data) {
+    return request({
+        url: apiConfig.getMaintenanceRecordTable.url,
+        method: apiConfig.getMaintenanceRecordTable.method,
+        data
+    });
+}
+
 // todo 分页符
 // todo 分页符
 // todo 分页符

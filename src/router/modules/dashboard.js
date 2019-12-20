@@ -265,6 +265,36 @@ export default {
                 title: '操作日志'
             },
             component: () => import('@/pages/dashboard/operation_log')
+        },
+        {
+            path: 'safety_equipment_ledger',
+            name: `${pre}safety-equipment-ledger`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '安全设备设施种类'
+            },
+            component: () => import('@/pages/dashboard/safety_equipment_ledger')
+        },
+        {
+            path: 'equipmen_facilities_ledger',
+            name: `${pre}equipmen-facilities-ledger`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '安全设备设施台账'
+            },
+            component: () => import('@/pages/dashboard/safety_equipment_ledger/equipmen_facilities_ledger')
+        },
+        {
+            path: 'check_maintenance_record',
+            name: `${pre}check-maintenance-record`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '检测维保记录'
+            },
+            component: () => import('@/pages/dashboard/safety_equipment_ledger/check_maintenance_record')
         }
     ]
 };

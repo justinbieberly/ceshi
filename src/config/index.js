@@ -202,6 +202,21 @@ const Config = {
             url: '/response/职业健康台账/用品台账/response.json',
             method: 'get'
         },
+        getSafetyEquipmentData: {
+            alias: '获取-安全设备设施台账-设备设施种类-的数据',
+            url: '/response/安全设备台账/设备设施种类/response.json',
+            method: 'get'
+        },
+        getMaintenanceRecordMenu: {
+            alias: '获取-安全设备设施台账-检测维保记录-的数据',
+            url: '/response/安全设备台账/检测维保记录/response.json',
+            method: 'get'
+        },
+        getMaintenanceRecordTable: {
+            alias: '获取-安全设备设施台账-检测维保记录-的数据',
+            url: '/response/安全设备台账/检测维保记录/response-table.json',
+            method: 'get'
+        },
         // todo 分页符
         // todo 分页符
         // todo 分页符

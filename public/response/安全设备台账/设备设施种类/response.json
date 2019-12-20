@@ -1,0 +1,161 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "treeData": [
+      {
+        "title": "安防设备设施",
+        "id": 1,
+        "children": [
+          {
+            "title": "视频监控设备",
+            "id": 1001,
+            "expand": true,
+            "checked": true
+          },
+          {
+            "title": "门禁系统设备",
+            "id": 1002,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "车辆系统设备",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "消防设备设施",
+        "id": 1,
+        "children": [
+          {
+            "title": "火灾自动报警器",
+            "id": 1001,
+            "expand": true,
+            "checked": true
+          },
+          {
+            "title": "消防供配电设施",
+            "id": 1002,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "电气火灾监控系统",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "可燃气体探测报警系统",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "自动喷淋系统",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "消火栓系统",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "泡沫灭火器系统",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "防排烟系统",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "应急照明和疏散指示标志",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "便携设备",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          }
+        ]
+      },
+      {
+        "title": "其他设施设备",
+        "id": 1,
+        "children": [
+          {
+            "title": "防撞装置",
+            "id": 1001,
+            "expand": true,
+            "checked": true
+          },
+          {
+            "title": "洗眼设备",
+            "id": 1002,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "人体静电释放器",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "安全警示标志",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "门",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "窗",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "叉车",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "堆高机",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          },
+          {
+            "title": "防爆风机",
+            "id": 1003,
+            "checked": true,
+            "expand": true
+          }
+        ]
+      }
+    ],
+    "sourceLink": "/assets/images/vbg.png"
+  }
+}
+

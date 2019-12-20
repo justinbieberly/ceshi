@@ -169,7 +169,7 @@
           {
             "name": "安全设备台账",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/safety_equipment_ledger"
           },
           {
             "name": "日常巡查",
