@@ -295,6 +295,36 @@ export default {
                 title: '检测维保记录'
             },
             component: () => import('@/pages/dashboard/safety_equipment_ledger/check_maintenance_record')
+        },
+        {
+            path: 'routine_inspections',
+            name: `${pre}routine-inspections`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '日常巡查'
+            },
+            component: () => import('@/pages/dashboard/routine_inspections')
+        },
+        {
+            path: 'new_patrol',
+            name: `${pre}new-patrol`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '新增日常巡查'
+            },
+            component: () => import('@/pages/dashboard/routine_inspections/new_patrol')
+        },
+        {
+            path: 'handling_operation',
+            name: `${pre}handling-operation`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '装卸作业'
+            },
+            component: () => import('@/pages/dashboard/handling_operation')
         }
     ]
 };

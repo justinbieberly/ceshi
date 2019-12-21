@@ -378,6 +378,52 @@ export function getMaintenanceRecordTable (data) {
     });
 }
 
+// 获取[日常巡查]的数据
+export function getRoutineInspectionsMenu (data) {
+    return request({
+        url: apiConfig.getRoutineInspectionsMenu.url,
+        method: apiConfig.getRoutineInspectionsMenu.method,
+        data
+    });
+}
+
+// 获取[日常巡查]的数据
+export function getRoutineTableByParam (data) {
+    return request({
+        url: apiConfig.getRoutineTableByParam.url,
+        method: apiConfig.getRoutineTableByParam.method,
+        data
+    });
+}
+
+// 获取[日常巡查]的数据
+export function getNewRoutineMenu (data) {
+    return request({
+        url: apiConfig.getNewRoutineMenu.url,
+        method: apiConfig.getNewRoutineMenu.method,
+        data
+    });
+}
+
+// 获取[日常巡查-右侧侧的列表]的数据
+export function getNewRoutineByParam (data) {
+    return request({
+        url: apiConfig.getNewRoutineByParam.url,
+        method: apiConfig.getNewRoutineByParam.method,
+        data
+    });
+}
+
+// todo 分页符
+// 获取[装卸作业]的数据
+export function getHandlingOperation (data) {
+    return request({
+        url: apiConfig.getHandlingOperation.url,
+        method: apiConfig.getHandlingOperation.method,
+        data
+    });
+}
+
 // todo 分页符
 // todo 分页符
 // todo 分页符

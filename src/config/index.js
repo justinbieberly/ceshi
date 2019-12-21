@@ -217,6 +217,32 @@ const Config = {
             url: '/response/安全设备台账/检测维保记录/response-table.json',
             method: 'get'
         },
+        getRoutineInspectionsMenu: {
+            alias: '获取-日常巡查-左侧目录-的数据',
+            url: '/response/日常巡查/response.json',
+            method: 'get'
+        },
+        getRoutineTableByParam: {
+            alias: '获取-日常巡查-右侧的表格-的数据',
+            url: '/response/日常巡查/巡查详情/response.json',
+            method: 'get'
+        },
+        getNewRoutineMenu: {
+            alias: '获取-日常巡查-新增-左侧的列表-的数据',
+            url: '/response/日常巡查/新增日常巡查/response.json',
+            method: 'get'
+        },
+        getNewRoutineByParam: {
+            alias: '获取-日常巡查-新增-右侧侧的列表-的数据',
+            url: '/response/日常巡查/新增日常巡查/response-tran.json',
+            method: 'get'
+        },
+        // todo 分页符
+        getHandlingOperation: {
+            alias: '获取-装卸作业-的数据',
+            url: '/response/装卸作业/response.json',
+            method: 'get'
+        },
         // todo 分页符
         // todo 分页符
         // todo 分页符

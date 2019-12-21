@@ -169,12 +169,31 @@
           {
             "name": "安全设备台账",
             "id": 1001,
-            "path": "/dashboard/safety_equipment_ledger"
+            "path": "/dashboard/safety_equipment_ledger",
+            "secondaryMenu": [
+              {
+                "name": "安全设备台账-是被设施台账",
+                "id": 1009,
+                "path": "/dashboard/equipmen_facilities_ledger"
+              },
+              {
+                "name": "安全设备台账-检测维保记录",
+                "id": 1009,
+                "path": "/dashboard/check_maintenance_record"
+              }
+            ]
           },
           {
             "name": "日常巡查",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/routine_inspections",
+            "secondaryMenu": [
+              {
+                "name": "日常巡查-新增日常巡查",
+                "id": 1009,
+                "path": "/dashboard/new_patrol"
+              }
+            ]
           },
           {
             "name": "隐患处置",
@@ -184,7 +203,7 @@
           {
             "name": "装卸作业",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/handling_operation"
           },
           {
             "name": "特作作业",

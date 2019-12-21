@@ -1,0 +1,55 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "menu": [
+      {
+        "id": 115,
+        "title": "任务一",
+        "taskName": "1-1甲类库",
+        "equipmentNum": "20",
+        "frequency": "1天/次 ",
+        "executor": "张三",
+        "periodTime": "2019.01.01 - 2020.01.01"
+      },
+      {
+        "id": 115,
+        "title": "任务二",
+        "taskName": "1-2甲类库",
+        "equipmentNum": "39",
+        "frequency": "1天/次 ",
+        "executor": "张三",
+        "periodTime": "2019.01.01 - 2020.01.01"
+      },
+      {
+        "id": 115,
+        "title": "任务三",
+        "taskName": "1-3甲类库",
+        "equipmentNum": "12",
+        "frequency": "2天/次 ",
+        "executor": "张三",
+        "periodTime": "2019.01.01 - 2020.01.01"
+      },
+      {
+        "id": 115,
+        "title": "任务四",
+        "taskName": "2-1乙类库",
+        "equipmentNum": "10",
+        "frequency": "1天/次 ",
+        "executor": "张三",
+        "periodTime": "2019.01.01 - 2020.01.01"
+      },
+      {
+        "id": 115,
+        "title": "任务五",
+        "taskName": "2-2乙类库",
+        "equipmentNum": "12",
+        "frequency": "3天/次 ",
+        "executor": "张三",
+        "periodTime": "2019.01.01 - 2020.01.01"
+      }
+    ]
+  }
+}
+

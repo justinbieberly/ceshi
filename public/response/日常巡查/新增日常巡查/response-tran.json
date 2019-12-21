@@ -1,0 +1,131 @@
+
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "tableData": [
+      {
+        "id": "5",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 0,
+        "model": "1"
+      },
+      {
+        "id": "6",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 0,
+        "model": "1"
+      },
+      {
+        "id": "7",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 0,
+        "model": "1"
+      },
+      {
+        "id": "8",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 0,
+        "model": "1"
+      },
+      {
+        "id": "9",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 0,
+        "model": "1"
+      },
+      {
+        "id": "10",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 0,
+        "model": "1"
+      },
+      {
+        "id": "11",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 1,
+        "model": "1"
+      },
+      {
+        "id": "12",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 0,
+        "model": "1"
+      },
+      {
+        "id": "14",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 0,
+        "model": "1"
+      },
+      {
+        "id": "16",
+        "no": "BOS89236491",
+        "classification": "消防栓系统",
+        "name": "消防栓",
+        "address": "仓库3-1里面",
+        "installTime": "2019/12/21",
+        "effectiveTime": "2021/12/21",
+        "attention": "注意事项简介",
+        "selected": 1,
+        "model": "1"
+      }
+
+    ]
+  }
+}
+
