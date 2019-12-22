@@ -198,7 +198,14 @@
           {
             "name": "隐患处置",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/hazard_registration",
+            "secondaryMenu": [
+              {
+                "name": "隐患处置-历史记录",
+                "id": 1009,
+                "path": "/dashboard/hazard_history"
+              }
+            ]
           },
           {
             "name": "装卸作业",

@@ -69,8 +69,8 @@
 <style lang="scss" scoped>
     .box {
         width: 100%;
-        height: 120px;
-        margin-bottom: 16px;
+        height: 100px;
+        margin-bottom: 10px;
         .left-border {
             width: 2px;
             height: 100%;
@@ -88,7 +88,7 @@
                 font-size: 12px;
             }
             span:first-child {
-                margin-top: 28%;
+                margin-top: 23%;
             }
         }
         .right-img {

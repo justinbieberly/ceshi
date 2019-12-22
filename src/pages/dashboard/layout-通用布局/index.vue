@@ -9,7 +9,7 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img"
+        <div class="content-layout-right user-full-img ivu-overflow-auto"
              :class="{ 'content-layout-right-pro': this.menuCollapse }"
              ref="right">
         </div>

@@ -317,6 +317,26 @@ export default {
             component: () => import('@/pages/dashboard/routine_inspections/new_patrol')
         },
         {
+            path: 'hazard_registration',
+            name: `${pre}hazard-registration`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '隐患登记处置'
+            },
+            component: () => import('@/pages/dashboard/hazard_registration')
+        },
+        {
+            path: 'hazard_history',
+            name: `${pre}hazard-history`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '隐患处置-历史记录'
+            },
+            component: () => import('@/pages/dashboard/hazard_registration/history')
+        },
+        {
             path: 'handling_operation',
             name: `${pre}handling-operation`,
             props: true,

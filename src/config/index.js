@@ -237,6 +237,16 @@ const Config = {
             url: '/response/日常巡查/新增日常巡查/response-tran.json',
             method: 'get'
         },
+        getHazardRegistration: {
+            alias: '获取-隐患登记处置-的数据',
+            url: '/response/隐患处置/response.json',
+            method: 'get'
+        },
+        getHazardHistory: {
+            alias: '获取-隐患登记处置-历史记录-的数据',
+            url: '/response/隐患处置/历史记录/response.json',
+            method: 'get'
+        },
         // todo 分页符
         getHandlingOperation: {
             alias: '获取-装卸作业-的数据',

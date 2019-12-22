@@ -414,6 +414,24 @@ export function getNewRoutineByParam (data) {
     });
 }
 
+// 获取[隐患登记处置]的数据
+export function getHazardRegistration (data) {
+    return request({
+        url: apiConfig.getHazardRegistration.url,
+        method: apiConfig.getHazardRegistration.method,
+        data
+    });
+}
+
+// 获取[隐患登记处置]的数据
+export function getHazardHistory (data) {
+    return request({
+        url: apiConfig.getHazardHistory.url,
+        method: apiConfig.getHazardHistory.method,
+        data
+    });
+}
+
 // todo 分页符
 // 获取[装卸作业]的数据
 export function getHandlingOperation (data) {
