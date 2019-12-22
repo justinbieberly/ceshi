@@ -432,12 +432,30 @@ export function getHazardHistory (data) {
     });
 }
 
-// todo 分页符
 // 获取[装卸作业]的数据
 export function getHandlingOperation (data) {
     return request({
         url: apiConfig.getHandlingOperation.url,
         method: apiConfig.getHandlingOperation.method,
+        data
+    });
+}
+
+// todo 分页符
+// 获取[事故管理]的数据
+export function getAccidentManagement (data) {
+    return request({
+        url: apiConfig.getAccidentManagement.url,
+        method: apiConfig.getAccidentManagement.method,
+        data
+    });
+}
+
+// 获取[事故管理-事故详情]的数据
+export function getAccidentDetailByParam (data) {
+    return request({
+        url: apiConfig.getAccidentDetailByParam.url,
+        method: apiConfig.getAccidentDetailByParam.method,
         data
     });
 }

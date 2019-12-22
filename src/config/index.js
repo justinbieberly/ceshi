@@ -247,10 +247,20 @@ const Config = {
             url: '/response/隐患处置/历史记录/response.json',
             method: 'get'
         },
-        // todo 分页符
         getHandlingOperation: {
             alias: '获取-装卸作业-的数据',
             url: '/response/装卸作业/response.json',
+            method: 'get'
+        },
+        // todo 分页符
+        getAccidentManagement: {
+            alias: '获取- 事故管理-的数据',
+            url: '/response/事故管理/response.json',
+            method: 'get'
+        },
+        getAccidentDetailByParam: {
+            alias: '获取- 事故管理-的数据',
+            url: '/response/事故管理/response-detail.json',
             method: 'get'
         },
         // todo 分页符

@@ -220,7 +220,7 @@
           {
             "name": "事故管理",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/accident_management"
           },
           {
             "name": "教育培训",

@@ -345,6 +345,16 @@ export default {
                 title: '装卸作业'
             },
             component: () => import('@/pages/dashboard/handling_operation')
+        },
+        {
+            path: 'accident_management',
+            name: `${pre}accident-management`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '事故管理'
+            },
+            component: () => import('@/pages/dashboard/accident_management')
         }
     ]
 };
