@@ -347,6 +347,16 @@ export default {
             component: () => import('@/pages/dashboard/handling_operation')
         },
         {
+            path: 'special_assignments',
+            name: `${pre}special-assignments`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '特殊作业'
+            },
+            component: () => import('@/pages/dashboard/special_assignments')
+        },
+        {
             path: 'accident_management',
             name: `${pre}accident-management`,
             props: true,
@@ -355,6 +365,16 @@ export default {
                 title: '事故管理'
             },
             component: () => import('@/pages/dashboard/accident_management')
+        },
+        {
+            path: 'education_training',
+            name: `${pre}education-training`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '教育培训'
+            },
+            component: () => import('@/pages/dashboard/education_training')
         }
     ]
 };

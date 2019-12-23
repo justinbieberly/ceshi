@@ -460,6 +460,24 @@ export function getAccidentDetailByParam (data) {
     });
 }
 
+// 获取[培训档案-menu]的数据
+export function getTrainingRecordsMenu (data) {
+    return request({
+        url: apiConfig.getTrainingRecordsMenu.url,
+        method: apiConfig.getTrainingRecordsMenu.method,
+        data
+    });
+}
+
+// 获取[培训档案-table]的数据
+export function getTrainingTableByParam (data) {
+    return request({
+        url: apiConfig.getTrainingTableByParam.url,
+        method: apiConfig.getTrainingTableByParam.method,
+        data
+    });
+}
+
 // todo 分页符
 // todo 分页符
 // todo 分页符

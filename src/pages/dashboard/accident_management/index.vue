@@ -11,7 +11,7 @@
                         <Icon type="md-arrow-round-down" />
                         导出
                     </Button>
-                    <div class="ivu-block">
+                    <div class="ivu-block ivu-mt">
                         <div class="regime-btn ivu-btn ivu-btn-default ivu-font-size-small"
                              v-for="(value, index) in menuList"
                              :key="index"

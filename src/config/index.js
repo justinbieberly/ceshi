@@ -263,6 +263,16 @@ const Config = {
             url: '/response/事故管理/response-detail.json',
             method: 'get'
         },
+        getTrainingRecordsMenu: {
+            alias: '获取-教育培训-培训档案-menu-的数据',
+            url: '/response/教育培训/培训档案/response.json',
+            method: 'get'
+        },
+        getTrainingTableByParam: {
+            alias: '获取-教育培训-培训档案-menu-的数据',
+            url: '/response/教育培训/培训档案/response-table.json',
+            method: 'get'
+        },
         // todo 分页符
         // todo 分页符
         // todo 分页符

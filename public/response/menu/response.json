@@ -215,7 +215,7 @@
           {
             "name": "特作作业",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/special_assignments"
           },
           {
             "name": "事故管理",
@@ -225,7 +225,7 @@
           {
             "name": "教育培训",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/education_training"
           }
         ]
       },
