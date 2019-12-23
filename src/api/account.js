@@ -478,6 +478,24 @@ export function getTrainingTableByParam (data) {
     });
 }
 
+// 获取[培训档案-从业人员]的数据
+export function getPractitionersTableData (data) {
+    return request({
+        url: apiConfig.getPractitionersTableData.url,
+        method: apiConfig.getPractitionersTableData.method,
+        data
+    });
+}
+
+// 获取[培训档案-从业人员]的数据
+export function getOutsidersTableData (data) {
+    return request({
+        url: apiConfig.getOutsidersTableData.url,
+        method: apiConfig.getOutsidersTableData.method,
+        data
+    });
+}
+
 // todo 分页符
 // todo 分页符
 // todo 分页符

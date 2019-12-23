@@ -225,7 +225,19 @@
           {
             "name": "教育培训",
             "id": 1001,
-            "path": "/dashboard/education_training"
+            "path": "/dashboard/education_training",
+            "secondaryMenu": [
+              {
+                "name": "教育培训-从业人员",
+                "id": 1009,
+                "path": "/dashboard/practitioners"
+              },
+              {
+                "name": "教育培训-外来人员",
+                "id": 1009,
+                "path": "/dashboard/outsiders"
+              }
+            ]
           }
         ]
       },

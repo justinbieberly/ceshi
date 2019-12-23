@@ -1,0 +1,81 @@
+{
+  "code": 200,
+  "msg": "数据获取成功！",
+  "data": {
+    "tableData": {
+      "data": [
+        {
+          "no": 1,
+          "id": 1,
+          "fileName": "员工教育",
+          "category": "常规岗位",
+          "createdAt": "2017-08-05 15:47:44",
+          "status": 0,
+          "resource": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg",
+          "fileType": "word"
+        },
+        {
+          "no": 2,
+          "id": 1,
+          "fileName": "叉车使用规范",
+          "category": "叉车员",
+          "createdAt": "2017-08-05 15:47:44",
+          "status": 1,
+          "resource": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg",
+          "fileType": "MP4"
+        },
+        {
+          "no": 3,
+          "id": 1,
+          "fileName": "道路安全条例",
+          "category": "运输员",
+          "createdAt": "2017-08-05 15:47:44",
+          "status": 1,
+          "resource": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg",
+          "fileType": "pdf"
+        },
+        {
+          "no": 4,
+          "id": 1,
+          "fileName": "押运规范指导",
+          "category": "押运员",
+          "createdAt": "2017-08-05 15:47:44",
+          "status": 1,
+          "resource": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg",
+          "fileType": "word"
+        },
+        {
+          "no": 5,
+          "id": 1,
+          "fileName": "员工教育",
+          "category": "常规岗位",
+          "createdAt": "2017-08-05 15:47:44",
+          "status": 0,
+          "resource": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg",
+          "fileType": "word"
+        },
+        {
+          "no": 6,
+          "id": 1,
+          "fileName": "员工教育",
+          "category": "常规岗位",
+          "createdAt": "2017-08-05 15:47:44",
+          "status": 1,
+          "resource": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg",
+          "fileType": "word"
+        },
+        {
+          "no": 7,
+          "id": 1,
+          "fileName": "员工教育",
+          "category": "常规岗位",
+          "createdAt": "2017-08-05 15:47:44",
+          "status": 0,
+          "resource": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg",
+          "fileType": "pdf"
+        }
+      ]
+    }
+  }
+}
+

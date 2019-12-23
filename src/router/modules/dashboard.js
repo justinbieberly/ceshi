@@ -375,6 +375,26 @@ export default {
                 title: '教育培训'
             },
             component: () => import('@/pages/dashboard/education_training')
+        },
+        {
+            path: 'practitioners',
+            name: `${pre}practitioners`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '从业人员'
+            },
+            component: () => import('@/pages/dashboard/education_training/practitioners')
+        },
+        {
+            path: 'outsiders',
+            name: `${pre}outsiders`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '外来人员'
+            },
+            component: () => import('@/pages/dashboard/education_training/outsiders')
         }
     ]
 };

@@ -2,9 +2,9 @@
     <main class="body-content-main">
         <div class="content-layout-left" :class="{ 'i-layout-slider-min': this.menuCollapse }"
              ref="left">
-            <div class="logo-words-desc"> {{ logoDesc }} </div>
+            <div class="logo-words-desc"> {{ logoDesc }}</div>
             <Card :bordered="false" class="i-admin-left-menu">
-                <Card :title="title" icon="ios-options"  shadow class="temporary_table_nopadding">
+                <Card :title="title" icon="ios-options" shadow class="temporary_table_nopadding">
                     <div class="ivu-block ivu-mt-16">
                         <div class="pat-btn ivu-btn ivu-btn-default ivu-font-size-small"
                              v-for="(value, index) in menuList"
@@ -32,8 +32,9 @@
                             </div>
                         </div>
 
-                        <Button  class="regime-btn ivu-btn ivu-btn-default ivu-font-size-small p-new" @click="addTask">
-                            <Icon type="md-add-circle" size="16" class="ivu-mr-8"/>新增
+                        <Button class="regime-btn ivu-btn ivu-btn-default ivu-font-size-small p-new" @click="addTask">
+                            <Icon type="md-add-circle" size="16" class="ivu-mr-8"/>
+                            新增
                         </Button>
                     </div>
                 </Card>
@@ -43,7 +44,7 @@
              :class="{ 'content-layout-right-pro': this.menuCollapse }"
              ref="right">
             <div class="ivu-block">
-                <Form :model="formItem" :label-width="70"  inline :label-colon="true"
+                <Form :model="formItem" :label-width="70" inline :label-colon="true"
                       class="real-time-form ivu-inline-block user-full-screen">
                     <div class="ivu-form-item" style="line-height: 32px;">
                         功能操作
@@ -59,16 +60,17 @@
                                 class="ivu-nomal-select"
                                 style="width: 120px">
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery" class="ivu-query-btn ivu-ml-16">查询结果</Button>
+                        <Button type="primary" size="small" @click="doQuery" class="ivu-query-btn ivu-ml-16">查询结果
+                        </Button>
                         <Button style="margin-left: 18px" size="small">重置查询</Button>
-<!--                        <Button style="margin-left: 16px" size="small" >-->
-<!--                            保存-->
-<!--                        </Button>-->
+                        <!--                        <Button style="margin-left: 16px" size="small" >-->
+                        <!--                            保存-->
+                        <!--                        </Button>-->
                     </FormItem>
                     <div class="ivu-inline-block" style="float: right">
                         <div class="ivu-form-item-content ivu-inline-block ivu-mr-16">
                             <Button size="small" to="/dashboard/routine_inspections">
-                                <Icon type="ios-arrow-back" />
+                                <Icon type="ios-arrow-back"/>
                                 返回
                             </Button>
                             <Button style="margin-left: 16px"
@@ -128,9 +130,9 @@
                 width="400"
                 v-model="modal.modal1.status"
                 @on-ok="submitAdd"
-                :title="modal.modal1.title" >
+                :title="modal.modal1.title">
             <div class="ivu-block ivu-p-8 user-full-img">
-                <Form :model="formItem" :label-width="100"  inline :label-colon="true"
+                <Form :model="formItem" :label-width="100" inline :label-colon="true"
                       class="real-time-form ivu-inline-block">
                     <FormItem label="任务名">
                         <Input v-model="formItem.taskName"
@@ -168,9 +170,9 @@
                 width="400"
                 v-model="modal.modal2.status"
                 @on-ok="submitEquipment"
-                :title="modal.modal2.title" >
+                :title="modal.modal2.title">
             <div class="ivu-block ivu-p-8 user-full-img">
-                <Form :model="formItem" :label-width="100"  inline :label-colon="true"
+                <Form :model="formItem" :label-width="100" inline :label-colon="true"
                       class="real-time-form ivu-inline-block">
                     <FormItem label="设施编号">
                         <Input v-model="formItem.facilitiesNum"
@@ -181,8 +183,8 @@
                         <Select v-model="formItem.facilitiesClassfiy"
                                 size="small"
                                 style="width:200px"
-                                placeholder="请输入任务名..." >
-                            <Option value="item" >333</Option>
+                                placeholder="请输入任务名...">
+                            <Option value="item">333</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="设施名称">
@@ -216,8 +218,8 @@
                         <Select v-model="formItem.model"
                                 size="small"
                                 style="width:200px"
-                                placeholder="请选择3D模型..." >
-                            <Option value="item" >333</Option>
+                                placeholder="请选择3D模型...">
+                            <Option value="item">333</Option>
                         </Select>
                     </FormItem>
                 </Form>
@@ -226,8 +228,8 @@
     </main>
 </template>
 <script>
-    import {mapState} from 'vuex';
-    import {getNewRoutineMenu, getNewRoutineByParam} from '@api/account';
+    import { mapState } from 'vuex';
+    import { getNewRoutineMenu, getNewRoutineByParam } from '@api/account';
     import Config from '@/config';
 
     export default {
@@ -421,7 +423,7 @@
                     '</div>'
             },
             modalMock (state) {
-                if (state === 1 ) {
+                if (state === 1) {
                     this.setTableForm({}, false)
                     this.modal.modal2.state = 1
                 } else {
@@ -435,7 +437,7 @@
                 this.modal.modal2.status = true
             },
             submitEquipment () {
-                if (this.modal.modal2.state === 1){
+                if (this.modal.modal2.state === 1) {
                     console.log(this.formItem)
                     // todo 数据添加
                     let formData = this.formItem
@@ -448,22 +450,22 @@
                             id: 520,
                             no: formData.facilitiesNum,
                             classification: formData.facilitiesClassfiy,
-                            name:  formData.facilitiesName,
+                            name: formData.facilitiesName,
                             address: formData.facilitiesAddress,
                             installTime: this.dateTimeFormat(formData.installTime),
-                            effectiveTime:  this.dateTimeFormat(formData.effectiveTime),
+                            effectiveTime: this.dateTimeFormat(formData.effectiveTime),
                             attention: formData.attention,
                             model: formData.model
                         }
                     })
                     this.$Message.success('添加成功')
-                } else{
+                } else {
                     this.$Message.success('编辑成功')
                 }
             },
             cacheChoose (sourceSelectedKeys, targetSelectedKeys) {
-              // 缓存用户当前点击的第一条 sourceSelectedKeys 左边选中 targetSelectedKeys右边
-                let data =  this.transfer.data
+                // 缓存用户当前点击的第一条 sourceSelectedKeys 左边选中 targetSelectedKeys右边
+                let data = this.transfer.data
                 for (let i = 0; i < data.length; i++) {
                     let item = data[i]
                     if (item.key === sourceSelectedKeys[0]) {
@@ -488,7 +490,7 @@
                 let mouth = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
                 let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
                 return year + '/' + mouth + '/' + day
-            },
+            }
         }
     }
 </script>
@@ -497,35 +499,43 @@
         width: 49%;
         text-align: right;
     }
+
     .pat-btn {
         width: 100%;
         height: 90px;
         margin-bottom: 8px;
         text-align: left;
         overflow: hidden;
+
         .p-title {
             width: 100%;
             font-size: 14px;
         }
+
         .p-info {
             width: 100%;
-            .p-items{
+
+            .p-items {
                 width: 50%;
                 display: block;
                 float: left;
                 margin-bottom: 6px;
+
                 span {
                     display: inline-block;
                 }
             }
+
             .p-items:last-child {
                 width: 100%;
+
                 span:first-child {
                     width: 25%;
                 }
             }
         }
     }
+
     .p-new {
         margin-top: 6px;
         width: 100%;

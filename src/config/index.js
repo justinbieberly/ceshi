@@ -273,6 +273,16 @@ const Config = {
             url: '/response/教育培训/培训档案/response-table.json',
             method: 'get'
         },
+        getPractitionersTableData: {
+            alias: '获取-教育培训-从业人员-的数据',
+            url: '/response/教育培训/从业人员/response.json',
+            method: 'get'
+        },
+        getOutsidersTableData: {
+            alias: '获取-教育培训-从业人员-的数据',
+            url: '/response/教育培训/外来人员/response.json',
+            method: 'get'
+        },
         // todo 分页符
         // todo 分页符
         // todo 分页符
