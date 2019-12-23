@@ -196,49 +196,41 @@
                         {
                             title: '序号',
                             align: 'center',
-                            width: '120px',
                             key: 'id'
                         },
                         {
                             title: '姓名',
                             align: 'center',
-                            width: '120px',
                             key: 'name'
                         },
                         {
                             title: '电话',
                             align: 'center',
-                            width: '120px',
                             key: 'phone'
                         },
                         {
                             title: '部门',
                             align: 'center',
-                            width: '120px',
                             key: 'department'
                         },
                         {
                             title: '是否健康',
                             align: 'center',
-                            width: '120px',
                             key: 'isHealth'
                         },
                         {
                             title: '体检类型',
                             align: 'center',
-                            width: '120px',
                             key: 'medicalType'
                         },
                         {
                             title: '体检日期',
                             align: 'center',
-                            width: '120px',
                             key: 'medicalTime'
                         },
                         {
                             title: '有效日期',
                             align: 'center',
-                            width: '120px',
                             key: 'effectiveTime'
                         },
                         {
@@ -250,6 +242,7 @@
                             title: '附件',
                             align: 'center',
                             fixed: 'right',
+                            width: '250',
                             slot: 'attachment',
                             key: 'attachment'
                         }

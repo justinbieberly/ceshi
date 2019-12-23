@@ -38,18 +38,18 @@
                 </div>
                 <Form :model="formItem" :label-width="130"  inline :label-colon="true"
                       class="real-time-form ivu-inline-block user-full-screen">
-                    <FormItem label="事故名称">
+                    <FormItem label="事故名称" style="width: 49%; float: left;">
                         <Input type="text" v-model="formItem.name"
                                style="width: 250px"
                                :disabled="state === 1"
                                placeholder="请输入事故名称..."></Input>
                     </FormItem>
-                    <FormItem label="事故部门">
+                    <FormItem label="事故部门" style="width: 49%; float: left;">
                         <Select v-model="formItem.department"  :disabled="state === 1" style="width:250px">
                             <Option value="2">部门选择项</Option>
                         </Select>
                     </FormItem>
-                    <FormItem label="事故当事人">
+                    <FormItem label="事故当事人" style="width: 49%; float: left;">
                         <Input v-model="formItem.partiesConcerned"
                                style="width: 250px"
                                :disabled="state === 1"
@@ -57,7 +57,7 @@
                                :autosize="{minRows: 2,maxRows: 5}"
                                placeholder="请输入事故当事人..."></Input>
                     </FormItem>
-                    <FormItem label="当事人联系方式">
+                    <FormItem label="当事人联系方式" style="width: 49%; float: left;">
                         <Input v-model="formItem.partiesContact"
                                style="width: 250px"
                                :disabled="state === 1"
@@ -65,25 +65,25 @@
                                :autosize="{minRows: 2,maxRows: 5}"
                                placeholder="请输入当事人联系方式..."></Input>
                     </FormItem>
-                    <FormItem label="事故负责人">
+                    <FormItem label="事故负责人" style="width: 49%; float: left;">
                         <Input type="text" v-model="formItem.head"
                                style="width: 250px"
                                :disabled="state === 1"
                                placeholder="请输入事故负责人..."></Input>
                     </FormItem>
-                    <FormItem label="报告人">
+                    <FormItem label="报告人" style="width: 49%; float: left;">
                         <Input type="text" v-model="formItem.reporter"
                                style="width: 250px"
                                :disabled="state === 1"
                                placeholder="请输入报告人..."></Input>
                     </FormItem>
-                    <FormItem label="事故发生地点">
+                    <FormItem label="事故发生地点" style="width: 100%; float: left;">
                         <Input type="text" v-model="formItem.place"
-                               style="width:640px"
+                               style="width: 78.5%"
                                :disabled="state === 1"
                                placeholder="请输入事故发生地点..."></Input>
                     </FormItem>
-                    <FormItem label="事故发生时间">
+                    <FormItem label="事故发生时间" style="width: 49%; float: left;">
                         <DatePicker type="date" v-model="formItem.startTime"
                                     :disabled="state === 1"
                                     placeholder="选择开始时间..."
@@ -93,25 +93,25 @@
                                     placeholder="选择结束时间..."
                                     style="width: 120px; margin-left: 10px;"></DatePicker>
                     </FormItem>
-                    <FormItem label="事故的详细经过">
+                    <FormItem label="事故类别" style="width: 49%; float: left;">
                         <Select v-model="formItem.type"  :disabled="state === 1" style="width:250px">
                             <Option value="---">事故类别</Option>
                         </Select>
                     </FormItem>
-                    <FormItem label="事故的详细经过">
+                    <FormItem label="事故的详细经过" style="width: 100%; float: left;">
                         <Input v-model="formItem.detailPass" type="textarea"
                                style="width:640px"
                                :disabled="state === 1"
                                :rows="4" placeholder="事故的详细经过..." />
                     </FormItem>
-                    <FormItem label="事故的原因分析">
+                    <FormItem label="事故的原因分析" style="width: 100%; float: left;">
                         <Input v-model="formItem.causeAnalysis"
                                :disabled="state === 1"
                                type="textarea"
                                style="width:640px"
                                :rows="4" placeholder="事故的原因分析..." />
                     </FormItem>
-                    <FormItem label="事故处理结果及预防采取措施">
+                    <FormItem label="事故处理结果及预防采取措施" style="width: 100%; float: left;">
                         <Input v-model="formItem.measures"
                                :disabled="state === 1"
                                type="textarea"
@@ -123,6 +123,7 @@
                             <Button icon="ios-cloud-upload-outline">选择上传文件</Button>
                         </Upload>
                     </FormItem>
+                    <div style="clear: both"></div>
                     <div class="ivu-block ivu-text-center">
                         <Button type="primary" @click="submit">确定</Button>
                     </div>

@@ -7,54 +7,45 @@
         {
           "title": "序号",
           "key": "id",
-          "width": "80",
           "align": "center"
         },
         {
           "title": "交管许可字号",
-          "width": "120",
           "key": "trafficLicenseNo",
           "align": "center"
         },
         {
           "title": "业户名称",
           "key": "establishmentName",
-          "width": "170",
           "align": "center"
         },
         {
           "title": "地址",
           "key": "address",
-          "width": "170",
           "align": "center"
         },
         {
           "title": "经营范围",
-          "width": "100",
           "key": "scopeBusiness",
           "align": "center"
         },
         {
           "title": "发证机关",
-          "width": "100",
           "key": "agencies",
           "align": "center"
         },
         {
           "title": "起始日期",
-          "width": "100",
           "key": "startTime",
           "align": "center"
         },
         {
           "title": "有效日期",
-          "width": "100",
           "key": "effectivDate",
           "align": "center"
         },
         {
           "title": "临期时间",
-          "width": "100",
           "key": "periodTime",
           "align": "center"
         }
