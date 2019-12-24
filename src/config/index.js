@@ -252,6 +252,11 @@ const Config = {
             url: '/response/装卸作业/response.json',
             method: 'get'
         },
+        getSpecialAssignmentsMenu: {
+            alias: '获取-特殊作业的menu-的数据',
+            url: '/response/特殊作业/动火作业/response.json',
+            method: 'get'
+        },
         // todo 分页符
         getAccidentManagement: {
             alias: '获取- 事故管理-的数据',

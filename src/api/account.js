@@ -441,6 +441,15 @@ export function getHandlingOperation (data) {
     });
 }
 
+// 获取[特殊作业- 动火作业]的数据
+export function getSpecialAssignmentsMenu (data) {
+    return request({
+        url: apiConfig.getSpecialAssignmentsMenu.url,
+        method: apiConfig.getSpecialAssignmentsMenu.method,
+        data
+    });
+}
+
 // todo 分页符
 // 获取[事故管理]的数据
 export function getAccidentManagement (data) {
