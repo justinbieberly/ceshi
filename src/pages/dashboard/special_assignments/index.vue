@@ -12,11 +12,11 @@
                                  :key="index" >
                                 <h4 class="s-title">{{ value.title }}</h4>
                                 <div class="ivu-inline-block s-box" v-if="index === 0">
-                                    <Button  size="small" style="margin-right: 8px;">
+                                    <Button  size="small" style="margin-right: 8px;" @click="exportData">
                                         <Icon type="md-arrow-round-down" />
                                         导出
                                     </Button>
-                                    <Button  size="small" style="margin-right: 8px;">
+                                    <Button @click="modalAction(2)"  size="small" style="margin-right: 8px;">
                                         申请作业
                                     </Button>
                                 </div>
@@ -29,15 +29,69 @@
                                         <div class="ivu-inline-block">{{ item.title }}</div>
                                         <div class="ivu-inline-block">{{ item.createAt }}</div>
                                         <div class="ivu-inline-block do-action-btn">
-                                            <Icon type="ios-close-circle" size="18" @click="modalAction(item.id, index, key)"/>
+                                            <Icon type="ios-close-circle" size="18" @click="modalAction(1, item.id, index, key)"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </TabPane>
                         <TabPane label="登高作业">
+                            <div class="ivu-block"
+                                 v-for="(value, index) in menuList"
+                                 :key="index" >
+                                <h4 class="s-title">{{ value.title }}</h4>
+                                <div class="ivu-inline-block s-box" v-if="index === 0">
+                                    <Button  size="small" style="margin-right: 8px;" @click="exportData">
+                                        <Icon type="md-arrow-round-down" />
+                                        导出
+                                    </Button>
+                                    <Button @click="modalAction(2)"  size="small" style="margin-right: 8px;">
+                                        申请作业
+                                    </Button>
+                                </div>
+                                <div class="ivu-block">
+                                    <div class="regime-btn ivu-btn ivu-btn-default ivu-font-size-small"
+                                         v-for="(item, key) in value.children"
+                                         :key="key"
+                                         :class="{ 'ivu-btn-selected': btnArr[index][key]['state'] }"
+                                         @click="selectThisBtn(index, key)">
+                                        <div class="ivu-inline-block">{{ item.title }}</div>
+                                        <div class="ivu-inline-block">{{ item.createAt }}</div>
+                                        <div class="ivu-inline-block do-action-btn">
+                                            <Icon type="ios-close-circle" size="18" @click="modalAction(1, item.id, index, key)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </TabPane>
                         <TabPane label="临时用电作业">
+                            <div class="ivu-block"
+                                 v-for="(value, index) in menuList"
+                                 :key="index" >
+                                <h4 class="s-title">{{ value.title }}</h4>
+                                <div class="ivu-inline-block s-box" v-if="index === 0">
+                                    <Button  size="small" style="margin-right: 8px;" @click="exportData">
+                                        <Icon type="md-arrow-round-down" />
+                                        导出
+                                    </Button>
+                                    <Button @click="modalAction(2)"  size="small" style="margin-right: 8px;">
+                                        申请作业
+                                    </Button>
+                                </div>
+                                <div class="ivu-block">
+                                    <div class="regime-btn ivu-btn ivu-btn-default ivu-font-size-small"
+                                         v-for="(item, key) in value.children"
+                                         :key="key"
+                                         :class="{ 'ivu-btn-selected': btnArr[index][key]['state'] }"
+                                         @click="selectThisBtn(index, key)">
+                                        <div class="ivu-inline-block">{{ item.title }}</div>
+                                        <div class="ivu-inline-block">{{ item.createAt }}</div>
+                                        <div class="ivu-inline-block do-action-btn">
+                                            <Icon type="ios-close-circle" size="18" @click="modalAction(1, item.id, index, key)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </TabPane>
                     </Tabs>
                 </Card>
@@ -1047,9 +1101,9 @@
                 </div>
             </div>
             <div class="special-progress">
-                <Steps :current="2" direction="vertical">
+                <Steps :current="steps.current" direction="vertical">
                     <Step title="待审批" content="还没有人审批，等待审批中"></Step>
-                    <Step title="审批流程中" content="审批已进入到______"></Step>
+                    <Step title="审批流程中" :content="'审批已进入到' + steps.progress"></Step>
                     <Step title="已完成审批" content="审批完成，正在施工"></Step>
                     <Step title="完工验收" content="未上传验收照片"></Step>
                 </Steps>
@@ -1063,11 +1117,21 @@
                 <p>您正在进行删除操作,请确定是否继续进行.</p>
             </div>
         </Modal>
+        <Modal
+                v-model="modal.modal2.status"
+                title="选择新建作业类型?"
+                @on-ok="submit(2)">
+            <div class="ivu-block ivu-p-8">
+                <Button type="primary" @click="chooseWorkType(1)" long class="ivu-mb-8">动火作业</Button>
+                <Button type="primary" @click="chooseWorkType(2)" long class="ivu-mb-8">登高作业</Button>
+                <Button type="primary" @click="chooseWorkType(3)" long>临时用电作业</Button>
+            </div>
+        </Modal>
     </main>
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getSpecialAssignmentsMenu } from '@api/account';
+    import { getSpecialAssignmentsMenu, getAssignmentsTableByParam } from '@api/account';
     import Config from '@/config';
 
     export default {
@@ -1079,7 +1143,40 @@
                 menuList: [],
                 btnArr: [],
                 table: {
-                    state: 3
+                    state: 1,
+                    data: {
+                        table1: {
+                            applyUnit: '',
+                            applyUser: '',
+                            licenseNum: '',
+                            jobLevel: '',
+                            way: '',
+                            address: '',
+                            date: {
+                                start: {
+                                    year: '',
+                                    mouth: '',
+                                    day: '',
+                                    hours: '',
+                                    minutes: ''
+                                },
+                                end: {
+                                    year: '',
+                                    mouth: '',
+                                    day: '',
+                                    hours: '',
+                                    minutes: ''
+                                }
+                            },
+                            head: ''
+                        },
+                        table2: {},
+                        table3: {}
+                    }
+                },
+                steps: {
+                    current: 0,
+                    progress: '_______'
                 },
                 modal: {
                     modal1: {
@@ -1089,14 +1186,7 @@
                         id: undefined
                     },
                     modal2: {
-                        fileTypeList: [], // 所有的文件类型
-                        status: false,
-                        state: 1,
-                        title: '添加文件',
-                        fileName: '',
-                        category: '',
-                        fileType: '',
-                        filePath: '' // 返回id 还是路劲
+                        status: false
                     }
                 }
             }
@@ -1114,7 +1204,6 @@
             let that = this;
             getSpecialAssignmentsMenu().then(async res => {
                 that.menuList = res.menu
-                console.log(that.menuList)
                 this.setMenuClass(res.menu)
             }).catch(err => {
                 console.log('err', err)
@@ -1162,39 +1251,62 @@
                 }, 500)
             },
             getTableDataById (id = 0) {
-                console.log('id', id)
-                // let param = {
-                //     id: id
-                // }
-                // getTrainingTableByParam(param).then(async res => {
-                //     this.table.data = res.tableData.data
-                //     this.table.loading = false
-                // })
+                let param = {
+                    id: id
+                }
+                getAssignmentsTableByParam(param).then(async res => {
+                    this.steps.current = res.steps.current
+                    this.steps.progress = res.steps.progress
+                })
             },
             changeTabs (index) {
                 // 点击tab分页 如果只在一个页面 页面数据会混淆
-                // let that = this;
+                let that = this;
+                let param = {
+                    menuType: index
+                }
                 if (index === 0) {
+                    this.table.state = 1
                 } else if (index === 1) {
-                    this.$router.push('practitioners')
+                    this.table.state = 2
                 } else if (index === 2) {
-                    this.$router.push('outsiders')
+                    this.table.state = 3
+                }
+                getSpecialAssignmentsMenu(param).then(async res => {
+                    that.menuList = res.menu
+                    console.log('----menuList', that.menuList)
+                    this.setMenuClass(res.menu)
+                }).catch(err => {
+                    console.log('err', err)
+                })
+            },
+            modalAction (state, id, index, key) {
+                if (state === 1) {
+                    this.modal.modal1.status = true
+                    this.modal.modal1.id = id
+                    this.modal.modal1.index = index
+                    this.modal.modal1.key = key
+                } else {
+                    this.modal.modal2.status = true
                 }
             },
-            modalAction (id, index, key) {
-                this.modal.modal1.status = true
-                this.modal.modal1.id = id
-                this.modal.modal1.index = index
-                this.modal.modal1.key = key
+            chooseWorkType (state) {
+                this.table.state = state
+                this.$Message.info('请填写相应的表单数据!')
+                this.modal.modal2.status = false
+            },
+            exportData () {
+                // todo API导出
+                this.$Message.success('导出成功!')
             },
             submit (state) {
                 if (state === 1) {
                     // todo let id = this.modal.modal1.id
                     let key = this.modal.modal1.key
                     let index = this.modal.modal1.index
-                    this.menuList[key].children.splice(index, 1)
-                    // 清除按钮里面对应的数据
-                    this.btnArr[key].splice(index, 1)
+                    this.menuList[index].children.splice(key, 1)
+                    this.btnArr[index].splice(key, 1)
+                    // todo API删除
                     this.$Message.success('删除成功!')
                 }
             }

@@ -367,16 +367,6 @@ export default {
             component: () => import('@/pages/dashboard/accident_management')
         },
         {
-            path: 'education_training',
-            name: `${pre}education-training`,
-            props: true,
-            meta: {
-                ...meta,
-                title: '教育培训'
-            },
-            component: () => import('@/pages/dashboard/education_training')
-        },
-        {
             path: 'practitioners',
             name: `${pre}practitioners`,
             props: true,
@@ -395,6 +385,26 @@ export default {
                 title: '外来人员'
             },
             component: () => import('@/pages/dashboard/education_training/outsiders')
+        },
+        {
+            path: 'education_training',
+            name: `${pre}education-training`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '教育培训'
+            },
+            component: () => import('@/pages/dashboard/education_training')
+        },
+        {
+            path: 'data_statistics',
+            name: `${pre}data-statistics`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '数据统计'
+            },
+            component: () => import('@/pages/dashboard/data_statistics')
         }
     ]
 };

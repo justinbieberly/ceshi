@@ -54,7 +54,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { geToperationLog } from '@api/account';
+    import { getToperationLog } from '@api/account';
     import Config from '@/config';
 
     export default {
@@ -123,7 +123,7 @@
         created () {
             let that = this;
             that.table.loading = true
-            geToperationLog().then(async res => {
+            getToperationLog().then(async res => {
                 that.table.data = res.tableData
                 that.table.loading = false
             }).catch(err => {

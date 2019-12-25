@@ -249,7 +249,7 @@
           {
             "name": "数据统计",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/data_statistics"
           },
           {
             "name": "预留页面",

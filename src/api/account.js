@@ -441,11 +441,35 @@ export function getHandlingOperation (data) {
     });
 }
 
+// todo 上线之后需要删除
 // 获取[特殊作业- 动火作业]的数据
 export function getSpecialAssignmentsMenu (data) {
+    if (data === undefined || data.menuType === 0) {
+        return request({
+            url: apiConfig.getSpecialAssignmentsMenu.url,
+            method: apiConfig.getSpecialAssignmentsMenu.method,
+            data
+        });
+    } else if (data.menuType === 1) {
+        return request({
+            url: '/response/特殊作业/登高作业/response.json',
+            method: 'get',
+            data
+        });
+    } else if (data.menuType === 2) {
+        return request({
+            url: '/response/特殊作业/临时用电作业/response.json',
+            method: 'get',
+            data
+        });
+    }
+}
+
+// 获取[特殊作业- 表格数据]的数据
+export function getAssignmentsTableByParam (data) {
     return request({
-        url: apiConfig.getSpecialAssignmentsMenu.url,
-        method: apiConfig.getSpecialAssignmentsMenu.method,
+        url: apiConfig.getAssignmentsTableByParam.url,
+        method: apiConfig.getAssignmentsTableByParam.method,
         data
     });
 }
@@ -505,15 +529,50 @@ export function getOutsidersTableData (data) {
     });
 }
 
-// todo 分页符
-// todo 分页符
-// todo 分页符
-// todo 分页符
-// 获取[操作日志]的数据
-export function geToperationLog (data) {
+// 获取[数据统计-目录数据]的数据
+export function getDataStatisticsMenu (data) {
     return request({
-        url: apiConfig.geToperationLog.url,
-        method: apiConfig.geToperationLog.method,
+        url: apiConfig.getDataStatisticsMenu.url,
+        method: apiConfig.getDataStatisticsMenu.method,
+        data
+    });
+}
+
+// 获取[数据统计-图表数据]的数据
+export function getDataStatisticsCharts (data) {
+    console.log('data', data)
+    if (data.id === 16) {
+        return request({
+            url: apiConfig.getDataStatisticsCharts.url,
+            method: apiConfig.getDataStatisticsCharts.method,
+            data
+        });
+    } else if (data.id === 17) {
+        return request({
+            url: '/response/数据统计/图表数据/response1.json',
+            method: apiConfig.getDataStatisticsCharts.method,
+            data
+        });
+    } else if (data.id === 18) {
+        return request({
+            url: '/response/数据统计/图表数据/response2.json',
+            method: apiConfig.getDataStatisticsCharts.method,
+            data
+        });
+    } else if (data.id === 19) {
+        return request({
+            url: '/response/数据统计/图表数据/response3.json',
+            method: apiConfig.getDataStatisticsCharts.method,
+            data
+        });
+    }
+}
+
+// 获取[操作日志]的数据
+export function getToperationLog (data) {
+    return request({
+        url: apiConfig.getToperationLog.url,
+        method: apiConfig.getToperationLog.method,
         data
     });
 }

@@ -1,0 +1,13 @@
+
+{
+  "code": 200,
+  "msg": "特种设备-数据获取成功！",
+  "data": {
+    "steps": {
+      "current": 1,
+      "progress": "作业单位"
+    },
+    "tableInfo": []
+  }
+}
+

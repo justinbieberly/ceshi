@@ -257,6 +257,11 @@ const Config = {
             url: '/response/特殊作业/动火作业/response.json',
             method: 'get'
         },
+        getAssignmentsTableByParam: {
+            alias: '获取-特殊作业的表格-的数据',
+            url: '/response/特殊作业/动火作业/response-table.json',
+            method: 'get'
+        },
         // todo 分页符
         getAccidentManagement: {
             alias: '获取- 事故管理-的数据',
@@ -288,10 +293,17 @@ const Config = {
             url: '/response/教育培训/外来人员/response.json',
             method: 'get'
         },
-        // todo 分页符
-        // todo 分页符
-        // todo 分页符
-        geToperationLog: {
+        getDataStatisticsMenu: {
+            alias: '获取-数据统计-的数据',
+            url: '/response/数据统计/response.json',
+            method: 'get'
+        },
+        getDataStatisticsCharts: {
+            alias: '获取-数据统计-图表数据-的数据',
+            url: '/response/数据统计/图表数据/response.json',
+            method: 'get'
+        },
+        getToperationLog: {
             alias: '获取-操作日志-的数据',
             url: '/response/操作日志/response.json',
             method: 'get'
