@@ -264,12 +264,12 @@
           {
             "name": "用户管理",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/user_management"
           },
           {
             "name": "权限分配",
             "id": 1001,
-            "path": "/dashboard/"
+            "path": "/dashboard/permissions_allocate"
           }
         ]
       }

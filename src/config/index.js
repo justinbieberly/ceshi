@@ -307,6 +307,16 @@ const Config = {
             alias: '获取-操作日志-的数据',
             url: '/response/操作日志/response.json',
             method: 'get'
+        },
+        getUserManagementData: {
+            alias: '获取-用户管理的表格-的数据',
+            url: '/response/用户管理/response.json',
+            method: 'get'
+        },
+        getPermissionsAllocateData: {
+            alias: '获取-权限分配的表格-的数据',
+            url: '/response/权限分配/response.json',
+            method: 'get'
         }
 
     },

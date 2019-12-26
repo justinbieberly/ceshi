@@ -576,3 +576,21 @@ export function getToperationLog (data) {
         data
     });
 }
+
+// 获取[用户管理]的数据
+export function getUserManagementData (data) {
+    return request({
+        url: apiConfig.getUserManagementData.url,
+        method: apiConfig.getUserManagementData.method,
+        data
+    });
+}
+
+// 获取[权限分配]的数据
+export function getPermissionsAllocateData (data) {
+    return request({
+        url: apiConfig.getPermissionsAllocateData.url,
+        method: apiConfig.getPermissionsAllocateData.method,
+        data
+    });
+}

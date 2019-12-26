@@ -257,16 +257,6 @@ export default {
             component: () => import('@/pages/dashboard/occupational_health_ledger/supplies_parameter')
         },
         {
-            path: 'operation_log',
-            name: `${pre}operation-log`,
-            props: true,
-            meta: {
-                ...meta,
-                title: '操作日志'
-            },
-            component: () => import('@/pages/dashboard/operation_log')
-        },
-        {
             path: 'safety_equipment_ledger',
             name: `${pre}safety-equipment-ledger`,
             props: true,
@@ -405,6 +395,46 @@ export default {
                 title: '数据统计'
             },
             component: () => import('@/pages/dashboard/data_statistics')
+        },
+        {
+            path: 'operation_log',
+            name: `${pre}operation-log`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '操作日志'
+            },
+            component: () => import('@/pages/dashboard/operation_log')
+        },
+        {
+            path: 'user_management',
+            name: `${pre}user-management`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '用户管理'
+            },
+            component: () => import('@/pages/dashboard/user_management')
+        },
+        {
+            path: 'permissions_allocate',
+            name: `${pre}permissions-allocate`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '权限分配'
+            },
+            component: () => import('@/pages/dashboard/permissions_allocate')
+        },
+        {
+            path: 'permit',
+            name: `${pre}permit`,
+            props: true,
+            meta: {
+                ...meta,
+                title: '权限操作'
+            },
+            component: () => import('@/pages/dashboard/permit')
         }
     ]
 };
