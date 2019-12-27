@@ -247,9 +247,14 @@
                     this.modal.modal2.title = '删除当前行数据?'
                     this.modal.modal2.state = 3
                 } else if (state === 4) {
-                    this.setModalFormItem(temp)
-                    this.modal.modal2.title = '数据详情预览'
-                    this.modal.modal2.state = 4
+                    this.$router.push({
+                        name: 'dashboard-permit',
+                        params: {
+                            uId: temp.id,
+                            backUrl: 'user_management'
+                        }
+                    })
+                    return true
                 }
                 this.modal.modal2.status = true
             },

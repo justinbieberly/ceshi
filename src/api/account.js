@@ -594,3 +594,21 @@ export function getPermissionsAllocateData (data) {
         data
     });
 }
+
+// 获取[权限列表]的数据
+export function getPermitList (data) {
+    return request({
+        url: apiConfig.getPermitList.url,
+        method: apiConfig.getPermitList.method,
+        data
+    });
+}
+
+// 获取[根据id[用户id/部门id获取对应的权限]]的数据
+export function getPermitById (data) {
+    return request({
+        url: apiConfig.getPermitById.url,
+        method: apiConfig.getPermitById.method,
+        data
+    });
+}

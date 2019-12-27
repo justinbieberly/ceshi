@@ -31,8 +31,8 @@
                                                     :value="checkAllList[index]"
                                                     @click.prevent.native="handleCheckAll(index)">{{ item.title }}</Checkbox>
                                         </div>
-                                        <CheckboxGroup :value="checkGroupObj[index]" @on-change="checkAllGroupChange">
-                                            <Checkbox :label="value" v-for="(value, key) in item.list" :key="key"></Checkbox>
+                                        <CheckboxGroup :value="checkGroupObj[index]" @on-change="checkAllGroupChange($event, index)">
+                                            <Checkbox :label="value.title" v-for="(value, key) in item.list" :key="key"></Checkbox>
                                         </CheckboxGroup>
                                     </div>
                                 </Col>
@@ -46,7 +46,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    // import { get3dModelInfo } from '@api/account';
+    import { getPermitList, getPermitById } from '@api/account';
     import Config from '@/config';
 
     export default {
@@ -55,48 +55,23 @@
             return {
                 logoDesc: Config.logo.logoDesc,
                 formItem: {},
-                indeterminateList: [
-                    true,
-                    false,
-                    true,
-                    true,
-                    false,
-                    true
-                ],
-                checkAllList: [
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                ],
-                checkAllGroupList: [
-                    {
-                        title: '重大危险源监测预警',
-                        list: ['货物存储', '临时存储', '分布状况', '环境监测', '用电监测', '空间监测']
-                    },
-                    {
-                        title: '安全风险分区',
-                        list: ['风险分区', '风险预警', '特种设备管理', '控制室值班', '应急管理']
-                    },
-                    {
-                        title: '人员在岗在位管理系统',
-                        list: ['人员信息管理', '实名进出管理', '访客登记管理', '车辆登记检查']
-                    },
-                    {
-                        title: '系统设置',
-                        list: ['数据统计', '预留页面', '操作日志', '用户管理', '权限分配', '删除和修改']
-                    },
-                    {
-                        title: '企业生产全流程管理',
-                        list: ['制度管理', '证书管理', '职业健康台账', '安全设备台账', ' 日常巡查', '隐患处置', '装卸作业', '事故管理', '教育培训']
-                    },
-                    {
-                        title: 'App权限',
-                        list: ['巡查任务', '值班打卡', '隐患登记', '登记处置', ' 人员登记', '车辆登记', '事故登记', '特种作业']
-                    }
-                ],
+                indeterminateList: {
+                    0: false,
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false
+                },
+                checkAllList: {
+                    0: false,
+                    1: false,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false
+                },
+                checkAllGroupList: [],
                 checkGroupObj: {
                     0: [],
                     1: [],
@@ -105,6 +80,7 @@
                     4: [],
                     5: []
                 },
+                backUrl: '',
                 title: '权限操作'
             }
         },
@@ -118,7 +94,27 @@
             ])
         },
         created () {
-            // let that = this;
+            let that = this;
+            let params = this.$route.params;
+            if (Object.keys(params).length === 0) {
+                this.$Message.error('非法访问,请传入相应的参数!')
+                return
+            }
+            this.backUrl = params.backUrl
+            getPermitList().then(async res => {
+                that.checkAllGroupList = res
+                getPermitById(params).then(async response => {
+                    response.some((value, index, arr) => {
+                        let temp = []
+                        value['list'].some((item, key, arr) => {
+                            temp.push(item.title)
+                        })
+                        this.checkGroupObj[index] = temp
+                    })
+                })
+            }).catch(err => {
+                console.log('err', err)
+            })
         },
         mounted () {
             // 设置屏幕的宽度高度
@@ -126,6 +122,7 @@
         },
         methods: {
             back () {
+                this.$router.replace(this.backUrl)
             },
             handleCheckAll (index) {
                 if (this.indeterminateList[index]) {
@@ -135,23 +132,31 @@
                 }
                 this.indeterminateList[index] = false;
                 if (this.checkAllList[index]) {
-                    this.checkGroupObj[index] = this.checkAllGroupList[index]['list'];
+                    let list = this.checkAllGroupList[index]['list']
+                    let temp = []
+                    list.some((value, index, arr) => {
+                        temp.push(value.title)
+                    })
+                    this.checkGroupObj[index] = temp;
                 } else {
                     this.checkGroupObj[index] = [];
                 }
             },
-            checkAllGroupChange (data) {
-                // let dataLength = this.checkAllGroupList[1]['list'].length
-                if (data.length === 3) {
-                    this.indeterminate = false;
-                    this.checkAll = true;
+            checkAllGroupChange (data, index) {
+                let dataLength = this.checkAllGroupList[index]['list'].length
+                if (data.length === dataLength) {
+                    this.indeterminateList[index] = false;
+                    this.checkAllList[index] = true;
                 } else if (data.length > 0) {
-                    this.indeterminate = true;
-                    this.checkAll = false;
+                    this.indeterminateList[index] = true;
+                    this.checkAllList[index] = false;
                 } else {
-                    this.indeterminate = false;
-                    this.checkAll = false;
+                    this.indeterminateList[index] = false;
+                    this.checkAllList[index] = false;
                 }
+            },
+            updatePermit () {
+                // todo api change user permit
             }
         }
     }

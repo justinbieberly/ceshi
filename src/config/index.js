@@ -317,6 +317,16 @@ const Config = {
             alias: '获取-权限分配的表格-的数据',
             url: '/response/权限分配/response.json',
             method: 'get'
+        },
+        getPermitList: {
+            alias: '获取-权限列表-的数据',
+            url: '/response/权限列表/response.json',
+            method: 'get'
+        },
+        getPermitById: {
+            alias: '获取-根据id[用户id/部门id获取对应的权限]-的数据',
+            url: '/response/权限列表/response1.json',
+            method: 'get'
         }
 
     },
