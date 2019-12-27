@@ -54,6 +54,11 @@
             this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
+            /*
+             * @title 选中之后的钩子操作
+             * @author iEfoam
+             * @return Miexd
+             */
             sendInfo (info) {
                 let param = {
                     id: []
@@ -62,6 +67,7 @@
                     param.id.push(value.id)
                 })
                 send3dModelInfo(param).then(async res => {
+                    // TODO 当结果返回之后的逻辑处理
                     console.log('do some logic', res)
                 }).catch(err => {
                     console.log('err', err)

@@ -46,6 +46,7 @@
 <script>
     import { mapState } from 'vuex';
     import { getElectricityMonitoring } from '@api/account';
+    import { sendElectricityMonitoring } from '@api/interaction';
     import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',
@@ -85,8 +86,11 @@
         created () {
             let that = this;
             console.log('before', that.data5);
-            getElectricityMonitoring()
-                .then(async res => { that.data5 = that.dealTableData(res.tableData); }).catch(err => { console.log('err: ', err) });
+            getElectricityMonitoring().then(async res => {
+                that.data5 = that.dealTableData(res.tableData);
+            }).catch(err => {
+                console.log('err: ', err)
+            });
         },
         mounted () {
             // 设置屏幕的宽度高度
@@ -113,10 +117,13 @@
                                 type: 'ios-paper-outline'
                             },
                             style: {
-                                marginRight: '8px'
+                                marginRight: '8px',
+                                lineHeight: '24px'
                             }
                         }),
-                        h('span', data.title)
+                        h('span', {
+                            class: ['ivu-tree-title']
+                        }, data.title)
                     ]),
                     h('span', {
                         style: {
@@ -190,47 +197,79 @@
                 ]);
             },
             append (data) {
-                const children = data.children || [];
-                children.push({
-                    title: 'appended node',
-                    total: 0,
-                    expand: true
-                });
-                this.$set(data, 'children', children);
-                // TODO 新增一个节点
-                this.$Message.success('添加成功!');
+                let param = {
+                    action: 'new node'
+                }
+                sendElectricityMonitoring(param).then(async res => {
+                    if (res.state === true) {
+                        const children = data.children || [];
+                        children.push({
+                            title: 'appended node',
+                            id: res.id,
+                            total: 0,
+                            expand: true
+                        });
+                        this.$set(data, 'children', children);
+                    }
+                    this.$Message.success(res.msg);
+                }).catch(err => {
+                    console.log('err', err)
+                })
             },
             remove (root, node, data) {
                 const parentKey = root.find(el => el === node).parent;
                 const parent = root.find(el => el.nodeKey === parentKey).node;
                 const index = parent.children.indexOf(data);
-                parent.children.splice(index, 1);
-                // TODO 删除一个节点
-                this.$Message.success('删除成功！');
+                let param = {
+                    id: parent.children[index]['id']
+                }
+                sendElectricityMonitoring(param).then(async res => {
+                    if (res.state === true) {
+                        parent.children.splice(index, 1);
+                    }
+                    this.$Message.success(res.msg);
+                }).catch(err => {
+                    console.log('err', err)
+                })
             },
             removeAll () {
-                this.modal_loading = true;
-                setTimeout(() => {
-                    this.modal_loading = false;
-                    this.modalInfo.modalState = false;
-                    let id = this.monitorHelper.delHelper.id;
-                    let delObject = this.data5.find(el => el.id === id);
-                    let thisKey = this.data5.indexOf(delObject);
-                    this.data5.splice(thisKey, 1);
-                    // TODO 删除一个父级节点
-                    this.$Message.success('删除成功！');
-                }, 500);
+                let id = this.monitorHelper.delHelper.id;
+                let param = {
+                    id: id,
+                    isGroup: true
+                }
+                sendElectricityMonitoring(param).then(async res => {
+                    if (res.state === true) {
+                        this.modal_loading = true;
+                        this.modal_loading = false;
+                        this.modalInfo.modalState = false;
+                        let delObject = this.data5.find(el => el.id === id);
+                        let thisKey = this.data5.indexOf(delObject);
+                        this.data5.splice(thisKey, 1);
+                    }
+                    this.$Message.success(res.msg);
+                }).catch(err => {
+                    console.log('err', err)
+                })
             },
             updateData () {
-                this.modal_loading = true;
-                setTimeout(() => {
-                    this.modal_loading = false;
-                    this.modalInfo.modalState = false;
-                    this.monitorHelper.thisTemp.title = this.monitorHelper.name;
-                    this.monitorHelper.thisTemp.total = this.monitorHelper.value;
-                    // TODO 更新一个父级节点
-                    this.$Message.success('更新成功！');
-                }, 500);
+                let param = {
+                    id: this.monitorHelper.thisTemp.id,
+                    title: this.monitorHelper.name,
+                    total: this.monitorHelper.value
+                }
+                sendElectricityMonitoring(param).then(async res => {
+                    if (res.state === true) {
+                        this.modal_loading = true;
+                        this.modal_loading = false;
+                        this.modalInfo.modalState = false;
+                        this.monitorHelper.thisTemp.title = this.monitorHelper.name;
+                        this.monitorHelper.thisTemp.total = this.monitorHelper.value;
+                    }
+                    this.$Message.success(res.msg);
+                }).catch(err => {
+                    console.log('err', err)
+                })
             },
             dealTableData (data) {
                 let dataTemp = [];
@@ -241,7 +280,8 @@
                             return h('span', {
                                 style: {
                                     display: 'inline-block',
-                                    width: '100%'
+                                    width: '100%',
+                                    lineHeight: '24px'
                                 }
                             }, [
                                 h('span', {
@@ -256,10 +296,13 @@
                                             type: 'ios-folder-outline'
                                         },
                                         style: {
-                                            marginRight: '8px'
+                                            marginRight: '8px',
+                                            lineHeight: '24px'
                                         }
                                     }),
-                                    h('span', data.title)
+                                    h('span', {
+                                        class: ['ivu-tree-title']
+                                    }, data.title)
                                 ]),
                                 h('span', {
                                     style: {
@@ -275,7 +318,7 @@
                                             textAlign: 'center',
                                             fontSize: '16',
                                             color: '#cc5151',
-                                            lineHeight: '20px'
+                                            lineHeight: '24px'
                                         }
                                     }, data.total),
                                     h('Button', {
@@ -285,7 +328,7 @@
                                         }),
                                         style: {
                                             width: '20px',
-                                            fontSize: '20px',
+                                            fontSize: '19px',
                                             marginRight: '4px',
                                             lineHeight: '20px'
                                         },
@@ -300,7 +343,7 @@
                                         }),
                                         style: {
                                             width: '20px',
-                                            fontSize: '20px',
+                                            fontSize: '19px',
                                             marginRight: '4px',
                                             lineHeight: '20px'
                                         },
@@ -322,7 +365,7 @@
                                         }),
                                         style: {
                                             width: '20px',
-                                            fontSize: '20px',
+                                            fontSize: '19px',
                                             lineHeight: '20px'
                                         },
                                         on: {

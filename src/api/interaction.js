@@ -11,9 +11,10 @@
 import request from '@/plugins/request';
 import Config from '@/config';
 
-const apiConfig = Config.apiRoute;
+const apiConfig = Config.interactionApi;
 
 /*
+* @page 三维模型
 * @object 将页面点击的按钮 传递给接口端
 * @param data
 * @author iEfoam
@@ -25,6 +26,23 @@ export function send3dModelInfo (data) {
     return request({
         url: apiConfig.getCertificateByParameter.url,
         method: apiConfig.getCertificateByParameter.method,
+        data
+    });
+}
+
+/*
+* @page 用电监测
+* @object 用电监测 的tree  进行新增 删除 编辑操作
+* @param data
+* @author iEfoam
+* @time 2019-12-18 23:07
+* @return mixed
+* */
+export function sendElectricityMonitoring (data) {
+    console.log('sendElectricityMonitoring', data)
+    return request({
+        url: apiConfig.sendElectricityMonitoring.url,
+        method: apiConfig.sendElectricityMonitoring.method,
         data
     });
 }

@@ -10,7 +10,7 @@
                             <Tree :data="data5" :render="renderContent" class="env-air-tree ivu-text-color i-ctr-hj"></Tree>
                         </TabPane>
                         <TabPane label="环境温度监测">
-                            <Tree :data="data6" :render="renderContent" class="env-air-tree"></Tree>
+                            <Tree :data="data6" :render="renderContent" class="env-air-tree ivu-text-color i-ctr-hj"></Tree>
                         </TabPane>
                     </Tabs>
                 </Card>
@@ -67,97 +67,74 @@
         },
         methods: {
             renderContent (h, { root, node, data }) {
-                // 页面渲染引擎
-                if (node.node.checked) {
-                    // 存在故障
-                    let errStyle = {
-                        display: 'inline-block',
-                        width: '100%'
-                    };
-                    if (node.node.errorLevel === 1) {
-                        // 警告级别的错误
-                        Object.assign(errStyle, {
-                            color: '#cec15c'
-                        });
-                    } else if (node.node.errorLevel === 2) {
-                        // 故障 错误
-                        Object.assign(errStyle, {
-                            color: '#ce0f0d'
-                        });
+                let errStyle = {
+                    display: 'inline-block',
+                    width: '100%'
+                };
+                let bgColor = {
+                    backgroundColor: '#c1cdc0'
+                }
+                if (node.node.errorLevel === 1) {
+                    // 警告级别的错误
+                    Object.assign(errStyle, {
+                        color: '#cec15c'
+                    });
+                    bgColor = {
+                        backgroundColor: '#6891d7'
                     }
-                    return h('span', {
-                        style: errStyle
+                } else if (node.node.errorLevel === 2) {
+                    // 故障 错误
+                    Object.assign(errStyle, {
+                        color: '#ce0f0d'
+                    });
+                    bgColor = {
+                        backgroundColor: '#6891d7'
+                    }
+                }
+                return h('span', {
+                    style: errStyle
+                }, [
+                    h('span', {
+                        style: {
+                            display: 'inline-block',
+                            float: 'left'
+                            // width: '72%'
+                        }
                     }, [
                         h('span', {
-                            style: {
-                                width: '60%',
-                                height: '100%',
-                                display: 'flex',
-                                lineHeight: '24px',
-                                float: 'left',
-                                marginRight: '8px'
-                            }
-                        }, [
-                            h('span', {
-                                style: {
-                                    width: '15px',
-                                    height: '15px',
-                                    display: 'inline-block',
-                                    backgroundColor: '#6891d7',
-                                    marginTop: '4px',
-                                    marginRight: '8px'
-                                }
-                            }),
-                            h('span', data.title)
-                        ]),
-                        h('span', {
-                            style: {
+                            style: Object.assign({
+                                width: '15px',
+                                height: '15px',
+                                borderRadius: '2px',
                                 display: 'inline-block',
-                                float: 'right',
-                                marginRight: '62px'
+                                backgroundColor: '#c1cdc0',
+                                marginTop: '4px',
+                                marginRight: '8px'
+                            }, bgColor)
+                        }),
+                        h('span', {
+                            class: ['ivu-tree-title']
+                        }, data.title)
+                    ]),
+                    h('span', {
+                        style: {
+                            display: 'inline-block',
+                            float: 'right',
+                            marginRight: '10px'
+                        }
+                    }, [
+                        h('Button', {
+                            props: Object.assign({}, this.buttonProps, {
+                                icon: 'ios-information-circle'
+                            }),
+                            style: {
+                                width: '32px',
+                                fontSize: '19px',
+                                lineHeight: '23px'
                             }
-                        }, [
-                            h('Button', {
-                                props: Object.assign({}, this.buttonProps, {
-                                    icon: 'ios-information-circle'
-                                }),
-                                style: {
-                                    width: '32px',
-                                    fontSize: '20px',
-                                    lineHeight: '23px'
-                                }
-                            })
-                        ])
-                    ]);
-                } else {
-                    // 不存在
-                    return h('span', {
-                        style: {
-                            display: 'inline-block',
-                            width: '100%'
-                        }
-                    }, [h('span', {
-                        style: {
-                            width: '60%',
-                            height: '100%',
-                            display: 'flex',
-                            lineHeight: '24px',
-                            float: 'left',
-                            marginRight: '8px'
-                        }
-                    }, [h('span', {
-                        style: {
-                            width: '15px',
-                            height: '15px',
-                            display: 'inline-block',
-                            backgroundColor: '#c1cdc0',
-                            marginTop: '4px',
-                            marginRight: '8px'
-                        }
-                    }), h('span', data.title)
+                        })
                     ])
-                    ]);
-                }
+                ]);
             },
             dealTableData (data) {
                 let dataTemp = [];

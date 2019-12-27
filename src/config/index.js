@@ -14,7 +14,7 @@ const Config = {
     // 请求域名设置
     apiBaseURL: env === 'development' ? 'http://localhost:8080/' : '/',
     /**
-     *  路由设置
+     *  api路由 请求设置
      * */
     apiRoute: {
         login: {
@@ -328,7 +328,16 @@ const Config = {
             url: '/response/权限列表/response1.json',
             method: 'get'
         }
-
+    },
+    /**
+     *  交互api配置
+     * */
+    interactionApi: {
+        sendElectricityMonitoring: {
+            alias: '用电检测的-新增-编辑-删除操作接口',
+            url: '/response/api/sendElectricityMonitoring.json',
+            method: 'get'
+        }
     },
     /**
      * 版权设置

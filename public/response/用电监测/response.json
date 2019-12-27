@@ -5,99 +5,172 @@
   "data": {
     "tableData": [
       {
-        "id": 1,
-        "title": "1#甲类库照明和风机配电箱",
-        "expand": true,
+        "id": 123,
+        "title": "4#甲类库照明和风机配",
+        "expand": false,
         "total": 6,
         "children": [
           {
+            "id": 123,
             "title": "电气综合监控装置400A",
             "total": 1,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "电气综合监控装置100A",
             "total": 1,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "故障电弧探测器",
             "total": 4,
-            "expand": true
+            "expand": false
           }
         ]
       },
       {
-        "id": 2,
-        "title": "2#园区总配电箱",
-        "expand": true,
+        "id": 123,
+        "title": "园区总配电箱",
+        "expand": false,
         "total": 7,
         "children": [
           {
+            "id": 123,
             "title": "电箱A",
             "total": 3,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "电箱B",
             "total": 2,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "电箱C",
             "total": 2,
-            "expand": true
+            "expand": false
           }
         ]
       },
       {
-        "id": 3,
-        "title": "3#临货区应急照明配电箱",
-        "expand": true,
+        "id": 123,
+        "title": "1#临货区应急照明配",
+        "expand": false,
         "total": 4,
         "children": [
           {
+            "id": 123,
             "title": "电箱A",
             "total": 1,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "电箱B",
             "total": 3,
-            "expand": true
+            "expand": false
           }
         ]
       },
       {
-        "id": 4,
+        "id": 123,
+        "title": "2#临货区应急照明配",
+        "expand": false,
+        "total": 4,
+        "children": [
+          {
+            "id": 123,
+            "title": "电箱A",
+            "total": 1,
+            "expand": false
+          },
+          {
+            "id": 123,
+            "title": "电箱B",
+            "total": 3,
+            "expand": false
+          }
+        ]
+      },
+      {
+        "id": 123,
+        "title": "3#临货区应急照明配",
+        "expand": false,
+        "total": 4,
+        "children": [
+          {
+            "id": 123,
+            "title": "电箱A",
+            "total": 1,
+            "expand": false
+          },
+          {
+            "id": 123,
+            "title": "电箱B",
+            "total": 3,
+            "expand": false
+          }
+        ]
+      },
+      {
+        "id": 123,
+        "title": "4#临货区应急照明配",
+        "expand": false,
+        "total": 4,
+        "children": [
+          {
+            "id": 123,
+            "title": "电箱A",
+            "total": 1,
+            "expand": false
+          },
+          {
+            "id": 123,
+            "title": "电箱B",
+            "total": 3,
+            "expand": false
+          }
+        ]
+      },
+      {
+        "id": 123,
         "title": "4#办公区电车充电区",
-        "expand": true,
+        "expand": false,
         "total": 12,
         "children": [
           {
+            "id": 123,
             "title": "电箱A",
             "total": 1,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "电箱B",
             "total": 3,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "电箱B",
             "total": 3,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "电箱B",
             "total": 3,
-            "expand": true
+            "expand": false
           },
           {
+            "id": 123,
             "title": "电箱B",
             "total": 2,
-            "expand": true
+            "expand": false
           }
         ]
       }
