@@ -574,6 +574,7 @@
         methods: {
             renderContent (h, { root, node, data }) {
                 return h('span', {
+                    class: ['ivu-tree-title'],
                     style: {
                         display: 'inline-block',
                         width: '100%'
@@ -716,6 +717,7 @@
                     Object.assign(temp, {
                         render: (h, { root, node, data }) => {
                             return h('span', {
+                                class: ['ivu-tree-title'],
                                 style: {
                                     display: 'inline-block',
                                     width: '100%'

@@ -100,6 +100,7 @@
         methods: {
             renderContent (h, { root, node, data }) {
                 return h('span', {
+                    class: ['ivu-tree-title'],
                     style: {
                         display: 'inline-block',
                         width: '100%'
@@ -121,9 +122,7 @@
                                 lineHeight: '24px'
                             }
                         }),
-                        h('span', {
-                            class: ['ivu-tree-title']
-                        }, data.title)
+                        h('span', data.title)
                     ]),
                     h('span', {
                         style: {
@@ -278,6 +277,7 @@
                     Object.assign(temp, {
                         render: (h, { root, node, data }) => {
                             return h('span', {
+                                class: ['ivu-tree-title'],
                                 style: {
                                     display: 'inline-block',
                                     width: '100%',
@@ -300,9 +300,7 @@
                                             lineHeight: '24px'
                                         }
                                     }),
-                                    h('span', {
-                                        class: ['ivu-tree-title']
-                                    }, data.title)
+                                    h('span', data.title)
                                 ]),
                                 h('span', {
                                     style: {

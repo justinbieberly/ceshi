@@ -337,6 +337,11 @@ const Config = {
             alias: '用电检测的-新增-编辑-删除操作接口',
             url: '/response/api/sendElectricityMonitoring.json',
             method: 'get'
+        },
+        sendRealTimeMonitorParam: {
+            alias: '用电检测的-新增-编辑-删除操作接口',
+            url: '/response/api/sendElectricityMonitoring.json',
+            method: 'get'
         }
     },
     /**

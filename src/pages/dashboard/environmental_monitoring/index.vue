@@ -74,6 +74,7 @@
                 let bgColor = {
                     backgroundColor: '#c1cdc0'
                 }
+                let state = 'none'
                 if (node.node.errorLevel === 1) {
                     // 警告级别的错误
                     Object.assign(errStyle, {
@@ -82,6 +83,7 @@
                     bgColor = {
                         backgroundColor: '#6891d7'
                     }
+                    state = 'block'
                 } else if (node.node.errorLevel === 2) {
                     // 故障 错误
                     Object.assign(errStyle, {
@@ -90,8 +92,10 @@
                     bgColor = {
                         backgroundColor: '#6891d7'
                     }
+                    state = 'block'
                 }
                 return h('span', {
+                    class: ['ivu-tree-title'],
                     style: errStyle
                 }, [
                     h('span', {
@@ -112,9 +116,7 @@
                                 marginRight: '8px'
                             }, bgColor)
                         }),
-                        h('span', {
-                            class: ['ivu-tree-title']
-                        }, data.title)
+                        h('span', data.title)
                     ]),
                     h('span', {
                         style: {
@@ -129,6 +131,7 @@
                             }),
                             style: {
                                 width: '32px',
+                                display: state,
                                 fontSize: '19px',
                                 lineHeight: '23px'
                             }

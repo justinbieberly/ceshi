@@ -33,7 +33,12 @@
           {
             "name": "环境监测",
             "id": 1002,
-            "path": "/dashboard/environmental_monitoring",
+            "path": "/dashboard/environmental_monitoring"
+          },
+          {
+            "name": "用电监测",
+            "id": 1002,
+            "path": "/dashboard/electricity_monitoring",
             "secondaryMenu": [
               {
                 "name": "实时监测",
@@ -46,11 +51,6 @@
                 "path": "/dashboard/electricity_history"
               }
             ]
-          },
-          {
-            "name": "用电监测",
-            "id": 1002,
-            "path": "/dashboard/electricity_monitoring"
           },
           {
             "name": "空间监测",

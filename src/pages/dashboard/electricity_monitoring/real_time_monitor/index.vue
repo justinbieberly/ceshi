@@ -14,7 +14,7 @@
                               style="width: 200px"></Input>
                    </FormItem>
                    <FormItem label="监测状态">
-                       <Select v-model="formItem.select"
+                       <Select v-model="formItem.status"
                                size="small"
                                class="ivu-nomal-select"
                                style="width: 150px">
@@ -23,8 +23,8 @@
                        </Select>
                    </FormItem>
                    <FormItem>
-                       <Button type="primary" size="small" @click="doQuery" class="ivu-query-btn">查询结果</Button>
-                       <Button style="margin-left: 18px" size="small">重置查询</Button>
+                       <Button type="primary" size="small" @click="reloadTable" class="ivu-query-btn">查询结果</Button>
+                       <Button style="margin-left: 18px" size="small"  @click="reloadTable(false)" >重置查询</Button>
                    </FormItem>
                    <div class="ivu-inline-block" style="float: right">
                        <FormItem>
@@ -34,17 +34,18 @@
                            </Button>
                        </FormItem>
                        <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                           <Select v-model="formItem.showNum" size="small"
+                           <Select v-model="formItem.pageSize" size="small"
                                    placeholder="显示条数"
-                                   @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                   @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                                <Option value="20">20条/页</Option>
                                <Option value="50">50条/页</Option>
                                <Option value="100">100条/页</Option>
                            </Select>
                            <Select v-model="formItem.sortWay" size="small"
                                    placeholder="排序方式"
+                                   @on-change="reloadTable"
                                    style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                               <Option value="errorInfo">报警内容</Option>
+                               <Option :value="item.key" v-for="(item, key) in reservoirData.columns" :key="key">{{ item.title }}</Option>
                            </Select>
                        </div>
                    </div>
@@ -52,28 +53,28 @@
                <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
            </div>
             <div class="ivu-block" style="float: right;margin-top: 30px;">
-                <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="reloadTable(true, $event)"/>
             </div>
         </div>
     </main>
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getElectricityRealTime } from '@api/account';
+    import { getElectricityRealTime } from '@api';
     export default {
         name: 'dashboard-real-time-monitoring',
         data () {
             return {
                 title: '实时监测',
                 loading: false,
-                pageSize: 100,
+                pageSize: 10,
                 total: 0,
                 formItem: {
                     input: undefined,
-                    select: undefined,
+                    status: undefined,
                     sortWay: undefined,
-                    showNum: 1
-
+                    page: 1,
+                    pageSize: 10
                 },
                 reservoirData: {
                     columns: [
@@ -144,30 +145,37 @@
             ])
         },
         created () {
-            let that = this;
-            getElectricityRealTime()
-                .then(async res => {
-                    that.total = res.tableData.data.length;
-                    that.reservoirData.data = res.tableData.data;
-            }).catch(err => { console.log('err: ', err) });
+            this.getElectricityTableByParam()
         },
         mounted () {
             // 设置屏幕的宽度高度
             this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // 只能 请求API限制
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem = {
+                        input: undefined,
+                        status: undefined,
+                        sortWay: undefined,
+                        page: 1,
+                        pageSize: 1
+                    }
+                }
+                this.getElectricityTableByParam(this.formItem)
             },
-            doQuery () {
-                console.log('do query');
-                console.log(this.formItem);
-                // 只能 请求API筛选处理
-            },
-            changePage () {
-                console.log('api change page')
+            getElectricityTableByParam (param) {
+                let that = this;
+                console.log('param', param)
+                getElectricityRealTime(param).then(async res => {
+                    that.total = res.tableData.data.length;
+                    that.reservoirData.data = res.tableData.data;
+                }).catch(err => {
+                    console.log('err: ', err)
+                });
             }
         }
     }

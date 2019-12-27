@@ -109,7 +109,7 @@ export function getQueryObject(url) {
 }
 
 /**
- * @param {string} input value
+ * @param {string} str value
  * @returns {number} output value
  */
 export function byteLength(str) {
@@ -339,7 +339,7 @@ export function addClass(ele, cls) {
 
 /**
  * Remove class from element
- * @param {HTMLElement} elm
+ * @param {HTMLElement}  ele
  * @param {string} cls
  */
 export function removeClass(ele, cls) {
