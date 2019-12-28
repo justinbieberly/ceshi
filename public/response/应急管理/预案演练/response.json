@@ -79,6 +79,38 @@
           "file_url": "https://img.alicdn.com/tfs/TB1m7Ihaf1H3KVjSZFHXXbKppXa-200-200.png",
           "file_type": "pdf"
         }
+      ],
+      "categoryListL": [
+        {
+          "id": 123123,
+          "title": "火灾应急预案"
+        },
+        {
+          "id": 123123,
+          "title": "火灾应急预案3"
+        },
+        {
+          "id": 123123,
+          "title": "火灾应急预案5"
+        }
+      ],
+      "fileType": [
+        {
+          "id": 1,
+          "title": "Word"
+        },
+        {
+          "id": 2,
+          "title": "Pdf"
+        },
+        {
+          "id": 4,
+          "title": "Mp4"
+        },
+        {
+          "id": 7,
+          "title": "Mp3"
+        }
       ]
     }
   }

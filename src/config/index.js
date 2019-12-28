@@ -87,6 +87,11 @@ const Config = {
             url: '/response/风险预警/response.json',
             method: 'get'
         },
+        sendRiskEarlyWarning: {
+            alias: '交互-风险预警-点击了选项框会触发的函数',
+            url: '/response/风险预警/api/response.json',
+            method: 'get'
+        },
         getRiskHistory: {
             alias: '获取-风险预警-历史数据-的数据',
             url: '/response/风险预警/历史数据/response.json',
@@ -118,8 +123,13 @@ const Config = {
             method: 'get'
         },
         getEmergencyResponsePlan: {
-            alias: '获取-应急预案例-的数据',
+            alias: '获取-应急预案-的数据',
             url: '/response/应急管理/应急预案/response.json',
+            method: 'get'
+        },
+        sendEmergencyResponsePlan: {
+            alias: 'CURD-应急预案-的数据',
+            url: '/response/应急管理/api/response.json',
             method: 'get'
         },
         getPreparednessDrill: {
@@ -130,6 +140,11 @@ const Config = {
         getEmergencyTreatment: {
             alias: '获取-应急预案例-的数据',
             url: '/response/应急管理/应急处理/response.json',
+            method: 'get'
+        },
+        sendEmergencyTableAction: {
+            alias: '对表格的数据操作-应急预案-的数据',
+            url: '/response/应急管理/api/response1.json',
             method: 'get'
         },
         getPersonnelInformation: {

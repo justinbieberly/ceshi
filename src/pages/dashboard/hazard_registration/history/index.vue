@@ -113,7 +113,7 @@
                 logoDesc: Config.logo.logoDesc,
                 title: '隐患处置',
                 listArr: [],
-                pageSize: 5,
+                pageSize: 10,
                 total: 12,
                 modal: {
                     status: false,

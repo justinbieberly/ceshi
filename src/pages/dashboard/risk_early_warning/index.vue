@@ -19,7 +19,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getRiskEarlyWarning } from '@api/account';
+    import { getRiskEarlyWarning, sendRiskEarlyWarning } from '@api';
     import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',
@@ -47,7 +47,6 @@
                 .then(async res => {
                     that.checkBox = res.navList;
                     that.checkInfo = res.checked;
-                    console.log(that.checkInfo)
                 }).catch(err => { console.log('err: ', err) })
         },
         mounted () {
@@ -57,7 +56,15 @@
         },
         methods: {
             select () {
-                console.log('异步请求数据 选中了', this.checkInfo)
+                sendRiskEarlyWarning(this.checkInfo).then(async res => {
+                    if (res.state === true) {
+                        this.$log.capsule('iView', 'Do SomeThing', 'success');
+                        console.log(res)
+                    }
+                }).catch(err => {
+                    this.$log.capsule('iView', 'Error', 'error');
+                    console.log('err: ', err)
+                })
             }
         }
     }

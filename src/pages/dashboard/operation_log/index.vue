@@ -69,7 +69,7 @@
                     sortWay: '',
                     time: ''
                 },
-                pageSize: 5,
+                pageSize: 10,
                 total: 12,
                 loading: false,
                 modelImg: '/assets/images/vbg.png',

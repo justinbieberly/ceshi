@@ -127,11 +127,27 @@ export function getRiskZoningData (data) {
     });
 }
 
-// 获取[风险预警-]的数据
+// 获取[风险预警]的数据
 export function getRiskEarlyWarning (data) {
     return request({
         url: apiConfig.getRiskEarlyWarning.url,
         method: apiConfig.getRiskEarlyWarning.method,
+        data
+    });
+}
+
+/**
+ * @page 风险预警
+ * @object 点击了选项框会触发的函数 会将当前选中项的id 发送至此
+ * @param {object} data
+ * @author iEfoam
+ * @time 2019-12-28
+ * @return mixed
+ */
+export function sendRiskEarlyWarning (data) {
+    return request({
+        url: apiConfig.sendRiskEarlyWarning.url,
+        method: apiConfig.sendRiskEarlyWarning.method,
         data
     });
 }
@@ -190,11 +206,20 @@ export function getPunchCardLog (data) {
     });
 }
 
-// 获取[控制室值班- 值班情况]的数据
+// 获取[应急管理- 应急预案]的数据
 export function getEmergencyResponsePlan (data) {
     return request({
         url: apiConfig.getEmergencyResponsePlan.url,
         method: apiConfig.getEmergencyResponsePlan.method,
+        data
+    });
+}
+
+// [CURD-应急预案-]的数据
+export function sendEmergencyResponsePlan (data) {
+    return request({
+        url: apiConfig.sendEmergencyResponsePlan.url,
+        method: apiConfig.sendEmergencyResponsePlan.method,
         data
     });
 }
@@ -213,6 +238,15 @@ export function getEmergencyTreatment (data) {
     return request({
         url: apiConfig.getEmergencyTreatment.url,
         method: apiConfig.getEmergencyTreatment.method,
+        data
+    });
+}
+
+// 获取[对表格的数据操作- 值班情况]的数据
+export function sendEmergencyTableAction (data) {
+    return request({
+        url: apiConfig.sendEmergencyTableAction.url,
+        method: apiConfig.sendEmergencyTableAction.method,
         data
     });
 }

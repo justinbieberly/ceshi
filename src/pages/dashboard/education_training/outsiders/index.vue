@@ -135,7 +135,7 @@
             return {
                 logoDesc: Config.logo.logoDesc,
                 title: '外来人员',
-                pageSize: 5,
+                pageSize: 10,
                 total: 12,
                 loading: false,
                 formItem: {

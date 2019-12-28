@@ -15,7 +15,7 @@
                                  @click="selectThisBtn(key)">
                                 <div class="ivu-block hzjjya-list">
                                     <div class="ivu-inline-block">{{ item.title }}</div>
-                                    <div class="ivu-inline-block">{{ item.create_at}}</div>
+                                    <div class="ivu-inline-block">{{ item.createAt}}</div>
                                     <div class="ivu-inline-block do-action-btn">
                                         <Icon type="ios-add-circle" size="18" @click="modalAction(1, '')"/>
                                         <Icon type="ios-close-circle" size="18" @click="modalAction(2, item.id, key)"/>
@@ -33,7 +33,7 @@
                                  @click="selectThisBtn(key)">
                                 <div class="ivu-block hzjjya-list">
                                     <div class="ivu-inline-block">{{ item.title }}</div>
-                                    <div class="ivu-inline-block">{{ item.create_at}}</div>
+                                    <div class="ivu-inline-block">{{ item.createAt}}</div>
                                     <div class="ivu-inline-block do-action-btn">
                                         <Icon type="ios-add-circle" size="18" @click="modalAction(1, '')"/>
                                         <Icon type="ios-close-circle" size="18" @click="modalAction(2, item.id, key)"/>
@@ -80,32 +80,39 @@
                        <Select v-model="formItem.category"
                                class="ivu-nomal-select"
                                size="small"  style="width:100px">
-                           <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>
+                           <Option :value="item.id"
+                                   v-for="(item, key) in modal.modal2.categoryList"
+                                   :key="key">{{ item.title }}</Option>
                        </Select>
                    </FormItem>
                    <FormItem label="文档格式">
                        <Select v-model="formItem.fileType" size="small"
                                class="ivu-nomal-select"
                                style="width:100px">
-                           <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>
+                           <Option :value="item.id"
+                                   v-for="(item, key) in modal.modal2.fileTypeList"
+                                   :key="key">{{ item.title }}</Option>
                        </Select>
-                       <Button type="primary" size="small" @click="doQuery"
+                       <Button type="primary" size="small" @click="reloadTable"
                                class="ivu-ml-40 ivu-query-btn">查询结果</Button>
-                       <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                       <Button size="small" @click="reloadTable(false)" class="ivu-ml">重置查询</Button>
                        <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
                    </FormItem>
                    <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                       <Select v-model="formItem.showNum" size="small"
+                       <Select v-model="formItem.pageSize" size="small"
                                placeholder="显示条数"
-                               @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                               @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                            <Option value="20">20条/页</Option>
                            <Option value="50">50条/页</Option>
                            <Option value="100">100条/页</Option>
                        </Select>
                        <Select v-model="formItem.sortWay" size="small"
                                placeholder="排序方式"
+                               @on-change="reloadTable"
                                style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                           <Option value="errorInfo">报警内容</Option>
+                           <Option :value="item.key" v-for="(item, key) in table.columns"
+                                   :key="key"
+                                   v-if="key !== table.columns.length - 1">{{ item.title }}</Option>
                        </Select>
                    </div>
                </Form>
@@ -118,7 +125,8 @@
                    </template>
                </Table>
                <div class="ivu-block" style="float: right;margin-top: 30px;">
-                   <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                   <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator
+                         size="small" @on-change="reloadTable(true, $event)"/>
                </div>
            </div>
             <img :src="emergency.imgModel" alt="" v-else>
@@ -158,12 +166,16 @@
                     </FormItem>
                     <FormItem label="所属类别"   :rules="{required: true, message: '文件类别不能为空', trigger: 'blur'}">
                         <Select v-model="modal.modal2.category" placeholder="请选择文件类别..." style="width: 180px">
-                            <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>
+                            <Option :value="item.id"
+                                    v-for="(item, key) in modal.modal2.categoryList"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="文件格式"   :rules="{required: true, message: '文件格式不能为空', trigger: 'blur'}">
                         <Select v-model="modal.modal2.fileType" placeholder="请选择文件格式..." style="width: 180px">
-                            <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>
+                            <Option :value="item.id"
+                                    v-for="(item, key) in modal.modal2.fileTypeList"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="上传选择器"   :rules="{required: true, message: '文件必须!', trigger: 'blur'}">
@@ -180,7 +192,11 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getEmergencyResponsePlan, getPreparednessDrill, getEmergencyTreatment } from '@api/account';
+    import {
+        getEmergencyResponsePlan, sendEmergencyResponsePlan,
+        sendEmergencyTableAction,
+        getPreparednessDrill, getEmergencyTreatment
+    } from '@api';
     import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',
@@ -205,6 +221,7 @@
                         fileTypeList: [], // 所有的文件类型
                         status: false,
                         state: 1,
+                        id: undefined,
                         title: '添加文件',
                         fileName: '',
                         category: '',
@@ -213,16 +230,15 @@
                     }
 
                 },
-                pageSize: 100,
+                pageSize: 10,
                 total: 0,
+                tabIndex: 0,
                 formItem: {
                     category: undefined,
                     fileType: undefined,
-                    dateRange: undefined,
                     condition: undefined,
-                    showNum: 1,
+                    pageSize: 10,
                     sortWay: undefined
-
                 },
                 table: {
                     columns: [
@@ -281,15 +297,7 @@
             ])
         },
         created () {
-            let that = this;
-            getEmergencyResponsePlan()
-                .then(async res => {
-                    that.table.data = res.tableData.data
-                    this.init(res)
-                    that.menuList = res.menu
-                }).catch(err => {
-                    console.log('err: ', err)
-                })
+            this.getEmergencyResponsePlanTableByParam()
         },
         mounted () {
             // 设置屏幕的宽度高度
@@ -298,30 +306,26 @@
         },
         methods: {
             changeTabs (index) {
+                this.clearForm()
                 // 点击tab分页 如果只在一个页面 页面数据会混淆
                 let that = this;
+                that.tabIndex = index
+                this.btnArr.some((item, key, arr) => {
+                    this.btnArr[key].state = false
+                })
+                this.btnArr[0].state = true
+                let param = {
+                    tabIndex: index,
+                    mId: this.menuList[index]['id']
+                }
                 if (index === 0) {
                     // 应急预案
                     that.emergency.isEmergency = false
-                    getEmergencyResponsePlan()
-                        .then(async res => {
-                            that.table.data = res.tableData.data
-                            this.init(res)
-                            that.menuList = res.menu
-                        }).catch(err => {
-                            console.log('err: ', err)
-                        })
+                    this.getEmergencyResponsePlanTableByParam(param)
                 } else if (index === 1) {
                     // 预案演练
                     that.emergency.isEmergency = false
-                    getPreparednessDrill()
-                        .then(async res => {
-                            that.table.data = res.tableData.data
-                            this.init(res)
-                            that.menuList = res.menu
-                        }).catch(err => {
-                            console.log('err: ', err)
-                        })
+                    this.getPreparednessDrillTableByParam(param)
                 } else if (index === 2) {
                     // 预案演练
                     that.emergency.isEmergency = true
@@ -336,26 +340,48 @@
             submit () {
                 if (this.modal.modal1.state === 1) {
                     // TODO 异步后台添加
-                    let date = new Date()
-                    this.menuList.push({
-                        id: 520,
+                    let param = {
                         title: this.modal.modal1.input,
-                        create_at: date.getFullYear() + '.' + (date.getMonth() + 1) + '.' + date.getDay()
+                        action: 'insert'
+                    }
+                    sendEmergencyResponsePlan(param).then(async res => {
+                        if (res.state === true) {
+                            let info = res.info
+                            this.menuList.push({
+                                id: info.id,
+                                title: info.title,
+                                createAt: info.createAt
+                            })
+                            this.btnArr.push({
+                                state: false
+                            })
+                        }
+                        this.$Message.success(res.msg);
                     })
-                    this.btnArr.push({
-                        state: false
-                    })
-                    this.$Message.success('添加成功');
                 } else if (this.modal.modal1.state === 2) {
-                    // TODO 异步编辑数据 this.modal.modal1.id
-                    let key = this.modal.modal1.key
-                    this.menuList[key].title = this.modal.modal1.input
-                    this.$Message.success('编辑成功');
+                    let param = {
+                        id: this.modal.modal1.id,
+                        action: 'update'
+                    }
+                    sendEmergencyResponsePlan(param).then(async res => {
+                        if (res.state === true) {
+                            let key = this.modal.modal1.key
+                            this.menuList[key].title = this.modal.modal1.input
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else {
-                    // TODO 异步删除操作
-                    let key = this.modal.modal1.key
-                    this.menuList.splice(key, 1)
-                    this.$Message.success('删除成功');
+                    let param = {
+                        id: this.modal.modal1.id,
+                        action: 'delete'
+                    }
+                    sendEmergencyResponsePlan(param).then(async res => {
+                        if (res.state === true) {
+                            let key = this.modal.modal1.key
+                            this.menuList.splice(key, 1)
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 }
             },
             modalAction (state, temp, key = 0) {
@@ -374,7 +400,6 @@
                     this.modal.modal1.key = key
                 } else {
                     // delete
-                    // TODO 此处已经传入了id 根据id删除
                     this.modal.modal1.id = temp
                     this.modal.modal1.title = '删除类别?'
                     this.modal.modal1.state = 3
@@ -388,18 +413,52 @@
                     this.btnArr[key].state = false
                 })
                 this.btnArr[index].state = true
+                let tableIndex = parseInt(this.tabIndex)
+                let param = {
+                    tabIndex: tableIndex,
+                    mId: this.menuList[index]['id']
+                }
+                if (tableIndex === 0) {
+                    this.getEmergencyResponsePlanTableByParam(param)
+                } else if (tableIndex === 1) {
+                    this.getPreparednessDrillTableByParam(param)
+                }
             },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // TODO 只能 请求API限制  分页 限制每页显示数量
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize)
+                } else {
+                    this.clearForm()
+                }
+                this.getEmergencyResponsePlanTableByParam(this.formItem)
             },
-            doQuery () {
-                console.log('do query');
-                // TODO 只能 请求API筛选处理 查询
+            getEmergencyResponsePlanTableByParam (param = null) {
+                let that = this
+                console.log('param', param)
+                getEmergencyResponsePlan(param).then(async res => {
+                    that.table.data = res.tableData.data
+                    that.total = res.tableData.data.length
+                    if (param === null) {
+                        this.init(res)
+                        that.menuList = res.menu
+                    }
+                }).catch(err => {
+                    console.log('err: ', err)
+                })
             },
-            changePage () {
-                // TODO 翻页
+            getPreparednessDrillTableByParam (param = null) {
+                let that = this
+                console.log('param', param)
+                getPreparednessDrill().then(async res => {
+                    that.table.data = res.tableData.data
+                    if (param === null) {
+                        this.init(res)
+                        that.menuList = res.menu
+                    }
+                }).catch(err => {
+                    console.log('err: ', err)
+                })
             },
             modalTable (state, temp) {
                 // 右侧的表格 操作添加和编辑模态框
@@ -422,8 +481,18 @@
             },
             tableSubmit () {
                 if (this.modal.modal2.state === 1) {
-                    console.log(this.modal.modal2)
-                    this.$Message.success('添加成功');
+                    let param = {
+                        fileName: this.modal.modal2.fileName,
+                        category: this.modal.modal2.category,
+                        fileType: this.modal.modal2.fileType,
+                        filePath: this.modal.modal2.filePath
+                    }
+                    sendEmergencyTableAction(param).then(async res => {
+                        if (res.state === true) {
+                            console.log('res', res)
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.modal2.state === 2) {
                     this.$Message.success('编辑成功');
                 } else {
@@ -443,18 +512,8 @@
             },
             init (data) {
                 // 初始化函数 将页面需要的数据注入到变量里面帮助页面渲染
-                let categoryList = []
-                let fileType = []
-                data.tableData.data.some((item, key, arr) => {
-                    if (categoryList.indexOf(item.category) === -1) {
-                        categoryList.push(item.category)
-                    }
-                    if (fileType.indexOf(item.file_type) === -1) {
-                        fileType.push(item.file_type)
-                    }
-                })
-                this.modal.modal2.categoryList = categoryList
-                this.modal.modal2.fileTypeList = fileType
+                this.modal.modal2.categoryList = data.tableData.categoryListL
+                this.modal.modal2.fileTypeList = data.tableData.fileType
                 data.menu.some((item, key, arr) => {
                     if (key === 0) {
                         this.btnArr.push({
@@ -478,6 +537,15 @@
                 link.setAttribute('download', '文件.jpg')
                 document.body.appendChild(link)
                 link.click()
+            },
+            clearForm () {
+                this.formItem = {
+                    category: undefined,
+                    fileType: undefined,
+                    condition: undefined,
+                    pageSize: 10,
+                    sortWay: undefined
+                }
             }
         }
     }

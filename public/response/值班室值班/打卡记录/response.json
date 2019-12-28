@@ -3,6 +3,24 @@
   "msg": "数据获取成功！",
   "data": {
     "tableData": {
+      "jobs": [
+        {
+          "id": 1,
+          "title": "技术部"
+        },
+        {
+          "id": 2,
+          "title": "销售部"
+        },
+        {
+          "id": 4,
+          "title": "售后部"
+        },
+        {
+          "id": 6,
+          "title": "财务部"
+        }
+      ],
       "data": [
         {
           "id": 1,
@@ -36,6 +54,26 @@
         },
         {
           "id": 7,
+          "personnel": "iEfoam",
+          "time": 1576057794
+        },
+        {
+          "id": 8,
+          "personnel": "iEfoam",
+          "time": 1576057794
+        },
+        {
+          "id": 9,
+          "personnel": "iEfoam",
+          "time": 1576057794
+        },
+        {
+          "id": 10,
+          "personnel": "iEfoam",
+          "time": 1576057794
+        },
+        {
+          "id": 11,
           "personnel": "iEfoam",
           "time": 1576057794
         }

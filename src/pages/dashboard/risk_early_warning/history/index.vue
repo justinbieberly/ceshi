@@ -1,6 +1,6 @@
 <template>
     <main class="body-content-main">
-        <div class="content-layout-right user-full-screen" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+        <div class="content-layout-right user-full-screen ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
              ref="right">
             <div class="ivu-block">
                 <Form :model="formItem" :label-width="70"  inline :label-colon="true"
@@ -12,68 +12,67 @@
                         <Select v-model="formItem.select" size="small"
                                 placeholder="请选择类型"
                                 class="ivu-nomal-select"
-                                style="width: 200px">
+                                style="width: 130px">
                             <Option :value="item.id"
-                                    v-for="(item, key) in formItem.alarm_type" :key="key">{{ item.name }}</Option>
-                            <Option value="0">异常</Option>
+                                    v-for="(item, key) in alarmType" :key="key">{{ item.name }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="报警日期">
                         <DatePicker type="daterange" size="small" placement="bottom-end"
-                                    placeholder="请选择日期" style="width: 150px"
+                                    placeholder="请选择日期" style="width: 200px"
                                     v-model="formItem.dateRange"></DatePicker>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-query-btn ivu-ml-40">查询结果</Button>
-                        <Button style="margin-left: 18px" size="small" >重置查询</Button>
+                        <Button style="margin-left: 18px" size="small" @click="reloadTable(false)" >重置查询</Button>
                     </FormItem>
-                    <div class="ivu-inline-block" style="float: right">
+                    <div class="ivu-inline-block ivu-no-lable" style="float: right">
                         <FormItem>
-                            <Button style="margin-left: 8px" size="small" to="/dashboard/risk_early_warning">
+                            <Button style="margin-right: 16px;" size="small" to="/dashboard/risk_early_warning">
                                 <Icon type="ios-arrow-back" />
                                 返回
                             </Button>
-                        </FormItem>
-                        <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                            <Select v-model="formItem.showNum" size="small"
+                            <Select v-model="formItem.pageSize" size="small"
                                     placeholder="显示条数"
-                                    @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                    @on-change="reloadTable" style="width: 110px; margin-right: 16px;">
                                 <Option value="20">20条/页</Option>
                                 <Option value="50">50条/页</Option>
                                 <Option value="100">100条/页</Option>
                             </Select>
                             <Select v-model="formItem.sortWay" size="small"
+                                    @on-change="reloadTable"
                                     placeholder="排序方式"
-                                    style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                                <Option value="errorInfo">报警内容</Option>
+                                    style="width: 110px;margin-left: 10px;">
+                                <Option :value="item.key" v-for="(item, key) in reservoirData.columns" :key="key">{{ item.title }}</Option>
                             </Select>
-                        </div>
+                        </FormItem>
                     </div>
                 </Form>
                 <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
             </div>
             <div class="ivu-block" style="float: right;margin-top: 30px;">
-                <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="reloadTable(true, $event)"/>
             </div>
         </div>
     </main>
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getRiskHistory } from '@api/account';
+    import { getRiskHistory } from '@api';
+
     export default {
         name: 'dashboard-risk-warning-history',
         data () {
             return {
                 title: '风险预警',
                 loading: false,
-                pageSize: 100,
+                pageSize: 10,
                 total: 0,
+                alarmType: [],
                 formItem: {
-                    alarm_type: [],
                     dateRange: undefined,
                     select: undefined,
-                    showNum: 1
-
+                    page: 1,
+                    pageSize: 10
                 },
                 reservoirData: {
                     columns: [
@@ -105,7 +104,7 @@
                         {
                             title: '报警类型',
                             align: 'center',
-                            key: 'alarm_type'
+                            key: 'alarmType'
                         },
                         {
                             title: '报警地点',
@@ -132,39 +131,44 @@
             ])
         },
         created () {
-            let that = this;
-            getRiskHistory()
-                .then(async res => {
-                    that.total = res.tableData.data.length;
-                    that.reservoirData.data = res.tableData.data;
-                    that.formItem.alarm_type = res.tableData.alarm_type;
-            }).catch(err => { console.log('err: ', err) });
+            this.getRiskHistoryTableByParam()
         },
         mounted () {
             // 设置屏幕的宽度高度
             this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // 只能 请求API限制
-            },
-            doQuery () {
-                console.log('do query');
-                let screening = {
-                    alarm_type: this.formItem.select,
-                    // dateRange: this.formItem.dateRange
-                    dateRange: [
-                        this.formItem.dateRange.map(function (value, index, array) {
-                            return new Date(value).getTime();
-                        })
-                    ]
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize)
+                } else {
+                    this.formItem = {
+                        dateRange: undefined,
+                        select: undefined,
+                        page: 1,
+                        pageSize: 10
+                    }
                 }
-                console.log('screening', screening);
-                // 只能 请求API筛选处理
+                this.getRiskHistoryTableByParam(this.formItem)
             },
-            changePage () {
+            getRiskHistoryTableByParam (param = null) {
+                if (param !== null) {
+                    param.dateRange.map(function (value, index, array) {
+                        if (value) {
+                            param.dateRange[index] = new Date(value).getTime()
+                        }
+                    })
+                }
+                let that = this;
+                getRiskHistory(param).then(async res => {
+                    that.total = res.tableData.data.length;
+                    that.reservoirData.data = res.tableData.data;
+                    that.alarmType = res.tableData.alarmType;
+                }).catch(err => {
+                    this.$log.capsule('iView', 'Error', 'error');
+                    console.log('err: ', err)
+                });
             }
         }
     }

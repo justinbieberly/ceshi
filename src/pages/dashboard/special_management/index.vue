@@ -9,7 +9,30 @@
                 </Card>
 
                 <div class="ivu-block tzsb-er-min father-position" v-for="(item, key) in infoData" :key="key">
-                    <div :id="'chartLineBox' + key" style="width: 91px; height: 116px;" class="ivu-inline-block"></div>
+<!--                    <div :id="'chartLineBox' + key" style="width: 91px; height: 116px;" class="ivu-inline-block"></div>-->
+                    <div class="ivu-inline-block circle">
+                        <Circle :percent="item['echars']['progressValue']"
+                                :trail-width="5"
+                                :stroke-width="6"
+                                :stroke-color="item['echars']['color']"
+                                class="special-management"
+                                :size="70">
+                            <div class="father-position" style="width: 100%;height: 100%;">
+                                <Icon type="ios-checkmark" class="child-position"
+                                      size="70"
+                                      v-if="item['echars']['state'] === 3"
+                                      style="color:#5cb85c;left: 0; top: -12%;"></Icon>
+                                <div class="child-position"
+                                     v-if="item['echars']['state'] === 3"
+                                     style="left: 19%; top: 57%;">未充电</div>
+                               <div class="child-position"
+                                    style="left: 22%; top: 33%;"
+                                    v-if="item['echars']['state'] !== 3" v-html="item['echars']['time']">
+                                   {{ item['echars']['time'] }}
+                               </div>
+                            </div>
+                        </Circle>
+                    </div>
                     <div class="ivu-inline-block child-position tzsb-child-info">
                         <div class="tzsb-title">{{ item.title}}</div>
                         <div class="left-content">
@@ -57,8 +80,9 @@
                                         v-model="formItem.dateRange">
                             </DatePicker>
                             <Button type="primary" size="small"
-                                    @click="doQuery"
+                                    @click="reloadTable"
                                     class="ivu-query-btn ivu-ml-40">查询结果</Button>
+                            <Button style="margin-left: 18px" size="small" @click="reloadTable(false)" >重置查询</Button>
                             <Button size="small" @click="showHistory(false)"
                                     style="margin-left: 20px;">
                                 <Icon type="ios-arrow-back" />
@@ -66,15 +90,16 @@
                             </Button>
                         </FormItem>
                         <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                            <Select v-model="formItem.showNum" size="small"
+                            <Select v-model="formItem.pageSize" size="small"
                                     placeholder="显示条数"
-                                    @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                    @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                                 <Option value="20">20条/页</Option>
                                 <Option value="50">50条/页</Option>
                                 <Option value="100">100条/页</Option>
                             </Select>
                             <Select v-model="formItem.sortWay" size="small"
                                     placeholder="排序方式"
+                                    @on-change="reloadTable"
                                     style="width: 110px;margin-left: 10px; margin-top: 4px;">
                                 <Option :value="item.key" v-for="(item, key) in reservoirData.columns" :key="key">{{ item.title }}</Option>
                             </Select>
@@ -83,7 +108,7 @@
                     <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
                 </div>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -92,12 +117,10 @@
 <script>
     import { mapState } from 'vuex';
     import { getSpecialManagement, getSpecialManagementHistory } from '@api/account';
-    import 'echarts-liquidfill';
     import Config from '@/config';
-    const echarts = require('echarts');
 
     export default {
-        name: 'dashboard-temporary-storage',
+        name: 'dashboard-special-management',
         data () {
             return {
                 logoDesc: Config.logo.logoDesc,
@@ -106,13 +129,14 @@
                 infoData: [],
                 modelImg: '/assets/images/u2539.svg',
                 loading: false,
-                pageSize: 100,
+                pageSize: 10,
                 total: 0,
                 formItem: {
                     state: undefined,
                     dateRange: undefined,
                     condition: undefined,
-                    showNum: 1,
+                    pageSize: 10,
+                    page: 1,
                     sortWay: undefined,
                     stateRow: [
                         {
@@ -231,12 +255,31 @@
             let that = this;
             getSpecialManagement()
                 .then(async res => {
-                    that.infoData = res.rowList
-                    for (let i = 0; i < res.rowList.length; i++) {
-                        let thisItem = res.rowList[i].echars
-                        that.drawEchars('chartLineBox' + i, thisItem.progressValue, thisItem.state, thisItem.time);
+                    let temp = res.rowList
+                    for (let i = 0; i < temp.length; i++) {
+                        let thisItem = temp[i].echars
+                        let color
+                        let item = thisItem
+                        if (thisItem.state === 1) {
+                            color = '#1abc9c'
+                        } else if (thisItem.state === 2) {
+                            color = '#f04844'
+                        } else if (thisItem.state === 3) {
+                            color = '#2ecc71'
+                        }
+                        let hours = Math.floor(item.time / 3600)
+                        let minute = Math.floor(Math.floor((item.time - 3600 * hours) % 3600) / 60)
+                        Object.assign(item, {
+                            color: color,
+                            time: hours + ' h <br/>' + minute + ' min'
+                        })
+                        temp[i]['echars'] = item
                     }
-                }).catch(err => { console.log('err: ', err) })
+                    that.infoData = temp
+                }).catch(err => {
+                    this.$log.capsule('iView', 'Error', 'error');
+                    console.log('err: ', err)
+                })
         },
         mounted () {
             // 设置屏幕的宽度高度
@@ -244,114 +287,51 @@
             this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
-            drawEchars (elementId, progressValue, state, times) {
-                let color = '#1abc9c'
-                if (state === 1) {
-                    color = '#1abc9c'
-                } else if (state === 2) {
-                    color = '#f04844'
-                } else if (state === 3) {
-                    color = '#2ecc71'
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem.condition = undefined
+                    this.formItem.state = undefined
+                    this.formItem.dateRange = undefined
+                    this.formItem.page = 1
+                    this.formItem.sortWay = undefined
+                    this.formItem.pageSize = 10
+                    this.pageSize = 10
                 }
-                let timeVal = '√ \n未充电'
-                if (times !== 0) {
-                    timeVal = Math.floor(times / 3600) + ' h \n' + Math.floor(Math.floor(times % 3600) / 60) + ' min';
+                let param = {
+                    state: this.formItem.state,
+                    dateRange: this.formItem.dateRange,
+                    condition: this.formItem.condition,
+                    page: this.formItem.page,
+                    pageSize: this.formItem.pageSize,
+                    sortWay: this.formItem.sortWay
                 }
-                setTimeout(function () {
-                    let myChart = echarts.init(document.getElementById(elementId));
-                    let data = {
-                        name: '',
-                        value: progressValue
-                    }
-                    myChart.setOption({
-                        backgroundColor: '#353535',
-                        title: {
-                            text: data.name,
-                            textAlign: 'center'
-                        },
-                        series: {
-                            name: data.name,
-                            type: 'pie',
-                            clockWise: false,
-                            radius: [30, 40],
-                            itemStyle: {
-                                normal: {
-                                    color: color,
-                                    shadowColor: color,
-                                    shadowBlur: 0,
-                                    label: {
-                                        show: false
-                                    },
-                                    labelLine: {
-                                        show: false
-                                    }
-                                }
-                            },
-                            hoverAnimation: false,
-                            center: [50 + '%', '45%'],
-                            data: [{
-                                value: data.value,
-                                label: {
-                                    normal: {
-                                        formatter: function (params) {
-                                            return timeVal;
-                                        },
-                                        position: 'center',
-                                        show: true,
-                                        textStyle: {
-                                            fontSize: '16',
-                                            color: '#389af4'
-                                        }
-                                    }
-                                }
-                            }, {
-                                value: 100 - data.value,
-                                name: 'invisible',
-                                itemStyle: {
-                                    normal: {
-                                        color: '#dfeaff'
-                                    },
-                                    emphasis: {
-                                        color: '#dfeaff'
-                                    }
-                                }
-                            }]
-                        }
-                    }
-                    );
-                }, 1000)
+                this.getSpecialManagementTableByParam(param)
             },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // 只能 请求API限制
-            },
-            doQuery () {
-                console.log('do query');
-                let screening = {
-                    alarm_type: this.formItem.select,
-                    // dateRange: this.formItem.dateRange
-                    dateRange: [
-                        this.formItem.dateRange.map(function (value, index, array) {
-                            return new Date(value).getTime();
+            getSpecialManagementTableByParam (param = null) {
+                if (param !== null) {
+                    if (param.dateRange !== undefined) {
+                        param.dateRange.map(function (value, index, array) {
+                            if (value) {
+                                param.dateRange[index] = new Date(value).getTime()
+                            }
                         })
-                    ]
+                    }
                 }
-                console.log('screening', screening);
-                // 只能 请求API筛选处理
-            },
-            changePage () {
+                getSpecialManagementHistory(param).then(async res => {
+                    this.total = res.tableData.data.length;
+                    this.reservoirData.data = res.tableData.data;
+                    this.formItem.alarm_type = res.tableData.alarm_type;
+                }).catch(err => {
+                    this.$log.capsule('iView', 'Error', 'error');
+                    console.log('err: ', err)
+                })
             },
             showHistory (state) {
                 if (state === true) {
-                    getSpecialManagementHistory()
-                        .then(async res => {
-                            this.total = res.tableData.data.length;
-                            this.reservoirData.data = res.tableData.data;
-                            this.formItem.alarm_type = res.tableData.alarm_type;
-                        }).catch(err => {
-                            console.log('err: ', err)
-                        })
+                    this.getSpecialManagementTableByParam()
                     this.isHistory = true
                     this.$store.commit('admin/layout/updateMenuCollapse', true)
                 } else {
@@ -363,4 +343,14 @@
     }
 </script>
 <style lang="scss" scoped>
+    .circle {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center; /*垂直居中*/
+        .ivu-chart-circle {
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+    }
 </style>

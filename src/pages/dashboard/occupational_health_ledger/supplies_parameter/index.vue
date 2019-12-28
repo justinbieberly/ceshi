@@ -222,7 +222,7 @@
                 logoDesc: Config.logo.logoDesc,
                 title: '用品台账',
                 modelImg: '/assets/images/vbg.png',
-                pageSize: 5,
+                pageSize: 10,
                 total: 12,
                 loading: false,
                 // 存放selected下拉选择框的数据

@@ -9,7 +9,7 @@
         "echars": {
           "state": 1,
           "progressValue": 80,
-          "time": 3600
+          "time": 3999
         },
         "info": {
           "left": [
@@ -56,7 +56,7 @@
         "echars": {
           "state": 2,
           "progressValue": 60,
-          "time": 3600
+          "time": 3999
         },
         "info": {
           "left": [
@@ -150,7 +150,7 @@
         "echars": {
           "state": 1,
           "progressValue": 50,
-          "time": 3600
+          "time": 3999
         },
         "info": {
           "left": [

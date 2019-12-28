@@ -93,7 +93,7 @@
         data () {
             return {
                 loading: false,
-                pageSize: 100,
+                pageSize: 10,
                 total: 0,
                 formItem: {
                     input: undefined,

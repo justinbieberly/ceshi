@@ -201,7 +201,7 @@
                 logoDesc: Config.logo.logoDesc,
                 title: '检测维保记录',
                 btnArr: [],
-                pageSize: 5,
+                pageSize: 10,
                 total: 12,
                 loading: false,
                 formItem: {

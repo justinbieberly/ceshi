@@ -153,7 +153,7 @@
                 },
                 page: {
                     total: 12,
-                    pageSize: 2
+                    pageSize: 10
                 },
                 table: {
                     tableLeft: {

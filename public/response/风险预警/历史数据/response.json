@@ -4,7 +4,7 @@
   "msg": "数据获取成功！",
   "data": {
     "tableData": {
-      "alarm_type": [
+      "alarmType": [
         {
           "id": 1,
           "name": "环境温度"

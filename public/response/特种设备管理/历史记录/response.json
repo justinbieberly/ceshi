@@ -17,7 +17,7 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 2,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",
@@ -29,7 +29,7 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 3,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",
@@ -41,7 +41,7 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 4,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",
@@ -53,7 +53,7 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 5,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",
@@ -65,7 +65,7 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 6,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",
@@ -77,7 +77,7 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 7,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",
@@ -89,7 +89,7 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 8,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",
@@ -101,7 +101,7 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 9,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",
@@ -113,7 +113,19 @@
           "mouth_electricity": "257.3KWH"
         },
         {
-          "id": 1,
+          "id": 10,
+          "charging_channels": "充电通道1",
+          "avg_voltage": "233.4V",
+          "avg_current": "50.32A",
+          "avg_temperature": "31℃",
+          "charging_start": "1575889982",
+          "charging_end": "1575989982",
+          "charging_state": 0,
+          "charging_electricity": "5.123KWH",
+          "mouth_electricity": "257.3KWH"
+        },
+        {
+          "id": 11,
           "charging_channels": "充电通道1",
           "avg_voltage": "233.4V",
           "avg_current": "50.32A",

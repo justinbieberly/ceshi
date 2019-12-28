@@ -45,7 +45,7 @@
                 </Card>
             </Card>
         </div>
-        <div class="content-layout-right user-full-img" :class="{ 'content-layout-right-pro': this.menuCollapse }"
+        <div class="content-layout-right user-full-img ivu-overflow-auto" :class="{ 'content-layout-right-pro': this.menuCollapse }"
              ref="right">
             <div class="ivu-block" v-if="onDutySituation">
                 <Form :model="formItem" :label-width="70"  inline :label-colon="true"
@@ -66,28 +66,31 @@
                     <FormItem label="时间">
                         <DatePicker type="daterange" size="small" placement="bottom-end" placeholder="请选择日期"
                                     style="width: 120px" v-model="formItem.dateRange"></DatePicker>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-ml ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable(false)" class="ivu-ml">重置查询</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key" v-for="(item, key) in onDutyTable.columns1" :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
                 <Table border :columns="onDutyTable.columns1" :data="onDutyTable.data1" class="ivu-mt" ref="table"></Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator
+                          :current="current"
+                          size="small" @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
             <div class="ivu-block" v-else-if="isPunchCardLog">
@@ -100,33 +103,35 @@
                         <Input v-model="formItem.condition" placeholder="名字/序号/..." size="small" style="width: 150px" />
                     </FormItem>
                     <FormItem label="岗位">
-                        <Select v-model="formItem.abnormalMatters" size="small"
+                        <Select v-model="formItem.jobs" size="small"
                                 class="ivu-nomal-select"
                                 style="width:150px">
-                            <Option value="all">全部</Option>
+                            <Option :value="item.id" v-for="(item, key) in formItem.jobsList" :key="key">{{ item.title }}</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable1"
                                 class="ivu-ml-40 ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable1(false)" class="ivu-ml">重置查询</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable1" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable1"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key" v-for="(item, key) in onDutyTable.columns2" :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
                 <Table border :columns="onDutyTable.columns2" :data="onDutyTable.data2" class="ivu-mt"></Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total
+                          show-elevator size="small" @on-change="reloadTable1(true, $event)"/>
                 </div>
             </div>
             <img :src="modelImg" alt="模型视图" v-else>
@@ -143,7 +148,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getConsoleRoomData, getOnDutySituation, getPunchCardLog } from '@api/account';
+    import { getConsoleRoomData, getOnDutySituation, getPunchCardLog } from '@api';
     import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',
@@ -158,15 +163,18 @@
                 isPunchCardLog: false,
                 isBack: false,
                 isAlarmFailure: false,
-                pageSize: 100,
+                pageSize: 10,
                 total: 0,
+                current: 1,
                 formItem: {
+                    jobsList: [],
                     abnormalMatters: undefined,
                     dateRange: undefined,
                     condition: undefined,
-                    showNum: 1,
-                    sortWay: undefined
-
+                    page: 1,
+                    pageSize: 10,
+                    sortWay: undefined,
+                    jobs: undefined
                 },
                 alarmFaultSignal: [],
                 onDutyTable: {
@@ -333,6 +341,86 @@
             this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize)
+                } else {
+                    this.formItem = {
+                        abnormalMatters: undefined,
+                        dateRange: undefined,
+                        condition: undefined,
+                        page: 1,
+                        pageSize: 10,
+                        sortWay: undefined
+                    }
+                    this.current = 1
+                }
+                let param = {
+                    condition: this.formItem.condition,
+                    abnormalMatters: this.formItem.abnormalMatters,
+                    dateRange: this.formItem.dateRange,
+                    page: this.formItem.page,
+                    pageSize: this.formItem.pageSize,
+                    sortWay: this.formItem.sortWay
+                }
+                this.getOnDutySituationTableByParam(param)
+            },
+            getOnDutySituationTableByParam (param = null) {
+                let that = this
+                if (param !== null) {
+                    if (param.dateRange !== undefined) {
+                        param.dateRange.map(function (value, index, array) {
+                            if (value) {
+                                param.dateRange[index] = new Date(value).getTime()
+                            }
+                        })
+                    }
+                }
+                getOnDutySituation(param).then(async res => {
+                    that.onDutyTable.data1 = res.tableData.data
+                    this.total = res.tableData.data.length
+                    that.loading = false
+                }).catch(err => {
+                    console.log('err: ', err)
+                })
+            },
+            reloadTable1 (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize)
+                } else {
+                    this.formItem = {
+                        abnormalMatters: undefined,
+                        dateRange: undefined,
+                        condition: undefined,
+                        page: 1,
+                        pageSize: 10,
+                        sortWay: undefined
+                    }
+                    this.current = 1
+                }
+                let param = {
+                    condition: this.formItem.condition,
+                    jobs: this.formItem.jobs,
+                    page: this.formItem.page,
+                    pageSize: this.formItem.pageSize,
+                    sortWay: this.formItem.sortWay
+                }
+                this.getPunchCardLogTableByParam(param)
+            },
+            getPunchCardLogTableByParam (param = null) {
+                let that = this
+                getPunchCardLog(param).then(async res => {
+                    that.loading = false
+                    that.onDutyTable.data2 = res.tableData.data
+                    that.formItem.jobsList = res.tableData.jobs
+                    this.total = res.tableData.data.length
+                }).catch(err => {
+                    this.$log.capsule('iView', 'Error', 'error')
+                    console.log('err: ', err)
+                })
+            },
             showRightTable (state) {
                 let that = this
                 if (state === 1) {
@@ -340,45 +428,12 @@
                     that.loading = true
                     that.isExport = true
                     that.onDutySituation = true
-                    getOnDutySituation()
-                        .then(async res => {
-                            that.onDutyTable.data1 = res.tableData.data
-                            that.loading = false
-                        }).catch(err => {
-                            console.log('err: ', err)
-                        })
+                    that.getOnDutySituationTableByParam()
                 } else {
                     that.isBack = true
                     that.isPunchCardLog = true
-                    getPunchCardLog()
-                        .then(async res => {
-                            that.loading = false
-                            that.onDutyTable.data2 = res.tableData.data
-                        }).catch(err => {
-                            console.log('err: ', err)
-                        })
+                    that.getPunchCardLogTableByParam()
                 }
-            },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // 只能 请求API限制
-            },
-            doQuery () {
-                console.log('do query');
-                let screening = {
-                    alarm_type: this.formItem.select,
-                    // dateRange: this.formItem.dateRange
-                    dateRange: [
-                        this.formItem.dateRange.map(function (value, index, array) {
-                            return new Date(value).getTime();
-                        })
-                    ]
-                }
-                console.log('screening', screening);
-                // 只能 请求API筛选处理
-            },
-            changePage () {
             },
             opendVoice (url) {
                 this.modal.state = true

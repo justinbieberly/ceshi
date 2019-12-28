@@ -93,7 +93,7 @@
                 page: {
                     loading: false,
                     total: 12,
-                    pageSize: 2
+                    pageSize: 10
                 },
                 modalInfo: {
                     status: false,

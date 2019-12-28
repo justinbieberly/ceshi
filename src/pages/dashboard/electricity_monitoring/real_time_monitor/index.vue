@@ -162,18 +162,18 @@
                         status: undefined,
                         sortWay: undefined,
                         page: 1,
-                        pageSize: 1
+                        pageSize: 10
                     }
                 }
                 this.getElectricityTableByParam(this.formItem)
             },
             getElectricityTableByParam (param) {
                 let that = this;
-                console.log('param', param)
                 getElectricityRealTime(param).then(async res => {
                     that.total = res.tableData.data.length;
                     that.reservoirData.data = res.tableData.data;
                 }).catch(err => {
+                    this.$log.capsule('iView', 'Error', 'error');
                     console.log('err: ', err)
                 });
             }
