@@ -80,23 +80,25 @@
                                 <Option value="1">内部</Option>
                                 <Option value="0">外部</Option>
                             </Select>
-                            <Button type="primary" size="small" @click="doQuery" class="ivu-query-btn">查询结果</Button>
-                            <i-link to="/dashboard/real_time_monitor">
-                                <Button style="margin-left: 8px" size="small" >重置查询</Button>
-                            </i-link>
+                            <Button type="primary" size="small" @click="reloadTable" class="ivu-query-btn">查询结果</Button>
+                            <Button style="margin-left: 8px" size="small" @click="reloadTable(false)" >重置查询</Button>
                         </FormItem>
                         <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                            <Select v-model="formItem.showNum" size="small"
+                            <Select v-model="formItem.pageSize" size="small"
                                     placeholder="显示条数"
-                                    @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                    @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                                 <Option value="20">20条/页</Option>
                                 <Option value="50">50条/页</Option>
                                 <Option value="100">100条/页</Option>
                             </Select>
                             <Select v-model="formItem.sortWay" size="small"
                                     placeholder="排序方式"
+                                    @on-change="reloadTable"
                                     style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                                <Option value="errorInfo">报警内容</Option>
+                                <Option :value="item.key"
+                                        v-for="(item, key) in table.tableRight.columns"
+                                        v-if="key < (table.tableRight.columns.length-3)"
+                                        :key="key">{{ item.title }}</Option>
                             </Select>
                         </div>
                     </Form>
@@ -111,7 +113,9 @@
                     </Table>
                 </div>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="page.total" :page-size="page.pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="page.total" :page-size="page.pageSize"
+                          show-total show-elevator
+                          size="small" @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
             <img :src="imgModel" alt="" v-else>
@@ -147,12 +151,13 @@
                     input: '',
                     status: '',
                     type: '',
+                    page: 1,
                     sortWay: '',
-                    showNum: 1
+                    pageSize: 1
 
                 },
                 page: {
-                    total: 12,
+                    total: 0,
                     pageSize: 10
                 },
                 table: {
@@ -295,25 +300,34 @@
             this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // 只能 请求API限制
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.page.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem = {
+                        input: '',
+                        status: '',
+                        type: '',
+                        page: 1,
+                        sortWay: '',
+                        pageSize: 1
+                    }
+                }
+                this.getRecordOfInOutTableByParam(this.formItem)
             },
-            doQuery () {
-                console.log('do query');
-                console.log(this.formItem);
-                // 只能 请求API筛选处理
-            },
-            changePage () {
-                console.log('api change page')
+            getRecordOfInOutTableByParam (param) {
+                let that = this
+                that.table.tableRight.loading = true
+                getRecordOfInOut(param).then(async res => {
+                    that.page.total = res.tableData.total
+                    that.table.tableRight.data = res.tableData.data
+                    that.table.tableRight.loading = false
+                })
             },
             getRecodeOfInOut () {
-                let that = this
-                getRecordOfInOut().then(async res => {
-                    that.table.tableRight.data = res.tableData.data
-                })
-                that.isTable = true
+                this.getRecordOfInOutTableByParam()
+                this.isTable = true
             },
             preview (state, row) {
                 if (state === 1) {

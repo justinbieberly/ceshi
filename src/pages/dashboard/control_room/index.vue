@@ -88,7 +88,7 @@
                 </Form>
                 <Table border :columns="onDutyTable.columns1" :data="onDutyTable.data1" class="ivu-mt" ref="table"></Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator
+                    <Page :total="total" :page-size="pageSize" show-total show-elevator
                           :current="current"
                           size="small" @on-change="reloadTable(true, $event)"/>
                 </div>
@@ -128,9 +128,11 @@
                         </Select>
                     </div>
                 </Form>
-                <Table border :columns="onDutyTable.columns2" :data="onDutyTable.data2" class="ivu-mt"></Table>
+                <Table border :loading="onDutyTable.loading"
+                       :columns="onDutyTable.columns2"
+                       :data="onDutyTable.data2" class="ivu-mt"></Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total
+                    <Page :total="total" :page-size="pageSize" show-total
                           show-elevator size="small" @on-change="reloadTable1(true, $event)"/>
                 </div>
             </div>
@@ -157,7 +159,6 @@
                 logoDesc: Config.logo.logoDesc,
                 title: '控制室值班管理',
                 modelImg: '/assets/images/u3190.svg',
-                loading: false,
                 isExport: false,
                 onDutySituation: false,
                 isPunchCardLog: false,
@@ -178,6 +179,7 @@
                 },
                 alarmFaultSignal: [],
                 onDutyTable: {
+                    loading: false,
                     columns: [
                         {
                             title: '打卡时间',
@@ -377,10 +379,11 @@
                         })
                     }
                 }
+                that.onDutyTable.loading = true
                 getOnDutySituation(param).then(async res => {
                     that.onDutyTable.data1 = res.tableData.data
-                    this.total = res.tableData.data.length
-                    that.loading = false
+                    this.total = res.tableData.total
+                    that.onDutyTable.loading = false
                 }).catch(err => {
                     console.log('err: ', err)
                 })
@@ -411,11 +414,12 @@
             },
             getPunchCardLogTableByParam (param = null) {
                 let that = this
+                that.onDutyTable.loading = true
                 getPunchCardLog(param).then(async res => {
-                    that.loading = false
                     that.onDutyTable.data2 = res.tableData.data
                     that.formItem.jobsList = res.tableData.jobs
-                    this.total = res.tableData.data.length
+                    this.total = res.tableData.total
+                    that.onDutyTable.loading = false
                 }).catch(err => {
                     this.$log.capsule('iView', 'Error', 'error')
                     console.log('err: ', err)
@@ -425,7 +429,6 @@
                 let that = this
                 if (state === 1) {
                     // 值班情况
-                    that.loading = true
                     that.isExport = true
                     that.onDutySituation = true
                     that.getOnDutySituationTableByParam()

@@ -272,10 +272,10 @@ export function getVisitorRegistration (data) {
 }
 
 // 获取[实名进出管理-进出记录]的数据
-export function getregistrationLog (data) {
+export function getRegistrationLog (data) {
     return request({
-        url: apiConfig.getregistrationLog.url,
-        method: apiConfig.getregistrationLog.method,
+        url: apiConfig.getRegistrationLog.url,
+        method: apiConfig.getRegistrationLog.method,
         data
     });
 }

@@ -13,21 +13,23 @@
                                style="width: 200px"></Input>
                     </FormItem>
                     <FormItem label="车辆类型" >
-                        <Select v-model="formItem.status" size="small"
+                        <Select v-model="formItem.type" size="small"
                                 class="ivu-nomal-select"
-                                style="width: 150px">
+                                style="width: 180px">
                             <Option value="1">内部</Option>
                             <Option value="0">外部</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="进入时间" >
-                        <DatePicker type="daterange" placement="bottom-end" placeholder="选择进入时间"
+                        <DatePicker type="daterange" placement="bottom-end"
+                                    placeholder="选择进入时间"
+                                    v-model="formItem.dateTime"
                                     size="small"
-                                    style="width: 150px;"></DatePicker>
-                        <Button type="primary" size="small" @click="doQuery"
+                                    style="width: 200px;"></DatePicker>
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-query-btn ivu-ml-40"
                                 style="margin-right: 20px;">查询结果</Button>
-                        <Button size="small" @click="doQuery" style="margin-right: 20px;">重置查询</Button>
+                        <Button size="small" @click="reloadTable(false)" style="margin-right: 20px;">重置查询</Button>
                         <Button  size="small" style="margin-right: 8px;"
                                  @click="exportData" >
                             <Icon type="md-arrow-round-down" />
@@ -35,17 +37,21 @@
                         </Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    v-if="key < (table.columns.length - 3)"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -60,7 +66,9 @@
                 </Table>
             </div>
             <div class="ivu-block" style="float: right;margin-top: 30px;">
-                <Page :total="page.total" :page-size="page.pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                <Page :total="page.total" :page-size="page.pageSize"
+                      show-total show-elevator size="small"
+                      @on-change="reloadTable(true, $event)"/>
             </div>
         </div>
         <Modal v-model="modalInfo.status" width="360">
@@ -86,9 +94,11 @@
                 title: '临时存储',
                 formItem: {
                     input: undefined,
-                    select: undefined,
+                    type: undefined,
                     sortWay: undefined,
-                    showNum: 1
+                    dateTime: undefined,
+                    page: 1,
+                    pageSize: 1
                 },
                 page: {
                     loading: false,
@@ -276,28 +286,45 @@
             ])
         },
         created () {
-            let that = this
-            getVehicleReInspection().then(async res => {
-                that.table.data = res.tableData
-            })
+            this.getVehicleReInspectionTableByParam()
         },
         mounted () {
             // 设置屏幕的宽度高度
             this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum)
-                console.log('reset page size', this.pageSize)
-                // 只能 请求API限制
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem = {
+                        input: undefined,
+                        type: undefined,
+                        sortWay: undefined,
+                        dateTime: undefined,
+                        page: 1,
+                        pageSize: 1
+                    }
+                }
+                this.getVehicleReInspectionTableByParam(this.formItem)
             },
-            doQuery () {
-                console.log('do query')
-                console.log(this.formItem)
-                // 只能 请求API筛选处理
-            },
-            changePage () {
-                console.log('api change page')
+            getVehicleReInspectionTableByParam (param = null) {
+                let that = this
+                that.table.loading = true
+                if (param !== null && param.dateTime) {
+                    let temp = []
+                    param.dateTime.map(function (value, index, array) {
+                        temp.push(new Date(value).getTime())
+                    })
+                    param.dateTime = temp
+                }
+                console.log('param', param)
+                getVehicleReInspection(param).then(async res => {
+                    that.table.data = res.tableData.data
+                    that.page.total = res.tableData.total
+                    that.table.loading = false
+                })
             },
             preview (state, row) {
                 if (state === 1) {

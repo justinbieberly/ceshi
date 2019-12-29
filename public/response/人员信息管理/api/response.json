@@ -1,0 +1,18 @@
+{
+  "code": 200,
+  "msg": "success！",
+  "data": {
+    "state": true,
+    "info": {
+      "id": 1008611,
+      "title": "New Node",
+      "sex": null,
+      "age": null,
+      "workTime": null,
+      "phone": "00-000-0000",
+      "createAt": "2019.12.29"
+    },
+    "msg": "删除成功！/编辑成功/添加成功"
+  }
+}
+

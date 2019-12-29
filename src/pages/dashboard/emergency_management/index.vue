@@ -116,16 +116,20 @@
                        </Select>
                    </div>
                </Form>
-               <Table border :columns="table.columns" :data="table.data" class="ivu-mt">
+               <Table border
+                      :loading="table.loading"
+                      :columns="table.columns"
+                      :data="table.data"
+                      class="ivu-mt">
                    <template slot-scope="{ row, index }" slot="action">
-                       <Button type="primary" size="small" style="margin-right: 5px" >预览</Button>
+                       <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(3, row)">预览</Button>
                        <Button type="primary" size="small" style="margin-right: 5px" @click.native="download(row.file_url)">下载</Button>
                        <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(2, row)">编辑</Button>
                        <Button type="error" size="small" @click="modalTable(3, row)">删除</Button>
                    </template>
                </Table>
                <div class="ivu-block" style="float: right;margin-top: 30px;">
-                   <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator
+                   <Page :total="total" :page-size="pageSize" show-total show-elevator
                          size="small" @on-change="reloadTable(true, $event)"/>
                </div>
            </div>
@@ -162,24 +166,32 @@
                       :hide-required-mark="false"
                       style="width: 350px;margin-right: auto;margin-left: auto;" v-else>
                     <FormItem label="文件名"   :rules="{required: true, message: '文件名不能为空', trigger: 'blur'}">
-                        <Input v-model="modal.modal2.fileName" placeholder="请输入文件名..." style="width: 180px"></Input>
+                        <Input v-model="modal.modal2.fileName" placeholder="请输入文件名..."
+                               :disabled="modal.modal2.state === 4"
+                               style="width: 180px"></Input>
                     </FormItem>
                     <FormItem label="所属类别"   :rules="{required: true, message: '文件类别不能为空', trigger: 'blur'}">
-                        <Select v-model="modal.modal2.category" placeholder="请选择文件类别..." style="width: 180px">
+                        <Select v-model="modal.modal2.category" placeholder="请选择文件类别..."
+                                :disabled="modal.modal2.state === 4"
+                                style="width: 180px">
                             <Option :value="item.id"
                                     v-for="(item, key) in modal.modal2.categoryList"
                                     :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="文件格式"   :rules="{required: true, message: '文件格式不能为空', trigger: 'blur'}">
-                        <Select v-model="modal.modal2.fileType" placeholder="请选择文件格式..." style="width: 180px">
+                        <Select v-model="modal.modal2.fileType" placeholder="请选择文件格式..."
+                                :disabled="modal.modal2.state === 4"
+                                style="width: 180px">
                             <Option :value="item.id"
                                     v-for="(item, key) in modal.modal2.fileTypeList"
                                     :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
-                    <FormItem label="上传选择器"   :rules="{required: true, message: '文件必须!', trigger: 'blur'}">
-                        <Upload action="//jsonplaceholder.typicode.com/posts/"
+                    <FormItem label="上传选择器"
+                              :rules="{required: true, message: '文件必须!', trigger: 'blur'}"
+                              v-if="modal.modal2.state !== 4">
+                        <Upload :action="uploadFileApi"
                                 :on-success="uploadSuccess" @on-error="uploadFailed" ref="uploadEle">
                             <Button icon="ios-cloud-upload-outline">选择上传文件</Button>
                             <span class="ivu-block upload-notice">只能上传word/pdf/视频格式文件，文件不能超过500Mb</span>
@@ -203,8 +215,8 @@
         data () {
             return {
                 logoDesc: Config.logo.logoDesc,
+                uploadFileApi: Config.uploadFileApi,
                 title: '应急管理',
-                loading: false,
                 menuList: [],
                 btnArr: [],
                 modal: {
@@ -226,13 +238,14 @@
                         fileName: '',
                         category: '',
                         fileType: '',
-                        filePath: '' // 返回id 还是路劲
+                        fileInfo: '' // 返回id 还是路劲
                     }
 
                 },
                 pageSize: 10,
                 total: 0,
                 tabIndex: 0,
+                tabKey: 0,
                 formItem: {
                     category: undefined,
                     fileType: undefined,
@@ -241,6 +254,7 @@
                     sortWay: undefined
                 },
                 table: {
+                    loading: false,
                     columns: [
                         {
                             title: '序号',
@@ -408,6 +422,7 @@
                 this.modal.modal1.status = true
             },
             selectThisBtn (index) {
+                this.tabKey = index
                 // 点击按钮切换颜色
                 this.btnArr.some((item, key, arr) => {
                     this.btnArr[key].state = false
@@ -436,13 +451,15 @@
             getEmergencyResponsePlanTableByParam (param = null) {
                 let that = this
                 console.log('param', param)
+                that.table.loading = true
                 getEmergencyResponsePlan(param).then(async res => {
                     that.table.data = res.tableData.data
-                    that.total = res.tableData.data.length
+                    that.total = res.tableData.total
                     if (param === null) {
                         this.init(res)
                         that.menuList = res.menu
                     }
+                    that.table.loading = false
                 }).catch(err => {
                     console.log('err: ', err)
                 })
@@ -450,12 +467,14 @@
             getPreparednessDrillTableByParam (param = null) {
                 let that = this
                 console.log('param', param)
+                that.table.loading = true
                 getPreparednessDrill().then(async res => {
                     that.table.data = res.tableData.data
                     if (param === null) {
                         this.init(res)
                         that.menuList = res.menu
                     }
+                    that.table.loading = false
                 }).catch(err => {
                     console.log('err: ', err)
                 })
@@ -473,6 +492,13 @@
                     this.modal.modal2.fileType = temp.file_type
                     this.modal.modal2.title = '编辑文件'
                     this.modal.modal2.state = 2
+                } else if (state === 3) {
+                    // 预览
+                    this.modal.modal2.fileName = temp.file_name
+                    this.modal.modal2.category = temp.category
+                    this.modal.modal2.fileType = temp.file_type
+                    this.modal.modal2.title = '预览'
+                    this.modal.modal2.state = 4
                 } else {
                     this.modal.modal2.title = '删除当前行数据?'
                     this.modal.modal2.state = 3
@@ -482,10 +508,11 @@
             tableSubmit () {
                 if (this.modal.modal2.state === 1) {
                     let param = {
+                        action: 'insert',
                         fileName: this.modal.modal2.fileName,
                         category: this.modal.modal2.category,
                         fileType: this.modal.modal2.fileType,
-                        filePath: this.modal.modal2.filePath
+                        fileInfo: this.modal.modal2.fileInfo
                     }
                     sendEmergencyTableAction(param).then(async res => {
                         if (res.state === true) {
@@ -494,14 +521,51 @@
                         this.$Message.success(res.msg);
                     })
                 } else if (this.modal.modal2.state === 2) {
-                    this.$Message.success('编辑成功');
-                } else {
-                    this.$Message.success('删除成功');
+                    let param = {
+                        action: 'update',
+                        id: this.modal.modal2.id,
+                        fileName: this.modal.modal2.fileName,
+                        category: this.modal.modal2.category,
+                        fileType: this.modal.modal2.fileType,
+                        fileInfo: this.modal.modal2.fileInfo
+                    }
+                    sendEmergencyTableAction(param).then(async res => {
+                        if (res.state === true) {
+                            console.log('res', res)
+                        }
+                        this.$Message.success(res.msg);
+                    })
+                } else if (this.modal.modal2.state === 3) {
+                    let param = {
+                        action: 'delete',
+                        id: this.modal.modal2.id
+                    }
+                    sendEmergencyTableAction(param).then(async res => {
+                        if (res.state === true) {
+                            console.log('res', res)
+                        }
+                        this.$Message.success(res.msg);
+                    })
+                }
+                if (this.modal.modal2.state === 4) {
+                    return true
+                }
+                let index = this.tabIndex
+                let key = this.tabKey
+                let param = {
+                    tabIndex: index,
+                    mId: this.menuList[key]['id']
+                }
+                if (index === 0) {
+                    this.getEmergencyResponsePlanTableByParam(param)
+                } else if (index === 1) {
+                    this.getPreparednessDrillTableByParam(param)
                 }
             },
             uploadSuccess (response, file, fileList) {
                 this.$Message.success('文件上传成功!');
                 // TODO 上传完成之后需要处理
+                this.modal.modal2.fileInfo = response.id
                 console.log(response, file, fileList)
             },
             uploadFailed (response, file, fileList) {

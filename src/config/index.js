@@ -13,6 +13,8 @@ const Config = {
     },
     // 请求域名设置
     apiBaseURL: env === 'development' ? 'http://localhost:8080/' : '/',
+    // 文件上传地址
+    uploadFileApi: env === 'development' ? '//jsonplaceholder.typicode.com/posts/' : '/',
     /**
      *  api路由 请求设置
      * */
@@ -152,9 +154,19 @@ const Config = {
             url: '/response/人员信息管理/response.json',
             method: 'get'
         },
+        sendPersonnelInformation: {
+            alias: 'CURD-人员信息管理的目录-的数据',
+            url: '/response/人员信息管理/api/response.json',
+            method: 'get'
+        },
         getPersonnelList: {
             alias: '获取-人员信息管理-的数据',
             url: '/response/人员信息管理/人员目录/response.json',
+            method: 'get'
+        },
+        sendPersonnelList: {
+            alias: 'CURD-人员信息管理-的数据',
+            url: '/response/人员信息管理/api/response.json',
             method: 'get'
         },
         getUserInfoById: {
@@ -177,7 +189,12 @@ const Config = {
             url: '/response/访客登记管理/response.json',
             method: 'get'
         },
-        getregistrationLog: {
+        sendVisitorRegistration: {
+            alias: '授权-访客登记管理-的数据',
+            url: '/response/访客登记管理/api/response.json',
+            method: 'get'
+        },
+        getRegistrationLog: {
             alias: '获取-访客登记管理-登记记录-的数据',
             url: '/response/访客登记管理/登记记录/response.json',
             method: 'get'

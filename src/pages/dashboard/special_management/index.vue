@@ -105,10 +105,12 @@
                             </Select>
                         </div>
                     </Form>
-                    <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
+                    <Table border :loading="reservoirData.loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
                 </div>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="reloadTable(true, $event)"/>
+                    <Page :total="total" :page-size="pageSize"
+                          show-total show-elevator size="small"
+                          @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -128,7 +130,6 @@
                 isHistory: false,
                 infoData: [],
                 modelImg: '/assets/images/u2539.svg',
-                loading: false,
                 pageSize: 10,
                 total: 0,
                 formItem: {
@@ -151,6 +152,7 @@
 
                 },
                 reservoirData: {
+                    loading: false,
                     columns: [
                         {
                             title: '序号',
@@ -320,8 +322,10 @@
                         })
                     }
                 }
+                this.reservoirData.loading = true
                 getSpecialManagementHistory(param).then(async res => {
-                    this.total = res.tableData.data.length;
+                    this.total = res.tableData.total;
+                    this.reservoirData.loading = false
                     this.reservoirData.data = res.tableData.data;
                     this.formItem.alarm_type = res.tableData.alarm_type;
                 }).catch(err => {

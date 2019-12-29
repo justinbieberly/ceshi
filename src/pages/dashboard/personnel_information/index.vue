@@ -18,7 +18,7 @@
                         返回
                     </Button>
                     <div class="ivu-block">
-                        <Tree :data="treeData" :render="renderContent" class="tree-color-gray ydjc-tree ryxxgl-tree"></Tree>
+                        <Tree :data="treeData" :render="renderContent" class="tree-color-gray ryxxgl-tree"></Tree>
                     </div>
                 </Card>
             </Card>
@@ -63,23 +63,27 @@
                             <Option value="1" >男</Option>
                             <Option value="2" >女</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-ml ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable" class="ivu-ml">重置查询</Button>
                         <Button size="small" @click="modalTable(0)" class="ivu-ml">添加</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    v-if="key < (table.columns.length - 1)"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -91,7 +95,8 @@
                     </template>
                 </Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading" :page-size="pageSize"
+                          show-total show-elevator size="small" @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -275,11 +280,41 @@
                 </div>
             </div>
         </Modal>
+        <Modal v-model="modalInfo.status" width="360">
+            <p slot="header" style="color:#f60;text-align:center" v-if="modalInfo.title_del">
+                <Icon type="ios-information-circle"></Icon>
+                <span>确认删除？</span>
+            </p>
+            <p slot="header" style="color:#3095ff;text-align:center" v-if="modalInfo.title_edit">
+                <Icon type="md-create" />
+                <span>编辑实例</span>
+            </p>
+            <div style="text-align:center" v-if="modalInfo.title_edit">
+                <Input v-model="formData.name" placeholder="请输入..."  clearable style="width: 300px" >
+                    <span slot="prepend">标题：</span>
+                </Input>
+                <Input v-model="formData.phone" placeholder="请输入手机号码..."
+                       clearable style="width: 300px;margin-top: 10px;">
+                    <span slot="prepend">信息：</span>
+                </Input>
+            </div>
+            <div style="text-align:center"  v-if="modalInfo.title_del">
+                <p>删除之后，下游的所有子栏也会删除</p>
+                <p>是否继续删除？</p>
+            </div>
+            <div slot="footer">
+                <Button type="error" size="large" long @click="removeAll"  v-if="modalInfo.title_del">删除</Button>
+                <Button type="primary" size="large" long @click="updateData"  v-if="modalInfo.title_edit">更新</Button>
+            </div>
+        </Modal>
     </main>
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getPersonnelInformation, getPersonnelList, getUserInfoById } from '@api/account';
+    import {
+        getPersonnelInformation, sendPersonnelInformation, getPersonnelList,
+        getUserInfoById, sendPersonnelList
+    } from '@api';
     import Config from '@/config';
     const echarts = require('echarts');
     export default {
@@ -289,15 +324,19 @@
                 logoDesc: Config.logo.logoDesc,
                 title: '人员信息管理',
                 formData: {
+                    id: undefined,
                     name: undefined,
                     phone: undefined
                 },
                 modalInfo: {
                     monitorHelper: {
+                        thisTemp: undefined,
                         delHelper: {},
                         name: '',
                         value: ''
                     },
+                    title_edit: false,
+                    title_del: false,
                     title: '新增人员信息',
                     status: false,
                     modal_loading: false,
@@ -309,6 +348,7 @@
                     status: false,
                     state: 2, // 1查看2 编辑 3 删除  0 添加
                     cache: undefined,
+                    id: undefined,
                     title: '添加用户'
                 },
                 treeData: [],
@@ -343,7 +383,8 @@
                     condition: '',
                     status: '',
                     sex: '',
-                    showNum: '',
+                    pageSize: 10,
+                    page: 1,
                     sortWay: ''
                 },
                 table: {
@@ -565,6 +606,7 @@
                 }).catch(err => {
                     console.log('err: ', err)
                 })
+            this.showTable()
         },
         mounted () {
             // 设置屏幕的宽度高度
@@ -602,7 +644,7 @@
                             h('span', {
                                 style: {
                                     display: 'inline-block',
-                                    marginLeft: '20px'
+                                    marginLeft: '10px'
                                 }
                             }, data.phone)
                         ])
@@ -656,21 +698,19 @@
                             },
                             on: {
                                 click: () => {
-                                    this.modalInfo.status = true;
-                                    this.modalInfo.state = 3;
-                                    if (data.phone === undefined) {
-                                        this.modalInfo.isMenu = true
-                                        this.modalInfo.title = '编辑组信息';
-                                        this.formData.name = data.title;
-                                    } else {
-                                        this.modalInfo.title = '编辑人员信息';
-                                        this.formData.name = data.title;
-                                        this.formData.phone = data.phone;
-                                        this.modalInfo.isMenu = false
-                                    }
-                                    this.modalInfo.monitorHelper.thisTemp = data;
-                                    this.modalInfo.monitorHelper.name = data.title;
-                                    this.modalInfo.monitorHelper.value = data.phone;
+                                    console.log('data', data)
+                                    this.modalInfo.status = true
+                                    this.modalInfo.state = 3
+                                    this.modalInfo.title = '编辑信息'
+                                    this.formData.id = data.id
+                                    this.formData.name = data.title
+                                    this.formData.phone = data.phone
+                                    this.modalInfo.isMenu = true
+                                    this.modalInfo.monitorHelper.thisTemp = data
+                                    this.modalInfo.monitorHelper.name = data.title
+                                    this.modalInfo.monitorHelper.value = data.phone
+                                    this.modalInfo.title_del = false;
+                                    this.modalInfo.title_edit = true;
                                 }
                             }
                         })
@@ -678,36 +718,59 @@
                 ]);
             },
             append (data) {
-                const children = data.children || [];
-                children.push({
-                    title: 'user name',
-                    phone: '000-0000-0000',
-                    expand: true
-                });
-                this.$set(data, 'children', children);
-                // TODO 新增一个节点
-                this.$Message.success('添加成功!');
+                let param = {
+                    action: 'insert'
+                }
+                sendPersonnelInformation(param).then(async res => {
+                    if (res.state === true) {
+                        let info = res.info
+                        let children = data.children || [];
+                        children.push({
+                            id: info.id,
+                            title: info.title,
+                            sex: info.sex,
+                            age: info.age,
+                            workTime: info.workTime,
+                            phone: info.phone
+                        });
+                        this.$set(data, 'children', children);
+                        this.$Message.success(res.msg);
+                    }
+                })
             },
             remove (root, node, data) {
-                const parentKey = root.find(el => el === node).parent;
-                const parent = root.find(el => el.nodeKey === parentKey).node;
-                const index = parent.children.indexOf(data);
-                parent.children.splice(index, 1);
-                // TODO 删除一个节点
-                this.$Message.success('删除成功！');
+                let parentKey = root.find(el => el === node).parent;
+                let parent = root.find(el => el.nodeKey === parentKey).node;
+                let index = parent.children.indexOf(data);
+                let param = {
+                    action: 'delete',
+                    id: parent['children'][index]['id']
+                }
+                sendPersonnelInformation(param).then(async res => {
+                    if (res.state === true) {
+                        parent.children.splice(index, 1);
+                        this.$Message.success(res.msg);
+                    }
+                })
             },
             removeAll () {
                 this.modalInfo.status = true;
-                setTimeout(() => {
-                    this.modalInfo.modal_loading = false;
-                    this.modalInfo.status = false;
-                    let id = this.modalInfo.monitorHelper.delHelper.id;
-                    let delObject = this.treeData.find(el => el.id === id);
-                    let thisKey = this.treeData.indexOf(delObject);
-                    this.treeData.splice(thisKey, 1);
-                    // TODO 删除一个父级节点
-                    this.$Message.success('删除成功！');
-                }, 500);
+                this.modalInfo.modal_loading = false;
+                this.modalInfo.status = false;
+                let id = this.modalInfo.monitorHelper.delHelper.id;
+                let delObject = this.treeData.find(el => el.id === id);
+                let thisKey = this.treeData.indexOf(delObject);
+                let param = {
+                    action: 'delete',
+                    isGroup: true,
+                    id: id
+                }
+                sendPersonnelInformation(param).then(async res => {
+                    if (res.state === true) {
+                        this.treeData.splice(thisKey, 1);
+                        this.$Message.success(res.msg);
+                    }
+                })
             },
             dealTableData (data) {
                 // 植入表头的操作方法
@@ -745,7 +808,7 @@
                                         h('span', {
                                             style: {
                                                 display: 'inline-block',
-                                                marginLeft: '20px'
+                                                marginLeft: '10px'
                                             }
                                         }, data.phone)
                                     ])
@@ -786,9 +849,9 @@
                                         on: {
                                             click: () => {
                                                 this.modalInfo.status = true
-                                                this.modalInfo.state = 2
-                                                this.modalInfo.title = '是否删除?'
                                                 this.modalInfo.monitorHelper.delHelper = data;
+                                                this.modalInfo.title_del = true;
+                                                this.modalInfo.title_edit = false;
                                             }
                                         }
                                     }),
@@ -805,13 +868,12 @@
                                         on: {
                                             click: () => {
                                                 this.modalInfo.status = true;
-                                                this.modalInfo.state = 3;
-                                                this.modalInfo.title = '编辑组信息';
-                                                this.formData.name = data.name;
+                                                this.formData.id = data.id
                                                 this.formData.phone = data.phone;
-                                                this.modalInfo.isMenu = true
                                                 this.formData.name = data.title
                                                 this.modalInfo.monitorHelper.thisTemp = data;
+                                                this.modalInfo.title_del = false;
+                                                this.modalInfo.title_edit = true;
                                             }
                                         }
                                     })
@@ -824,19 +886,20 @@
                 return dataTemp;
             },
             updateData () {
-                this.modalInfo.status = true;
-                setTimeout(() => {
-                    this.modalInfo.modal_loading = false;
-                    this.modalInfo.status = false;
-                    if (this.modalInfo.isMenu) {
-                        this.modalInfo.monitorHelper.thisTemp.title = this.formData.name;
-                    } else {
-                        this.modalInfo.monitorHelper.thisTemp.title = this.formData.name;
-                        this.modalInfo.monitorHelper.thisTemp.phone = this.formData.phone;
+                this.modalInfo.status = false;
+                let param = {
+                    action: 'update',
+                    id: this.formData.id,
+                    name: this.formData.name,
+                    phone: this.formData.phone
+                }
+                sendPersonnelInformation(param).then(async res => {
+                    if (res.state === true) {
+                        this.modalInfo.monitorHelper.thisTemp.title = this.formData.name
+                        this.modalInfo.monitorHelper.thisTemp.phone = this.formData.phone
                     }
-                    // TODO 更新一个父级节点
-                    this.$Message.success('更新成功！');
-                }, 500);
+                    this.$Message.success(res.msg);
+                })
             },
             recursiveChildren (data) {
                 if (data['children'] !== undefined) {
@@ -1046,35 +1109,62 @@
                     ]
                 })
             },
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize)
+                } else {
+                    this.formItem = {
+                        condition: '',
+                        status: '',
+                        sex: '',
+                        pageSize: 10,
+                        page: 1,
+                        sortWay: ''
+                    }
+                }
+                let param = {
+                    condition: this.formItem.condition,
+                    status: this.formItem.status,
+                    sex: this.formItem.sex,
+                    pageSize: this.formItem.pageSize,
+                    page: this.formItem.page,
+                    sortWay: this.formItem.sortWay
+                }
+                this.getPersonnelListTableByParam(param)
+            },
+            getPersonnelListTableByParam (param) {
+                this.table.loading = true
+                getPersonnelList(param).then(async res => {
+                    this.table.loading = false
+                    this.table.data = res.tableData.data
+                    this.total = res.tableData.total
+                    console.log(' this.total', this.total)
+                })
+            },
             tableSubmit () {
+                let param
                 if (this.tableModal.state === 1) {
                 } else if (this.tableModal.state === 2) {
                     this.$Message.success('编辑成功');
                 } else if (this.tableModal.state === 3) {
-                    this.$Message.success('删除成功');
+                    param = {
+                        action: 'delete',
+                        id: this.tableModal.id
+                    }
                 } else if (this.tableModal.state === 0) {
                     this.$Message.success('添加成功');
                 }
-            },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // TODO 只能 请求API限制  分页 限制每页显示数量
-            },
-            doQuery () {
-                console.log('do query');
-                // TODO 只能 请求API筛选处理 查询
-            },
-            changePage () {
-                // TODO 翻页
+                sendPersonnelList(param).then(async res => {
+                    if (res.state === true) {}
+                    this.$Message.success(res.msg);
+                })
             },
             showTable () {
                 // 显示人员名录的表格
                 this.table.loading = true
                 this.isTable = true
-                getPersonnelList().then(async res => {
-                    this.table.data = res.tableData.data
-                })
+                this.reloadTable()
             },
             modalTable (state, temp) {
                 let that = this
@@ -1083,18 +1173,28 @@
                     // 预览
                     this.tableModal.title = '用户信息预览'
                     this.tableModal.state = 1
-                    getUserInfoById().then(async res => {
+                    let param = {
+                        id: temp.id
+                    }
+                    getUserInfoById(param).then(async res => {
                         that.userDetail.info = res.baseInfo
-                        console.log('res.baseInfo', res.baseInfo)
                         that.userDetail.certificate = res.certificate
                     })
                 } else if (state === 2) {
                     // 编辑信息
+                    let param = {
+                        id: temp.id
+                    }
+                    getUserInfoById(param).then(async res => {
+                        that.userDetail.info = res.baseInfo
+                        this.setFormItemField(res.baseInfo)
+                    })
                     this.tableModal.title = '编辑用户'
                     this.tableModal.state = 2
                 } else if (state === 3) {
                     this.tableModal.title = '删除当前行数据?'
                     this.tableModal.state = 3
+                    this.tableModal.id = temp.id
                 } else {
                     this.tableModal.title = '添加用户'
                     this.tableModal.state = 0
@@ -1111,6 +1211,9 @@
                     columns: this.table.columns.filter((col, index) => index < 26),
                     data: this.table.data
                 });
+            },
+            setFormItemField (temp) {
+                console.log('temp', temp)
             }
         }
     }

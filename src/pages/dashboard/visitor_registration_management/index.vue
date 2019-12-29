@@ -12,27 +12,29 @@
                         <Input v-model="formItem.input" placeholder="证件号码/名称" size="small" style="width: 120px"></Input>
                     </FormItem>
                     <FormItem label="人员类型" >
-                        <Select v-model="formItem.status" size="small"
+                        <Select v-model="formItem.type" size="small"
                                 class="ivu-nomal-select"
                                 style="width: 120px">
-                            <Option value="1">内部员工1</Option>
-                            <Option value="0">外部人员</Option>
+                            <Option :value="item.id"
+                                    v-for="(item, key) in typeList"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="性别">
-                        <Select v-model="formItem.type" size="small"
+                        <Select v-model="formItem.sex" size="small"
                                 class="ivu-nomal-select"
                                 style="width: 120px; margin-right: 20px;">
                             <Option value="1">男</Option>
                             <Option value="0">女</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-query-btn"
-                                style="margin-right: 20px;">查询结果</Button>
-                        <i-link to="/dashboard/real_time_monitor" style="width: 80px; margin-right: 20px;">
-                            <Button style="margin-left: 8px" size="small" >重置查询</Button>
-                        </i-link>
-                        <Button type="primary" size="small" @click="registrationLog" v-if="!table.isLog">登记记录</Button>
+                                style="margin-right: 16px;">查询结果</Button>
+                        <Button style="margin-right: 16px;" size="small"
+                                @click="reloadTable(false)">重置查询</Button>
+                        <Button type="primary" size="small"
+                                @click="registrationLog"
+                                v-if="!table.isLog">登记记录</Button>
                         <Button  size="small" v-if="table.isLog" style="margin-right: 8px;"
                                 @click="exportData" >
                             <Icon type="md-arrow-round-down" />
@@ -44,17 +46,21 @@
                         </Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    v-if="key < (table.columns.length - 3)"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -76,7 +82,9 @@
                 </Table>
             </div>
             <div class="ivu-block" style="float: right;margin-top: 30px;">
-                <Page :total="page.total" :page-size="page.pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                <Page :total="page.total" :page-size="page.pageSize"
+                      show-total show-elevator size="small"
+                      @on-change="reloadTable(true, $event)"/>
             </div>
             <Modal v-model="modalInfo.status" width="360">
                 <p slot="header" style="color:#3095ff;text-align:center" v-if="!modalInfo.isDate">
@@ -89,10 +97,11 @@
                     <img :src="modalInfo.userPhoto" alt="">
                 </div>
                 <div class="ivu-block ivu-text-center" v-else>
-                    <DatePicker v-model="modalInfo.dateData" type="date" multiple placeholder="选择日期..." style="width: 300px" ></DatePicker>
+                    <DatePicker v-model="modalInfo.dateData" type="date" multiple
+                                placeholder="选择日期..." style="width: 300px" ></DatePicker>
                 </div>
                 <div slot="footer" v-if="modalInfo.isDate">
-                    <Button type="primary" size="large" long @click="authorization(1)">确定</Button>
+                    <Button type="primary" size="large" long @click="authorization(1, modalInfo.cacheData)">确定</Button>
                 </div>
             </Modal>
         </div>
@@ -100,7 +109,7 @@
 </template>
 <script>
     import { mapState } from 'vuex'
-    import { getVisitorRegistration, getregistrationLog } from '@api/account'
+    import { getVisitorRegistration, getRegistrationLog, sendVisitorRegistration } from '@api'
 
     export default {
         name: 'dashboard-visitor-registration-management',
@@ -109,20 +118,24 @@
                 title: '访客登记管理',
                 page: {
                     loading: false,
-                    total: 12,
-                    pageSize: 2
+                    total: 0,
+                    pageSize: 10
                 },
                 modalInfo: {
                     status: false,
                     isDate: false,
                     dateData: undefined,
-                    userPhoto: ''
+                    userPhoto: '',
+                    cacheData: undefined
                 },
+                typeList: [],
                 formItem: {
                     input: undefined,
-                    select: undefined,
-                    sortWay: undefined,
-                    showNum: 1
+                    type: undefined,
+                    sex: undefined,
+                    page: 1,
+                    pageSize: 10,
+                    sortWay: undefined
 
                 },
                 table: {
@@ -237,41 +250,62 @@
             ])
         },
         created () {
-            this.getVisitorData()
+            this.getVisitorRegistrationTableByParam()
         },
         mounted () {
             // 设置屏幕的宽度高度
             this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum)
-                console.log('reset page size', this.pageSize)
-                // 只能 请求API限制
-            },
-            doQuery () {
-                console.log('do query')
-                console.log(this.formItem)
-                // 只能 请求API筛选处理
-            },
-            changePage () {
-                console.log('api change page')
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem = {
+                        input: undefined,
+                        type: undefined,
+                        sex: undefined,
+                        page: 1,
+                        pageSize: 10,
+                        sortWay: undefined
+                    }
+                }
+                if (this.table.isLog === false) {
+                    this.getVisitorRegistrationTableByParam(this.formItem)
+                } else {
+                    this.getRegistrationLogTableByParam(this.formItem)
+                }
             },
             authorization (state, row) {
                 // 操作授权
-                // todo API授权操作
+                let param = {
+                    id: row.id
+                }
                 if (state === 0) {
-                    this.$Message.success('单次授权成功!')
+                    Object.assign(param, {
+                        type: 'once'
+                    })
                 } else if (state === 1) {
+                    let dateTime = []
                     this.modalInfo.dateData.map(function (value, index, array) {
-                        console.log(new Date(value).getTime())
+                        dateTime.push(new Date(value).getTime())
+                    })
+                    Object.assign(param, {
+                        dateTime: dateTime
                     })
                     this.modalInfo.status = false
-                    this.$Message.success('多次授权成功!')
                 } else {
-                    this.$Message.success('已拒绝授权!')
+                    Object.assign(param, {
+                        type: 'refused'
+                    })
                 }
-                console.log('api change page')
+                sendVisitorRegistration(param).then(async res => {
+                    if (res.state === true) {
+                        // todo >
+                    }
+                    this.$Message.success(res.msg)
+                })
             },
             preview (state, row) {
                 if (state === 1) {
@@ -280,6 +314,7 @@
                     this.modalInfo.userPhoto = row.photoUrl
                 } else {
                     // 选择授权时间
+                    this.modalInfo.cacheData = row
                     this.modalInfo.isDate = true
                 }
                 this.modalInfo.status = true
@@ -288,14 +323,10 @@
                 // 展示登记记录
                 this.table.loading = true
                 this.table.isLog = true
-                let that = this
-                getregistrationLog().then(async res => {
-                    that.table.data = res.tableData
-                    that.table.loading = false
-                }).catch()
+                this.getRegistrationLogTableByParam()
             },
             back () {
-                this.getVisitorData()
+                this.getVisitorRegistrationTableByParam()
                 this.table.isLog = false
             },
             exportData () {
@@ -306,9 +337,23 @@
                     data: this.table.data
                 });
             },
-            getVisitorData () {
-                getVisitorRegistration().then(async res => {
-                    this.table.data = res.tableData
+            getVisitorRegistrationTableByParam (param = null) {
+                this.table.loading = true
+                getVisitorRegistration(param).then(async res => {
+                    if (param === null) {
+                        this.typeList = res.tableData.typeList
+                    }
+                    this.table.data = res.tableData.data
+                    this.page.total = res.tableData.total
+                    this.table.loading = false
+                })
+            },
+            getRegistrationLogTableByParam (param) {
+                this.table.loading = true
+                getRegistrationLog(param).then(async res => {
+                    this.table.data = res.tableData.data
+                    this.page.total = res.tableData.total
+                    this.table.loading = false
                 })
             }
         }

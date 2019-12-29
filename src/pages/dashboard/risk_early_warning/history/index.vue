@@ -47,7 +47,7 @@
                         </FormItem>
                     </div>
                 </Form>
-                <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
+                <Table border  :loading="reservoirData.loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
             </div>
             <div class="ivu-block" style="float: right;margin-top: 30px;">
                 <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="reloadTable(true, $event)"/>
@@ -64,7 +64,6 @@
         data () {
             return {
                 title: '风险预警',
-                loading: false,
                 pageSize: 10,
                 total: 0,
                 alarmType: [],
@@ -75,6 +74,7 @@
                     pageSize: 10
                 },
                 reservoirData: {
+                    loading: false,
                     columns: [
                         {
                             title: '序号',
@@ -153,7 +153,7 @@
                 this.getRiskHistoryTableByParam(this.formItem)
             },
             getRiskHistoryTableByParam (param = null) {
-                if (param !== null) {
+                if (param !== null && param.dateRange) {
                     param.dateRange.map(function (value, index, array) {
                         if (value) {
                             param.dateRange[index] = new Date(value).getTime()
@@ -161,10 +161,12 @@
                     })
                 }
                 let that = this;
+                this.reservoirData.loading = true
                 getRiskHistory(param).then(async res => {
-                    that.total = res.tableData.data.length;
+                    that.total = res.tableData.total;
                     that.reservoirData.data = res.tableData.data;
                     that.alarmType = res.tableData.alarmType;
+                    this.reservoirData.loading = false
                 }).catch(err => {
                     this.$log.capsule('iView', 'Error', 'error');
                     console.log('err: ', err)

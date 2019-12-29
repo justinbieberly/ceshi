@@ -50,7 +50,7 @@
                        </div>
                    </div>
                </Form>
-               <Table border  :loading="loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
+               <Table border :loading="reservoirData.loading" :columns="reservoirData.columns" :data="reservoirData.data" size="small" ></Table>
            </div>
             <div class="ivu-block" style="float: right;margin-top: 30px;">
                 <Page :total="total" :page-size="pageSize" show-total show-elevator size="small" @on-change="reloadTable(true, $event)"/>
@@ -66,7 +66,6 @@
         data () {
             return {
                 title: '实时监测',
-                loading: false,
                 pageSize: 10,
                 total: 0,
                 formItem: {
@@ -77,6 +76,7 @@
                     pageSize: 10
                 },
                 reservoirData: {
+                    loading: false,
                     columns: [
                         {
                             title: '序号',
@@ -169,9 +169,11 @@
             },
             getElectricityTableByParam (param) {
                 let that = this;
+                that.reservoirData.loading = true
                 getElectricityRealTime(param).then(async res => {
-                    that.total = res.tableData.data.length;
+                    that.total = res.tableData.total;
                     that.reservoirData.data = res.tableData.data;
+                    that.reservoirData.loading = false
                 }).catch(err => {
                     this.$log.capsule('iView', 'Error', 'error');
                     console.log('err: ', err)

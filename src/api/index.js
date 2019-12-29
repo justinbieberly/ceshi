@@ -260,11 +260,29 @@ export function getPersonnelInformation (data) {
     });
 }
 
+// [CURD-人员信息管理的目录-的数据]的数据
+export function sendPersonnelInformation (data) {
+    return request({
+        url: apiConfig.sendPersonnelInformation.url,
+        method: apiConfig.sendPersonnelInformation.method,
+        data
+    });
+}
+
 // 获取[人员信息管理 - 人员名录]的数据
 export function getPersonnelList (data) {
     return request({
         url: apiConfig.getPersonnelList.url,
         method: apiConfig.getPersonnelList.method,
+        data
+    });
+}
+
+// 获取[CURD - 人员信息管理 - 人员名录]的数据
+export function sendPersonnelList (data) {
+    return request({
+        url: apiConfig.sendPersonnelList.url,
+        method: apiConfig.sendPersonnelList.method,
         data
     });
 }
@@ -296,7 +314,7 @@ export function getRecordOfInOut (data) {
     });
 }
 
-// 获取[实名进出管理-进出记录]的数据
+// 获取[访客登记管理-]的数据
 export function getVisitorRegistration (data) {
     return request({
         url: apiConfig.getVisitorRegistration.url,
@@ -305,11 +323,20 @@ export function getVisitorRegistration (data) {
     });
 }
 
-// 获取[实名进出管理-进出记录]的数据
-export function getregistrationLog (data) {
+// 获取[授权-访客登记管理]的数据
+export function sendVisitorRegistration (data) {
     return request({
-        url: apiConfig.getregistrationLog.url,
-        method: apiConfig.getregistrationLog.method,
+        url: apiConfig.sendVisitorRegistration.url,
+        method: apiConfig.sendVisitorRegistration.method,
+        data
+    });
+}
+
+// 获取[实名进出管理-进出记录]的数据
+export function getRegistrationLog (data) {
+    return request({
+        url: apiConfig.getRegistrationLog.url,
+        method: apiConfig.getRegistrationLog.method,
         data
     });
 }
