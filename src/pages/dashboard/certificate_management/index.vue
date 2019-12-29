@@ -154,7 +154,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getCertificateManagement, getCertificateByParameter } from '@api/account';
+    import { getCertificateManagement, getCertificateByParameter } from '@api';
     import Config from '@/config';
     const echarts = require('echarts');
 

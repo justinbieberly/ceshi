@@ -606,7 +606,6 @@
                 }).catch(err => {
                     console.log('err: ', err)
                 })
-            this.showTable()
         },
         mounted () {
             // 设置屏幕的宽度高度

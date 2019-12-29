@@ -89,7 +89,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getDataStatisticsMenu, getDataStatisticsCharts } from '@api/account';
+    import { getDataStatisticsMenu, getDataStatisticsCharts } from '@api';
     import Config from '@/config';
     const echarts = require('echarts');
 

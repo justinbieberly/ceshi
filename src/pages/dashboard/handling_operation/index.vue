@@ -29,7 +29,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getHandlingOperation } from '@api/account';
+    import { getHandlingOperation } from '@api';
     import Config from '@/config';
 
     export default {

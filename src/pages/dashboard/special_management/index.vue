@@ -118,7 +118,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getSpecialManagement, getSpecialManagementHistory } from '@api/account';
+    import { getSpecialManagement, getSpecialManagementHistory } from '@api';
     import Config from '@/config';
 
     export default {

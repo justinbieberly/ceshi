@@ -53,7 +53,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getElectricityHistory } from '@api/account';
+    import { getElectricityHistory } from '@api';
     const echarts = require('echarts');
     export default {
         name: 'dashboard-electricity-history',

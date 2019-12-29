@@ -229,7 +229,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getNewRoutineMenu, getNewRoutineByParam } from '@api/account';
+    import { getNewRoutineMenu, getNewRoutineByParam } from '@api';
     import Config from '@/config';
 
     export default {

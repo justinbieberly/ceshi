@@ -149,7 +149,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getAccidentManagement, getAccidentDetailByParam } from '@api/account';
+    import { getAccidentManagement, getAccidentDetailByParam } from '@api';
     import Config from '@/config';
 
     export default {

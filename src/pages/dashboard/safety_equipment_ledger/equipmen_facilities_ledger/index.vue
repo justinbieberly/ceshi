@@ -86,7 +86,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    // import { get3dModelInfo } from '@api/account';
+    // import { get3dModelInfo } from '@api';
 
     export default {
         name: 'dashboard-console',

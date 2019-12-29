@@ -103,7 +103,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getHazardHistory } from '@api/account';
+    import { getHazardHistory } from '@api';
     import Config from '@/config';
 
     export default {

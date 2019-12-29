@@ -28,11 +28,35 @@ export function getHeaderMenu (data) {
     });
 }
 
-// 获取【三维模型】的左侧导航栏
+/*
+* @page 三维模型
+* @object 获取【三维模型】的左侧导航栏
+* @param data
+* @author iEfoam
+* @time 2019-12-18 23:07
+* @return mixed
+* */
 export function get3dModelInfo (data) {
     return request({
         url: apiConfig.get3dModelInfo.url,
         method: apiConfig.get3dModelInfo.method,
+        data
+    });
+}
+
+/*
+* @page 三维模型
+* @object 将页面点击的按钮 传递给接口端
+* @param data
+* @author iEfoam
+* @time 2019-12-18 23:07
+* @return mixed
+* */
+export function send3dModelInfo (data) {
+    console.log(data)
+    return request({
+        url: apiConfig.getCertificateByParameter.url,
+        method: apiConfig.getCertificateByParameter.method,
         data
     });
 }
@@ -105,6 +129,23 @@ export function getElectricityHistory (data) {
     return request({
         url: apiConfig.getElectricityHistory.url,
         method: apiConfig.getElectricityHistory.method,
+        data
+    });
+}
+
+/*
+* @page 用电监测
+* @object 用电监测 的tree  进行新增 删除 编辑操作
+* @param data
+* @author iEfoam
+* @time 2019-12-18 23:07
+* @return mixed
+* */
+export function sendElectricityMonitoring (data) {
+    console.log('sendElectricityMonitoring', data)
+    return request({
+        url: apiConfig.sendElectricityMonitoring.url,
+        method: apiConfig.sendElectricityMonitoring.method,
         data
     });
 }

@@ -35,7 +35,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getRiskZoningData } from '@api/account';
+    import { getRiskZoningData } from '@api';
     import Config from '@/config'
 
     export default {

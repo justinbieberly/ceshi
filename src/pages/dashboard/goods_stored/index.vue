@@ -24,7 +24,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getGoodsStored } from '@api/account';
+    import { getGoodsStored } from '@api';
     import Config from '@/config';
 
     export default {

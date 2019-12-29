@@ -158,7 +158,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getOccupationalHealth } from '@api/account';
+    import { getOccupationalHealth } from '@api';
     import Config from '@/config';
 
     export default {

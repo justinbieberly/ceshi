@@ -166,7 +166,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getTrainingRecordsMenu, getTrainingTableByParam } from '@api/account';
+    import { getTrainingRecordsMenu, getTrainingTableByParam } from '@api';
     import Config from '@/config';
 
     export default {

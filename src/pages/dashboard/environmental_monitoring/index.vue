@@ -25,7 +25,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getEnvironmentalMonitoring } from '@api/account';
+    import { getEnvironmentalMonitoring } from '@api';
     import Config from '@/config';
     export default {
         name: 'dashboard-environmental-monitoring',

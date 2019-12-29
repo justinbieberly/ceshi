@@ -21,7 +21,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getSpaceMonitoring } from '@api/account';
+    import { getSpaceMonitoring } from '@api';
     import Config from '@/config';
     export default {
         name: 'dashboard-space-monitoring-show',

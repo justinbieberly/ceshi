@@ -54,7 +54,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getToperationLog } from '@api/account';
+    import { getToperationLog } from '@api';
     import Config from '@/config';
 
     export default {

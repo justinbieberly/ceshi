@@ -46,7 +46,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getPermitList, getPermitById } from '@api/account';
+    import { getPermitList, getPermitById } from '@api';
     import Config from '@/config';
 
     export default {

@@ -132,7 +132,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getRealNameManagement, getRecordOfInOut } from '@api/account';
+    import { getRealNameManagement, getRecordOfInOut } from '@api';
     import Config from '@/config';
     export default {
         name: 'dashboard-real-name-management',

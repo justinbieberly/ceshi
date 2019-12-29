@@ -1131,7 +1131,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getSpecialAssignmentsMenu, getAssignmentsTableByParam } from '@api/account';
+    import { getSpecialAssignmentsMenu, getAssignmentsTableByParam } from '@api';
     import Config from '@/config';
 
     export default {

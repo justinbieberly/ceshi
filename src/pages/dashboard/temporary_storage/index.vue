@@ -33,7 +33,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getTemporaryStorage } from '@api/account';
+    import { getTemporaryStorage } from '@api';
     import Config from '@/config';
 
     export default {
@@ -93,7 +93,6 @@
                                         backgroundColor: '#fb1010 !important'
                                     }
                                 }
-                                console.log(params.row)
                                 return h('div', {
                                     style: Object.assign({
                                         width: '18px',
@@ -125,7 +124,6 @@
             let that = this;
             getTemporaryStorage()
                 .then(async res => {
-                    console.log('pageData', res);
                     that.pageData = res;
                     that.reservoirData.data = res.tableData.data;
                 }).catch(err => { console.log('err: ', err) })

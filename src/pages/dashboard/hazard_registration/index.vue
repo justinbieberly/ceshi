@@ -22,7 +22,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getHazardRegistration } from '@api/account';
+    import { getHazardRegistration } from '@api';
     import Config from '@/config';
     const echarts = require('echarts');
     export default {

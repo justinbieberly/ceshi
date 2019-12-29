@@ -114,7 +114,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getUserManagementData } from '@api/account';
+    import { getUserManagementData } from '@api';
     import Config from '@/config';
 
     export default {

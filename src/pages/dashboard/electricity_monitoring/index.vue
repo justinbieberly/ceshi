@@ -45,8 +45,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getElectricityMonitoring } from '@api/account';
-    import { sendElectricityMonitoring } from '@api/interaction';
+    import { getElectricityMonitoring, sendElectricityMonitoring } from '@api';
     import Config from '@/config';
     export default {
         name: 'dashboard-temporary-storage',

@@ -191,7 +191,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getMaintenanceRecordMenu, getMaintenanceRecordTable } from '@api/account';
+    import { getMaintenanceRecordMenu, getMaintenanceRecordTable } from '@api';
     import Config from '@/config';
 
     export default {

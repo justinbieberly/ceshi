@@ -67,9 +67,9 @@
     </main>
 </template>
 <script>
-    import { mapState } from 'vuex';
-    import { getStoredDetail } from '@api/account';
-    import Config from '@/config';
+    import { mapState } from 'vuex'
+    import { getStoredDetail } from '@api'
+    import Config from '@/config'
     export default {
         name: 'dashboard-goods-stored-detail',
         data () {
@@ -97,10 +97,10 @@
             let that = this;
             getStoredDetail()
                 .then(async res => {
-                    console.log('storageInfo', res.storageInfo);
-                    that.roomName = res.name;
-                    that.roomInfo = res.baseInfo;
-                    that.storageInfo = res.storageInfo;
+                    console.log('storageInfo', res.storageInfo)
+                    that.roomName = res.name
+                    that.roomInfo = res.baseInfo
+                    that.storageInfo = res.storageInfo
                 }).catch(err => { console.log('err: ', err) })
         },
         mounted () {

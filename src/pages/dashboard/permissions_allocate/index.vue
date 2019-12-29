@@ -90,7 +90,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getPermissionsAllocateData } from '@api/account';
+    import { getPermissionsAllocateData } from '@api';
     import Config from '@/config';
 
     export default {

@@ -6,7 +6,7 @@
     "airTableData": [
       {
         "title": "1#甲类库内探测器",
-        "expand": true,
+        "expand": false,
         "children": [
           {
             "title": "1#甲类库   左上角   正常",

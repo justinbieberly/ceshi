@@ -212,7 +212,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getSuppliesParameter } from '@api/account';
+    import { getSuppliesParameter } from '@api';
     import Config from '@/config';
 
     export default {

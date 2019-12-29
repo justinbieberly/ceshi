@@ -86,7 +86,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getVehicleReInspection } from '@api/account';
+    import { getVehicleReInspection } from '@api';
     export default {
         name: 'dashboard-vehicle-re-inspection',
         data () {

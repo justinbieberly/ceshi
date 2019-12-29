@@ -17,7 +17,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    // import { get3dModelInfo } from '@api/account';
+    // import { get3dModelInfo } from '@api';
     import Config from '@/config';
 
     export default {

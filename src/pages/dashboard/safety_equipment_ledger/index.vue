@@ -26,7 +26,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getSafetyEquipmentData } from '@api/account';
+    import { getSafetyEquipmentData } from '@api';
     import Config from '@/config';
 
     export default {

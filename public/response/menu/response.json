@@ -11,12 +11,7 @@
           {
             "name": "货物存储",
             "id": 1001,
-            "path": "/dashboard/goods_stored"
-          },
-          {
-            "name": "临时存储",
-            "id": 1002,
-            "path": "/dashboard/temporary_storage",
+            "path": "/dashboard/goods_stored",
             "secondaryMenu": [
               {
                 "name": "货物存储",
@@ -24,6 +19,11 @@
                 "path": "/dashboard/goods_stored_detail"
               }
             ]
+          },
+          {
+            "name": "临时存储",
+            "id": 1002,
+            "path": "/dashboard/temporary_storage"
           },
           {
             "name": "分布状况",

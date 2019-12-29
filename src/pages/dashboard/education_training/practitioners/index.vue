@@ -126,7 +126,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getPractitionersTableData } from '@api/account';
+    import { getPractitionersTableData } from '@api';
     import Config from '@/config';
 
     export default {

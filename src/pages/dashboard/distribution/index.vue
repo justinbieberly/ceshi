@@ -38,7 +38,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getDistributionData } from '@api/account';
+    import { getDistributionData } from '@api';
     import Config from '@/config';
     export default {
         name: 'dashboard-distribution',
@@ -91,7 +91,6 @@
                                         backgroundColor: '#fb1010 !important'
                                     }
                                 }
-                                console.log(params.row)
                                 return h('div', {
                                     style: Object.assign({
                                         width: '18px',
@@ -123,7 +122,6 @@
             let that = this;
             getDistributionData()
                 .then(async res => {
-                    console.log('pageData', res);
                     that.reservoirData.data = res.tableData.data;
                 }).catch(err => { console.log('err: ', err) })
         },

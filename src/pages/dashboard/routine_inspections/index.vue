@@ -113,7 +113,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getRoutineInspectionsMenu, getRoutineTableByParam } from '@api/account';
+    import { getRoutineInspectionsMenu, getRoutineTableByParam } from '@api';
     import Config from '@/config';
 
     export default {

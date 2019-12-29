@@ -158,7 +158,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getRegimeManagement, getRegimeByParameter } from '@api/account';
+    import { getRegimeManagement, getRegimeByParameter } from '@api';
     import Config from '@/config';
 
     export default {
