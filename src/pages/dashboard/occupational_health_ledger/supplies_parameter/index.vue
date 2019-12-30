@@ -10,17 +10,19 @@
                         功能操作
                     </div>
                     <FormItem label="输入搜索">
-                        <Input v-model="formItem.condition" placeholder="序号/名字/..." size="small"
-                               style="width: 150px" />
+                        <Input v-model="formItem.input" placeholder="序号/名字/..." size="small"
+                               style="width: 180px" />
                     </FormItem>
                     <FormItem label="领用时间">
-                        <DatePicker type="daterange" placement="bottom-end"
+                        <DatePicker type="daterange"
+                                    v-model="formItem.dateTime"
+                                    placement="bottom-end"
                                     placeholder="请选择领用时间"
                                     size="small"
-                                    style="width: 150px"></DatePicker>
-                        <Button type="primary" size="small" @click="doQuery"
+                                    style="width: 180px"></DatePicker>
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-ml-40 ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable(false)" class="ivu-ml">重置查询</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
                         <FormItem>
@@ -30,17 +32,22 @@
                                 返回
                             </Button>
                         </FormItem>
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable"
+                                style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    v-if="key < (table.columns.length - 1)"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -51,7 +58,9 @@
                     </template>
                 </Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading" :page-size="pageSize"
+                          show-total show-elevator size="small"
+                          @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -212,7 +221,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getSuppliesParameter } from '@api';
+    import { getSuppliesParameter, sendSuppliesAction } from '@api';
     import Config from '@/config';
 
     export default {
@@ -232,6 +241,12 @@
                     medicalType: []
                 },
                 formItem: {
+                    input: '',
+                    dateTime: '',
+                    page: 1,
+                    pageSize: 10,
+                    sortWay: '',
+                    id: '',
                     user: '',
                     jobs: '',
                     recipientsTime: '',
@@ -388,40 +403,48 @@
             ])
         },
         created () {
-            // let that = this;
-            getSuppliesParameter().then(async res => {
-                this.table.data = res.tableData
-            }).catch(err => {
-                console.log('err', err)
-            })
+            this.getSuppliesParameterTableByParam()
         },
         mounted () {
             // 设置屏幕的宽度高度
             this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
-            uploadSuccess (response, file, fileList) {
-                this.$Message.success('文件上传成功!');
-                // TODO 上传完成之后需要处理
-                console.log(response, file, fileList)
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem.input = undefined
+                    this.formItem.dateTime = undefined
+                    this.formItem.periodTime = undefined
+                    this.formItem.page = 1
+                }
+                let param = {
+                    input: this.formItem.input,
+                    dateTime: this.formItem.dateTime,
+                    page: this.formItem.page,
+                    pageSize: this.formItem.pageSize,
+                    sortWay: this.formItem.sortWay
+                }
+                this.getSuppliesParameterTableByParam(param)
             },
-            uploadFailed (response, file, fileList) {
-                console.log(response, file, fileList)
-                // TODO 上传失败之后需要处理
-                this.$refs.uploadEle.clearFiles()
-                this.$Message.error('文件上传失败!');
-            },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // TODO 只能 请求API限制  分页 限制每页显示数量
-            },
-            doQuery () {
-                console.log('do query');
-                // TODO 只能 请求API筛选处理 查询
-            },
-            changePage () {
-                // TODO 翻页
+            getSuppliesParameterTableByParam (param = null) {
+                this.table.loading = true
+                if (param !== null && param.dateTime !== undefined && param.dateTime) {
+                    let temp = []
+                    param.dateTime.map(function (value, index, arr) {
+                        temp.push(new Date(value).getTime())
+                    })
+                    param.dateTime = temp
+                }
+                getSuppliesParameter(param).then(async res => {
+                    this.table.data = res.tableData.data
+                    this.total = res.tableData.total
+                    this.table.loading = false
+                }).catch(err => {
+                    console.log('err', err)
+                })
             },
             getSelectItem (data) {
                 let categoryList = []
@@ -463,23 +486,64 @@
                     this.modal.title = '编辑文件'
                     this.modal.state = 2
                 } else if (state === 3) {
+                    this.formItem.id = temp.id
                     this.modal.title = '删除当前行数据?'
                     this.modal.state = 3
                 }
                 this.modal.status = true
             },
             modalSubmit () {
+                let param
                 if (this.modal.state === 1) {
-                    console.log(this.formDynamic)
-                    this.$Message.success('添加成功');
+                    console.log(this.formItem)
+                    param = this.formItem
+                    delete param.input
+                    delete param.dateTime
+                    delete param.page
+                    delete param.pageSize
+                    delete param.sortWay
+                    Object.assign(param, {
+                        action: 'insert'
+                    })
+                    sendSuppliesAction(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.state === 2) {
-                    this.$Message.success('编辑成功');
+                    let param = this.formItem
+                    delete param.input
+                    delete param.dateTime
+                    delete param.page
+                    delete param.pageSize
+                    delete param.sortWay
+                    Object.assign(param, {
+                        action: 'update'
+                    })
+                    sendSuppliesAction(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.state === 3) {
+                    param = {
+                        action: 'delete',
+                        id: this.formItem.id
+                    }
+                    sendSuppliesAction(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg);
+                    })
                     this.$Message.success('删除成功');
                 }
             },
             setFormItemValue (temp, state = true) {
                 // state == false 会清空当前表单
+                this.formItem.id = state ? temp.id : ''
                 this.formItem.user = state ? temp.user : ''
                 this.formItem.jobs = state ? temp.jobs : ''
                 this.formItem.recipientsTime = state ? temp.recipientsTime : ''

@@ -7,180 +7,214 @@
         {
           "id": 1,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 2,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 3,
           "fileName": "检测维保记录01",
-          "category": "安全风险管控",
+          "category": 2,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 4,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 5,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         },
         {
           "id": 6,
           "fileName": "检测维保记录01",
-          "category": "安全风险管理类",
+          "category": 1,
           "applicant": "张三",
           "maintenanceDate": "2017-08-05 15:47:44",
           "maintenanceUnit": "重庆XXX公司",
           "createdAt": "2017-08-05 15:47:44",
-          "fileType": "jpg",
+          "fileType": 1,
           "source": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3157353141,3119034262&fm=111&gp=0.jpg"
         }
-      ]
+      ],
+      "categoryList":{
+      "1": {
+        "id": 1,
+        "title": "分类一"
+      },
+      "2": {
+        "id": 2,
+        "title": "分类二"
+      },
+      "3": {
+        "id": 3,
+        "title": "分类三"
+      }
+    },
+      "fileTypeList": {
+      "1": {
+        "id": 1,
+        "title": "MP4"
+      },
+      "2": {
+        "id": 2,
+        "title": "JPG"
+      },
+      "3": {
+        "id": 3,
+        "title": "WORD"
+      },
+      "4": {
+        "id": 4,
+        "title": "PDF"
+      }
+
+    },
+      "total": 99
     }
   }
 }

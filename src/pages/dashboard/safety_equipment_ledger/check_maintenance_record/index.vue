@@ -19,9 +19,9 @@
                                      @click="selectThisBtn(index)">
                                     <div class="ivu-inline-block">{{ value.title }}</div>
                                     <div class="ivu-inline-block do-action-btn">
-                                        <Icon type="ios-add-circle" size="18" @click="modalAction(1, '', index)"/>
-                                        <Icon type="ios-close-circle" size="18" @click="modalAction(3, value.id, index)"/>
-                                        <Icon type="md-create" size="18" @click="modalAction(2, value, index)"/>
+                                        <Icon type="ios-add-circle" size="18" @click.stop="modalAction(1, '', index)"/>
+                                        <Icon type="ios-close-circle" size="18" @click.stop="modalAction(3, value.id, index)"/>
+                                        <Icon type="md-create" size="18" @click.stop="modalAction(2, value, index)"/>
                                     </div>
                                 </div>
                             </div>
@@ -40,39 +40,45 @@
                         功能操作
                     </div>
                     <FormItem label="输入搜索">
-                        <Input v-model="formItem.condition" placeholder="文件名/序号/..." size="small"
-                               style="width: 115px" />
+                        <Input v-model="formItem.input" placeholder="文件名/序号/..." size="small"
+                               style="width: 150px" />
                     </FormItem>
                     <FormItem label="所属类别">
                         <Select v-model="formItem.category"
                                 class="ivu-nomal-select"
-                                size="small"  style="width:95px">
-                                <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>
+                                size="small"  style="width:150px">
+                                <Option :value="item.id" v-for="(item, key) in modal.modal2.categoryList"
+                                        :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="文档格式">
                         <Select v-model="formItem.fileType" size="small"
                                 class="ivu-nomal-select"
-                                style="width:100px">
-                            <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>
+                                style="width:150px">
+                            <Option :value="item.id" v-for="(item, key) in modal.modal2.fileTypeList"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-ml-40 ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable(false)" class="ivu-ml">重置查询</Button>
                         <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    v-if="key < (table.columns.length - 1)"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -83,9 +89,17 @@
                         <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(2, row)">编辑</Button>
                         <Button type="error" size="small" @click="modalTable(3, row)">删除</Button>
                     </template>
+                    <template slot-scope="{ row, index }" slot="category">
+                        <span>{{ modal.modal2.categoryList[row.category]?modal.modal2.categoryList[row.category]['title']:'' }}</span>
+                    </template>
+                    <template slot-scope="{ row, index }" slot="fileType">
+                        <span>{{ modal.modal2.fileTypeList[row.fileType]?modal.modal2.fileTypeList[row.fileType]['title']:'' }}</span>
+                    </template>
                 </Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading"
+                          :page-size="pageSize" show-total
+                          show-elevator size="small" @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -133,7 +147,9 @@
                                 class="ivu-nomal-select"
                                 placeholder="请输选择类别..."
                                 style="width: 240px">
-                                <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>
+                                <Option :value="item.id"
+                                        v-for="(item, key) in modal.modal2.categoryList"
+                                        :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="维保人">
@@ -162,7 +178,8 @@
                                 class="ivu-nomal-select"
                                 placeholder="请输选择文件格式..."
                                 style="width: 240px">
-                                <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>
+                            <Option :value="item.id" v-for="(item, key) in modal.modal2.fileTypeList"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="上传选择器"
@@ -181,7 +198,7 @@
                     <FormItem label="图片详情"
                               class="item-copy"
                               v-else>
-                        <img :src="formItem.filePath" alt="" style="width: 240px; height: 240px;">
+                        <img :src="formItem.fileInfo" alt="" style="width: 240px; height: 240px;">
                     </FormItem>
                     <div style="clear: both"></div>
                 </Form>
@@ -191,7 +208,10 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getMaintenanceRecordMenu, getMaintenanceRecordTable } from '@api';
+    import {
+        getMaintenanceRecordMenu, sendMaintenanceRecordMenu,
+        getMaintenanceRecordTable, sendMaintenanceRecordTable
+    } from '@api';
     import Config from '@/config';
 
     export default {
@@ -206,16 +226,17 @@
                 loading: false,
                 formItem: {
                     category: undefined,
-                    dateRange: undefined,
-                    condition: undefined,
-                    showNum: 1,
+                    input: undefined,
+                    pageSize: 10,
+                    page: 1,
                     sortWay: undefined,
+                    id: '',
                     fileName: '',
                     applicant: '',
                     maintenanceDate: '',
                     maintenanceUnit: '',
                     fileType: '',
-                    filePath: '' // 返回\路劲
+                    fileInfo: '' // 返回\路劲
                 },
                 table: {
                     columns: [
@@ -228,14 +249,13 @@
                         {
                             title: '文件名',
                             align: 'center',
-                            width: '180',
                             key: 'fileName'
                         },
                         {
                             title: '所属类别',
-                            width: '120',
                             align: 'center',
-                            key: 'category'
+                            key: 'category',
+                            slot: 'category'
                         },
                         {
                             title: '维保人',
@@ -265,6 +285,7 @@
                             title: '文件格式',
                             align: 'center',
                             width: '90',
+                            slot: 'fileType',
                             key: 'fileType'
                         },
                         {
@@ -331,11 +352,11 @@
                 this.btnArr[key].state = true
                 // todo 更换右侧表单的数据
                 this.table.loading = true
-                let that = this
                 let id = this.menuList[key].id
-                setTimeout(() => {
-                    that.getTableDataById(id)
-                }, 500)
+                let param = {
+                    menuId: id
+                }
+                this.getMaintenanceRecordTableByParam(param)
             },
             modalAction (state, temp, key = 0) {
                 // 操作显示不同的模态框
@@ -349,7 +370,7 @@
                     this.modal.modal1.title = '编辑类别'
                     this.modal.modal1.state = 2
                     this.modal.modal1.input = temp.title
-                    this.modal.modal1.id = temp
+                    this.modal.modal1.id = temp.id
                 } else {
                     // delete
                     // TODO 此处已经传入了id 根据id删除
@@ -361,28 +382,48 @@
                 this.modal.modal1.status = true
             },
             submit () {
+                let param
                 if (this.modal.modal1.state === 1) {
-                    // TODO 异步后台添加
-                    this.menuList.push({
-                        id: 520,
-                        title: this.modal.modal1.input
+                    param = {
+                        action: 'insert'
+                    }
+                    sendMaintenanceRecordMenu(param).then(async res => {
+                        if (res.state === true) {
+                            this.menuList.push({
+                                id: 520,
+                                title: this.modal.modal1.input
+                            })
+                            this.btnArr.push({
+                                state: false
+                            })
+                        }
+                        this.$Message.success(res.msg);
                     })
-                    this.btnArr.push({
-                        state: false
-                    })
-                    this.$Message.success('添加成功');
                 } else if (this.modal.modal1.state === 2) {
-                    // TODO 异步编辑数据 this.modal.modal1.id
-                    let key = this.modal.modal1.key
-                    this.menuList[key].title = this.modal.modal1.input
-                    this.$Message.success('编辑成功');
+                    param = {
+                        action: 'update',
+                        id: this.modal.modal1.id,
+                        title: this.modal.modal1.input
+                    }
+                    sendMaintenanceRecordMenu(param).then(async res => {
+                        if (res.state === true) {
+                            let key = this.modal.modal1.key
+                            this.menuList[key].title = this.modal.modal1.input
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else {
-                    // TODO 异步删除操作
-                    let key = this.modal.modal1.key
-                    this.menuList.splice(key, 1)
-                    // 清除按钮里面对应的数据
-                    this.btnArr.splice(key, 1)
-                    this.$Message.success('删除成功');
+                    param = {
+                        action: 'delete',
+                        id: this.modal.modal1.id
+                    }
+                    sendMaintenanceRecordMenu(param).then(async res => {
+                        let key = this.modal.modal1.key
+                        this.menuList.splice(key, 1)
+                        // 清除按钮里面对应的数据
+                        this.btnArr.splice(key, 1)
+                        this.$Message.success(res.msg)
+                    })
                 }
             },
             changeTabs (index) {
@@ -399,12 +440,35 @@
                     this.$router.replace('/dashboard/check_maintenance_record')
                 }
             },
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem.category = undefined
+                    this.formItem.input = undefined
+                    this.formItem.fileType = undefined
+                }
+                let param = {
+                    input: this.formItem.input,
+                    category: this.formItem.category,
+                    fileType: this.formItem.fileType,
+                    page: this.formItem.page,
+                    pageSize: this.formItem.pageSize,
+                    sortWay: this.formItem.sortWay
+                }
+                this.getMaintenanceRecordTableByParam(param)
+            },
             setMenuClass (data) {
                 let tempArr = []
                 data.some((item, key, arr) => {
                     if (key === 0) {
                         // 默认第一个选中
-                        this.getTableDataById(item.id)
+                        let param = {
+                            menuId: item.id,
+                            isFirst: true
+                        }
+                        this.getMaintenanceRecordTableByParam(param)
                         tempArr.push({
                             state: true
                         })
@@ -440,12 +504,51 @@
                 this.modal.modal2.status = true
             },
             tableSubmit () {
+                let param
                 if (this.modal.modal2.state === 1) {
-                    this.$Message.success('添加成功');
+                    param = {
+                        action: 'insert',
+                        fileName: this.formItem.fileName,
+                        category: this.formItem.category,
+                        applicant: this.formItem.applicant,
+                        maintenanceDate: this.formItem.maintenanceDate,
+                        maintenanceUnit: this.formItem.maintenanceUnit,
+                        fileInfo: this.formItem.fileInfo
+                    }
+                    sendMaintenanceRecordTable(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.modal2.state === 2) {
-                    this.$Message.success('编辑成功');
+                    param = {
+                        action: 'update',
+                        id: this.formItem.id,
+                        fileName: this.formItem.fileName,
+                        category: this.formItem.category,
+                        applicant: this.formItem.applicant,
+                        maintenanceDate: this.formItem.maintenanceDate,
+                        maintenanceUnit: this.formItem.maintenanceUnit,
+                        fileInfo: this.formItem.fileInfo
+                    }
+                    sendMaintenanceRecordTable(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.modal2.state === 3) {
-                    this.$Message.success('删除成功');
+                    param = {
+                        action: 'insert',
+                        id: this.formItem.id
+                    }
+                    sendMaintenanceRecordTable(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 }
             },
             uploadSuccess (response, file, fileList) {
@@ -459,50 +562,27 @@
                 this.$refs.uploadEle.clearFiles()
                 this.$Message.error('文件上传失败!');
             },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // TODO 只能 请求API限制  分页 限制每页显示数量
-            },
-            doQuery () {
-                console.log('do query');
-                // TODO 只能 请求API筛选处理 查询
-            },
-            changePage () {
-                // TODO 翻页
-            },
-            getSelectItem (data) {
-                let categoryList = []
-                let fileType = []
-                data.some((item, key, arr) => {
-                    if (categoryList.indexOf(item.category) === -1) {
-                        categoryList.push(item.category)
-                    }
-                    if (fileType.indexOf(item.fileType) === -1) {
-                        fileType.push(item.fileType)
-                    }
-                })
-                this.modal.modal2.categoryList = categoryList
-                this.modal.modal2.fileTypeList = fileType
-            },
-            getTableDataById (id = 0) {
-                let param = {
-                    id: id
-                }
+            getMaintenanceRecordTableByParam (param) {
+                this.table.loading = true
                 getMaintenanceRecordTable(param).then(async res => {
                     this.table.data = res.table.data
+                    this.total = res.table.total
+                    if (param.isFirst === true) {
+                        this.modal.modal2.categoryList = res.table.categoryList
+                        this.modal.modal2.fileTypeList = res.table.fileTypeList
+                    }
                     this.table.loading = false
-                    this.getSelectItem(res.table.data)
                 })
             },
             setFormItemValue (temp, state = true) {
+                this.formItem.id = state ? temp.id : ''
                 this.formItem.fileName = state ? temp.fileName : ''
                 this.formItem.category = state ? temp.category : ''
                 this.formItem.applicant = state ? temp.applicant : ''
                 this.formItem.maintenanceDate = state ? temp.maintenanceDate : ''
                 this.formItem.maintenanceUnit = state ? temp.maintenanceUnit : ''
                 this.formItem.fileType = state ? temp.fileType : ''
-                this.formItem.filePath = state ? temp.source : ''
+                this.formItem.fileInfo = state ? temp.source : ''
             }
         }
     }

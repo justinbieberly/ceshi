@@ -391,11 +391,27 @@ export function getVehicleReInspection (data) {
     });
 }
 
-// 获取[制度管理-进出记录]的数据
+// 获取[制度管理-栏目菜单]的数据
 export function getRegimeManagement (data) {
     return request({
         url: apiConfig.getRegimeManagement.url,
         method: apiConfig.getRegimeManagement.method,
+        data
+    });
+}
+
+/*
+* @page 制度管理
+* @object CURD制度管理-栏目菜单
+* @param data
+* @author iEfoam
+* @time 2019-12-18 23:07
+* @return mixed
+* */
+export function sendRegimeManagement (data) {
+    return request({
+        url: apiConfig.sendRegimeManagement.url,
+        method: apiConfig.sendRegimeManagement.method,
         data
     });
 }
@@ -409,6 +425,22 @@ export function getRegimeByParameter (data) {
     });
 }
 
+/*
+* @page 制度管理
+* @object CURD制度管理-某一个栏目里面的数据
+* @param data
+* @author iEfoam
+* @time 2019-12-18 23:07
+* @return mixed
+* */
+export function sendRegimeAction (data) {
+    return request({
+        url: apiConfig.sendRegimeAction.url,
+        method: apiConfig.sendRegimeAction.method,
+        data
+    });
+}
+
 // 获取[证书管理-menu]的数据
 export function getCertificateManagement (data) {
     return request({
@@ -418,10 +450,26 @@ export function getCertificateManagement (data) {
     });
 }
 
+/*
+* @page 证书管理
+* @object CURD证书管理-某一个栏目里面的数据
+* @param data
+* @author iEfoam
+* @time 2019-12-18 23:07
+* @return mixed
+* */
+export function sendCertificateManagement (data) {
+    return request({
+        url: apiConfig.sendCertificateManagement.url,
+        method: apiConfig.sendCertificateManagement.method,
+        data
+    });
+}
+
 // 获取[证书管理-根据参数获取table]的数据
 // todo need delete this example
 export function getCertificateByParameter (data) {
-    if (data.id === 160050114) {
+    if (data.menuId === 160050114) {
         return request({
             url: '/response/证件管理/证件列表/response1.json',
             method: 'get',
@@ -435,6 +483,15 @@ export function getCertificateByParameter (data) {
     });
 }
 
+// 获取[CURD 证件管理左侧的表格数据]的数据
+export function sendCertificateAction (data) {
+    return request({
+        url: apiConfig.sendCertificateAction.url,
+        method: apiConfig.sendCertificateAction.method,
+        data
+    });
+}
+
 // 获取[职业健康台账的首页表格数据]的数据
 export function getOccupationalHealth (data) {
     return request({
@@ -444,11 +501,29 @@ export function getOccupationalHealth (data) {
     });
 }
 
+// 获取[CURD - 职业健康台账-首页表格数据]的数据
+export function sendOccupationalHealth (data) {
+    return request({
+        url: apiConfig.sendOccupationalHealth.url,
+        method: apiConfig.sendOccupationalHealth.method,
+        data
+    });
+}
+
 // 获取[职业健康台账的首页表格数据]的数据
 export function getSuppliesParameter (data) {
     return request({
         url: apiConfig.getSuppliesParameter.url,
         method: apiConfig.getSuppliesParameter.method,
+        data
+    });
+}
+
+// 获取[CURD - 职业健康台账 -用品台账]的数据
+export function sendSuppliesAction (data) {
+    return request({
+        url: apiConfig.sendSuppliesAction.url,
+        method: apiConfig.sendSuppliesAction.method,
         data
     });
 }
@@ -472,10 +547,27 @@ export function getMaintenanceRecordMenu (data) {
 }
 
 // 获取[安全设备设施台账-检测维保记录]的数据
+export function sendMaintenanceRecordMenu (data) {
+    return request({
+        url: apiConfig.sendMaintenanceRecordMenu.url,
+        method: apiConfig.sendMaintenanceRecordMenu.method,
+        data
+    });
+}
+
+// 获取[安全设备设施台账-检测维保记录]的数据
 export function getMaintenanceRecordTable (data) {
     return request({
         url: apiConfig.getMaintenanceRecordTable.url,
         method: apiConfig.getMaintenanceRecordTable.method,
+        data
+    });
+}
+// 获取[安全设备设施台账-检测维保记录]的数据
+export function sendMaintenanceRecordTable (data) {
+    return request({
+        url: apiConfig.sendMaintenanceRecordTable.url,
+        method: apiConfig.sendMaintenanceRecordTable.method,
         data
     });
 }

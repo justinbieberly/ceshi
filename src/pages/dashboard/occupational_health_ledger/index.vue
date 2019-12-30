@@ -10,46 +10,50 @@
                         功能操作
                     </div>
                     <FormItem label="输入搜索">
-                        <Input v-model="formItem.condition" placeholder="部门/名字/..." size="small"
+                        <Input v-model="formItem.input" placeholder="部门/名字/..." size="small"
                                style="width: 150px" />
                     </FormItem>
                     <FormItem label="体检类型">
-                        <Select v-model="formItem.fileType" size="small"
+                        <Select v-model="formItem.medicalType" size="small"
                                 class="ivu-nomal-select"
                                 style="width:150px">
-                            <Option value="10">临期10天</Option>
-                            <Option value="20">临期20天</Option>
-                            <Option value="30">临期30天</Option>
+                            <Option :value="item.id"
+                                    v-for="(item, key) in selectInfo.medicalType"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="临期时间">
-                        <Select v-model="formItem.fileType" size="small"
+                        <Select v-model="formItem.periodTime" size="small"
                                 class="ivu-nomal-select"
                                 style="width:150px">
                             <Option value="10">临期10天</Option>
                             <Option value="20">临期20天</Option>
                             <Option value="30">临期30天</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-ml-40 ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable(false)" class="ivu-ml">重置查询</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
                         <FormItem>
                             <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
                             <Button size="small" to="/dashboard/supplies_parameter" class="ivu-ml">用品台账</Button>
                         </FormItem>
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    v-if="key < (table.columns.length - 1)"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -62,7 +66,9 @@
                     </template>
                 </Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading" :page-size="pageSize"
+                          show-total show-elevator size="small"
+                          @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -103,8 +109,9 @@
                         <Select v-model="formItem.department"
                                 :disabled="modal.state === 4"
                                 placeholder="请选择部门信息...">
-                            <Option value="安防">安防</Option>
-                            <Option value="技术">技术</Option>
+                            <Option :value="item.id"
+                                    v-for="(item, key) in selectInfo.department"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem
@@ -123,8 +130,9 @@
                         <Select v-model="formItem.medicalType"
                                 :disabled="modal.state === 4"
                                 placeholder="请选择...">
-                            <Option value="入职体检">入职体检</Option>
-                            <Option value="职业病危害体检">职业病危害体检</Option>
+                            <Option :value="item.id"
+                                    v-for="(item, key) in selectInfo.medicalType"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem
@@ -133,23 +141,23 @@
                         <DatePicker type="date" placeholder="选择开始日期"
                                     :disabled="modal.state === 4"
                                     v-model="formItem.medicalTime"
-                                    style="width: 150px"></DatePicker>
+                                    style="width: 165px"></DatePicker>
                         <DatePicker type="date" placeholder="选择结束日期"
                                     :disabled="modal.state === 4"
                                     v-model="formItem.effectiveTime"
-                                    style="width: 150px; margin-left: 20px;"></DatePicker>
+                                    style="width: 165px; margin-left: 20px;"></DatePicker>
                     </FormItem>
-                    <FormItem label="上传选择器"
-                              class="item-copy"
-                              :rules="{required: true, message: '文件必须!', trigger: 'blur'}">
-                        <Upload action="//jsonplaceholder.typicode.com/posts/"
-                                :on-success="uploadSuccess"
-                                @on-error="uploadFailed"
-                                ref="uploadEle">
-                            <Button icon="ios-cloud-upload-outline">选择上传文件</Button>
-                            <span class="ivu-block upload-notice">只能上传word/pdf/视频格式文件，文件不能超过500Mb</span>
-                        </Upload>
-                    </FormItem>
+<!--                    <FormItem label="上传选择器"-->
+<!--                              class="item-copy"-->
+<!--                              :rules="{required: true, message: '文件必须!', trigger: 'blur'}">-->
+<!--                        <Upload action="//jsonplaceholder.typicode.com/posts/"-->
+<!--                                :on-success="uploadSuccess"-->
+<!--                                @on-error="uploadFailed"-->
+<!--                                ref="uploadEle">-->
+<!--                            <Button icon="ios-cloud-upload-outline">选择上传文件</Button>-->
+<!--                            <span class="ivu-block upload-notice">只能上传word/pdf/视频格式文件，文件不能超过500Mb</span>-->
+<!--                        </Upload>-->
+<!--                    </FormItem>-->
                     <div style="clear: both"></div>
                 </Form>
             </div>
@@ -158,7 +166,7 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getOccupationalHealth } from '@api';
+    import { getOccupationalHealth, sendOccupationalHealth } from '@api';
     import Config from '@/config';
 
     export default {
@@ -178,17 +186,25 @@
                     medicalType: []
                 },
                 formItem: {
-                    name: '',
-                    phone: '',
-                    department: '',
-                    isHealth: '',
-                    medicalType: '',
-                    medicalTime: '',
-                    effectiveTime: ''
+                    input: undefined,
+                    periodTime: undefined,
+                    page: 1,
+                    pageSize: 10,
+                    sortWay: undefined,
+                    id: undefined,
+                    name: undefined,
+                    phone: undefined,
+                    department: undefined,
+                    isHealth: undefined,
+                    medicalType: undefined,
+                    medicalTime: undefined,
+                    fileInfo: undefined,
+                    effectiveTime: undefined
                 },
                 modal: {
                     status: false,
                     title: '添加用户信息',
+                    id: undefined,
                     state: 1
                 },
                 table: {
@@ -262,40 +278,56 @@
             ])
         },
         created () {
-            // let that = this;
-            getOccupationalHealth().then(async res => {
-                this.table.data = res.tableData
-            }).catch(err => {
-                console.log('err', err)
-            })
+            this.getOccupationalHealthTableByParam()
         },
         mounted () {
             // 设置屏幕的宽度高度
             this.$refs.right.style.height = this.screenHeight + 'px'
         },
         methods: {
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem.input = undefined
+                    this.formItem.medicalType = undefined
+                    this.formItem.periodTime = undefined
+                    this.formItem.page = 1
+                }
+                let param = {
+                    input: this.formItem.input,
+                    medicalType: this.formItem.medicalType,
+                    periodTime: this.formItem.periodTime,
+                    page: this.formItem.page,
+                    pageSize: this.formItem.pageSize,
+                    sortWay: this.formItem.sortWay
+                }
+                this.getOccupationalHealthTableByParam(param)
+            },
+            getOccupationalHealthTableByParam (param = null) {
+                this.table.loading = true
+                getOccupationalHealth(param).then(async res => {
+                    this.table.data = res.tableData.data
+                    this.total = res.tableData.total
+                    if (param === null) {
+                        this.selectInfo.medicalType = res.tableData.medicalType
+                        this.selectInfo.department = res.tableData.departmentList
+                    }
+                    this.table.loading = false
+                }).catch(err => {
+                    console.log('err', err)
+                })
+            },
             uploadSuccess (response, file, fileList) {
+                this.formItem.fileInfo = response.id
                 this.$Message.success('文件上传成功!');
-                // TODO 上传完成之后需要处理
-                console.log(response, file, fileList)
             },
             uploadFailed (response, file, fileList) {
                 console.log(response, file, fileList)
                 // TODO 上传失败之后需要处理
                 this.$refs.uploadEle.clearFiles()
                 this.$Message.error('文件上传失败!');
-            },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // TODO 只能 请求API限制  分页 限制每页显示数量
-            },
-            doQuery () {
-                console.log('do query');
-                // TODO 只能 请求API筛选处理 查询
-            },
-            changePage () {
-                // TODO 翻页
             },
             getSelectItem (data) {
                 let categoryList = []
@@ -333,11 +365,13 @@
                     this.modal.state = 1
                 } else if (state === 2) {
                     // 编辑
+                    this.formItem.id = temp.id
                     this.setFormItemValue(temp)
                     this.modal.title = '编辑文件'
                     this.modal.state = 2
                 } else if (state === 3) {
                     this.modal.title = '删除当前行数据?'
+                    this.modal.id = temp.id
                     this.modal.state = 3
                 } else if (state === 4) {
                     this.setFormItemValue(temp)
@@ -347,13 +381,55 @@
                 this.modal.status = true
             },
             modalSubmit () {
+                let param
                 if (this.modal.state === 1) {
-                    console.log(this.formDynamic)
-                    this.$Message.success('添加成功');
+                    param = {
+                        action: 'insert',
+                        name: this.formItem.name,
+                        phone: this.formItem.phone,
+                        department: this.formItem.department,
+                        isHealth: this.formItem.isHealth,
+                        medicalType: this.formItem.medicalType,
+                        medicalTime: this.formItem.medicalTime,
+                        fileInfo: this.formItem.fileInfo,
+                        effectiveTime: this.formItem.effectiveTime
+                    }
+                    sendOccupationalHealth(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.state === 2) {
-                    this.$Message.success('编辑成功');
+                    param = {
+                        action: 'update',
+                        id: this.formItem.id,
+                        name: this.formItem.name,
+                        phone: this.formItem.phone,
+                        department: this.formItem.department,
+                        isHealth: this.formItem.isHealth,
+                        medicalType: this.formItem.medicalType,
+                        medicalTime: new Date(this.formItem.medicalTime).getTime(),
+                        fileInfo: this.formItem.fileInfo,
+                        effectiveTime: new Date(this.formItem.effectiveTime).getTime()
+                    }
+                    sendOccupationalHealth(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg)
+                    })
                 } else if (this.modal.state === 3) {
-                    this.$Message.success('删除成功');
+                    param = {
+                        action: 'delete',
+                        id: this.formItem.id
+                    }
+                    sendOccupationalHealth(param).then(async res => {
+                        if (res.state === true) {
+                            this.reloadTable()
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 }
             },
             setFormItemValue (temp, state = true) {

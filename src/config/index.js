@@ -209,19 +209,39 @@ const Config = {
             url: '/response/制度管理/response.json',
             method: 'get'
         },
+        sendRegimeManagement: {
+            alias: '获取-制度管理-的数据',
+            url: '/response/制度管理/api/response.json',
+            method: 'get'
+        },
         getRegimeByParameter: {
             alias: '获取-制度管理-某一项的文档数据列表-的数据',
             url: '/response/制度管理/制度文档/response.json',
             method: 'get'
         },
+        sendRegimeAction: {
+            alias: 'Curd-制度管理-某一项的文档数据列表-的数据',
+            url: '/response/制度管理/api/response.json',
+            method: 'get'
+        },
         getCertificateManagement: {
-            alias: '获取-制度管理-某一项的文档数据列表-的数据',
+            alias: '获取-证件管理-左侧的栏目-的数据',
             url: '/response/证件管理/response.json',
             method: 'get'
         },
+        sendCertificateManagement: {
+            alias: 'CURD-制度管理-左侧的栏目-的数据',
+            url: '/response/证件管理/api/response.json',
+            method: 'get'
+        },
         getCertificateByParameter: {
-            alias: '获取-制度管理-某一项的文档数据列表-的数据',
+            alias: '获取-证件管理-左侧的栏目-的数据',
             url: '/response/证件管理/证件列表/response.json',
+            method: 'get'
+        },
+        sendCertificateAction: {
+            alias: 'ＣＵＲＤ-证件管理-表格数据-的数据',
+            url: '/response/证件管理/api/response.json',
             method: 'get'
         },
         getOccupationalHealth: {
@@ -229,9 +249,19 @@ const Config = {
             url: '/response/职业健康台账/response.json',
             method: 'get'
         },
+        sendOccupationalHealth: {
+            alias: 'CURD-职业健康台账-的数据',
+            url: '/response/职业健康台账/api/response.json',
+            method: 'get'
+        },
         getSuppliesParameter: {
             alias: '获取-职业健康台账-用品台账-的数据',
             url: '/response/职业健康台账/用品台账/response.json',
+            method: 'get'
+        },
+        sendSuppliesAction: {
+            alias: 'CURD-职业健康台账-用品台账-的数据',
+            url: '/response/职业健康台账/api/response.json',
             method: 'get'
         },
         getSafetyEquipmentData: {
@@ -242,6 +272,16 @@ const Config = {
         getMaintenanceRecordMenu: {
             alias: '获取-安全设备设施台账-检测维保记录-的数据',
             url: '/response/安全设备台账/检测维保记录/response.json',
+            method: 'get'
+        },
+        sendMaintenanceRecordMenu: {
+            alias: 'CURD-安全设备设施台账-检测维保记录-的数据',
+            url: '/response/安全设备台账/api/response.json',
+            method: 'get'
+        },
+        sendMaintenanceRecordTable: {
+            alias: 'CURD-安全设备设施台账-检测维保记录-的数据',
+            url: '/response/安全设备台账/api/response.json',
             method: 'get'
         },
         getMaintenanceRecordTable: {

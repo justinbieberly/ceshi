@@ -40,14 +40,15 @@
                         功能操作
                     </div>
                     <FormItem label="输入搜索">
-                        <Input v-model="formItem.condition" placeholder="名字/地点/..." size="small"
-                               style="width: 120px" />
+                        <Input v-model="formItem.input" placeholder="名字/地点/..." size="small"
+                               style="width: 180px" />
                     </FormItem>
                     <FormItem label="隐患类别">
                         <Select v-model="formItem.type" size="small"
                                 class="ivu-nomal-select"
-                                style="width:110px">
-                            <Option value="all">全部</Option>
+                                style="width:180px">
+                            <Option :value="item.id" v-for="(item, key) in typeList"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="时间">
@@ -56,23 +57,26 @@
                                     placement="bottom-end"
                                     placeholder="请选择时间范围..."
                                     size="small"
-                                    style="width: 140px"></DatePicker>
-                        <Button type="primary" size="small" @click="doQuery"
+                                    style="width: 200px"></DatePicker>
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-ml-40 ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable(false)" class="ivu-ml">重置查询</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -85,7 +89,9 @@
                     </template>
                 </Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading" :page-size="pageSize"
+                          show-total show-elevator size="small"
+                          @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -113,6 +119,7 @@
                 logoDesc: Config.logo.logoDesc,
                 title: '隐患处置',
                 listArr: [],
+                typeList: [],
                 pageSize: 10,
                 total: 12,
                 modal: {
@@ -122,10 +129,11 @@
                 },
                 loading: false,
                 formItem: {
-                    condition: '',
+                    input: '',
                     type: '',
                     dateRange: undefined,
-                    showNum: 1,
+                    pageSize: 10,
+                    page: 1,
                     sortWay: undefined
                 },
                 table: {
@@ -252,11 +260,7 @@
             ])
         },
         created () {
-            let that = this
-            getHazardHistory().then(async res => {
-                that.listArr = res.listArr
-                that.table.data = res.tableData.data
-            })
+            this.getHazardHistoryTableByParam()
         },
         mounted () {
             // 设置屏幕的宽度高度
@@ -264,17 +268,38 @@
             this.$refs.left.style.height = this.screenHeight + 'px'
         },
         methods: {
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // TODO 只能 请求API限制  分页 限制每页显示数量
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem.input = undefined
+                    this.formItem.type = undefined
+                    this.formItem.dateRange = undefined
+                    this.formItem.page = undefined
+                }
+                let param = {
+                    input: this.formItem.input,
+                    type: this.formItem.type,
+                    dateRange: this.formItem.dateRange,
+                    page: this.formItem.page,
+                    pageSize: this.formItem.pageSize,
+                    sortWay: this.formItem.sortWay
+                }
+                this.getHazardHistoryTableByParam(param)
             },
-            doQuery () {
-                console.log('do query');
-                // TODO 只能 请求API筛选处理 查询
-            },
-            changePage () {
-                // TODO 翻页
+            getHazardHistoryTableByParam (param = null) {
+                let that = this
+                that.table.loading = true
+                getHazardHistory(param).then(async res => {
+                    that.listArr = res.listArr
+                    that.table.data = res.tableData.data
+                    this.total = res.tableData.total
+                    if (param === null) {
+                        that.typeList = res.tableData.typeList
+                    }
+                    that.table.loading = false
+                })
             },
             modalTable (state, temp) {
                 if (state === 1) {

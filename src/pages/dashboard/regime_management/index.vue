@@ -16,9 +16,9 @@
                                  @click="selectThisBtn(key, index)">
                                 <div class="ivu-inline-block">{{ value.title }}</div>
                                 <div class="ivu-inline-block do-action-btn">
-                                    <Icon type="ios-add-circle" size="18" @click="modalAction(1, '', key)"/>
-                                    <Icon type="ios-close-circle" size="18" @click="modalAction(3, value.id, key, index)"/>
-                                    <Icon type="md-create" size="18" @click="modalAction(2, value, key, index)"/>
+                                    <Icon type="ios-add-circle" size="18" @click.stop="modalAction(1, '', key)"/>
+                                    <Icon type="ios-close-circle" size="18" @click.stop="modalAction(3, value.id, key, index)"/>
+                                    <Icon type="md-create" size="18" @click.stop="modalAction(2, value, key, index)"/>
                                 </div>
                             </div>
                         </div>
@@ -36,39 +36,43 @@
                         功能操作
                     </div>
                     <FormItem label="输入搜索">
-                        <Input v-model="formItem.condition" placeholder="文件名/序号/..." size="small"
+                        <Input v-model="formItem.input" placeholder="文件名/序号/..." size="small"
                                style="width: 115px" />
                     </FormItem>
                     <FormItem label="所属类别">
                         <Select v-model="formItem.category"
                                 class="ivu-nomal-select"
                                 size="small"  style="width:95px">
-<!--                            <Option :value="item" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item }}</Option>-->
+                            <Option :value="item.id" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item.title }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="文档格式">
                         <Select v-model="formItem.fileType" size="small"
                                 class="ivu-nomal-select"
                                 style="width:100px">
-<!--                            <Option :value="item" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item }}</Option>-->
+                            <Option :value="item.id" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item.title }}</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-ml-40 ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable(false)" class="ivu-ml">重置查询</Button>
                         <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    v-if="key < (table.columns.length - 1)"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -79,9 +83,17 @@
                         <Button type="primary" size="small" style="margin-right: 5px" @click="modalTable(2, row)">编辑</Button>
                         <Button type="error" size="small" @click="modalTable(3, row)">删除</Button>
                     </template>
+                    <template slot-scope="{ row, index }" slot="category">
+                        <span>{{ modal.modal2.categoryList[row.category]?modal.modal2.categoryList[row.category]['title']:'' }}</span>
+                    </template>
+                    <template slot-scope="{ row, index }" slot="file_type">
+                        <span>{{ modal.modal2.fileTypeList[row.file_type]?modal.modal2.fileTypeList[row.file_type]['title']:'' }}</span>
+                    </template>
                 </Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading" :page-size="pageSize"
+                          show-total show-elevator
+                          size="small" @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -103,7 +115,7 @@
             </div>
         </Modal>
         <Modal
-                :width="modal.modal2.state === 3?350:900"
+                :width="450"
                 v-model="modal.modal2.status"
                 :title="modal.modal2.title"
                 @on-ok="tableSubmit">
@@ -117,20 +129,23 @@
                       :hide-required-mark="false"
                       :show-message="false"
                       style="width: 880px;margin-right: auto;margin-left: auto;" v-else>
-                    <FormItem
-                            class="item-copy"
-                            v-for="(item, index) in formDynamic.items"
-                            :key="index"
-                            :label="item.label">
-                            <DatePicker  v-model="item.value" type="date"
-                                         v-if="item.isTime"
-                                         style="width: 276px"
-                                         :disabled="modal.modal2.state === 4"
-                                         :placeholder="'请选择' + item.label + '...'">
-                            </DatePicker>
-                            <Input type="text" v-model="item.value"
-                                   :disabled="modal.modal2.state === 4"
-                                   :placeholder="'请输入' + item.label + '...'" v-else></Input>
+                    <FormItem label="文件名">
+                        <Input v-model="modal.modal2.fileName" placeholder="文件名..."
+                               style="width: 200px" />
+                    </FormItem>
+                    <FormItem label="所属类别">
+                        <Select v-model="modal.modal2.category"
+                                class="ivu-nomal-select"
+                                style="width: 200px" >
+                            <Option :value="parseInt(item.id)" v-for="(item, key) in modal.modal2.categoryList" :key="key">{{ item.title }}</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="文档格式">
+                        <Select v-model="modal.modal2.fileType"
+                                class="ivu-nomal-select"
+                                style="width: 200px" >
+                            <Option :value="parseInt(item.id)" v-for="(item, key) in modal.modal2.fileTypeList" :key="key">{{ item.title }}</Option>
+                        </Select>
                     </FormItem>
                     <FormItem label="上传选择器"
                               class="item-copy"
@@ -139,7 +154,6 @@
                         <Upload action="//jsonplaceholder.typicode.com/posts/"
                                 :on-success="uploadSuccess"
                                 @on-error="uploadFailed"
-
                                 ref="uploadEle">
                             <Button icon="ios-cloud-upload-outline">选择上传文件</Button>
                             <span class="ivu-block upload-notice">只能上传word/pdf/视频格式文件，文件不能超过500Mb</span>
@@ -148,7 +162,7 @@
                     <FormItem label="图片详情"
                               class="item-copy"
                               v-else>
-                            <img :src="modal.modal2.filePath" alt="">
+                            <img :src="modal.modal2.fileInfo" alt="">
                     </FormItem>
                     <div style="clear: both"></div>
                 </Form>
@@ -158,7 +172,11 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getRegimeManagement, getRegimeByParameter } from '@api';
+    import {
+        getRegimeManagement, sendRegimeManagement,
+        sendRegimeAction,
+        getRegimeByParameter
+    } from '@api';
     import Config from '@/config';
 
     export default {
@@ -184,22 +202,23 @@
                         status: false,
                         state: 1,
                         title: '添加文件',
+                        id: '',
                         fileName: '',
                         category: '',
                         fileType: '',
-                        filePath: '' // 返回id 还是路劲
+                        fileInfo: '' // 返回id 还是路劲
                     }
                 },
                 btnArr: [],
                 pageSize: 10,
-                total: 12,
+                total: 0,
                 loading: false,
                 formItem: {
                     category: undefined,
                     fileType: undefined,
-                    dateRange: undefined,
-                    condition: undefined,
-                    showNum: 1,
+                    input: undefined,
+                    pageSize: 10,
+                    page: 1,
                     sortWay: undefined
                 },
                 table: {
@@ -244,46 +263,66 @@
                     })
                 })
                 this.btnArr[key][index].state = true
-                // todo 更换右侧表单的数据
                 this.table.loading = true
-                let that = this
                 let id = this.menuList[key].children[index].id
-                setTimeout(() => {
-                    that.getTableDataById(id)
-                }, 500)
+                let param = {
+                    groupId: this.menuList[key]['id'],
+                    menuId: id
+                }
+                this.getRegimeByParameterTableByParam(param)
             },
             submit () {
+                let param
                 if (this.modal.modal1.state === 1) {
-                    // TODO 异步后台添加
-                    let key = this.modal.modal1.key
-                    this.menuList[key].children.push({
-                        id: 520,
-                        title: this.modal.modal1.input
+                    param = {
+                        action: 'insert'
+                    }
+                    sendRegimeManagement(param).then(async res => {
+                        if (res.state === true) {
+                            let key = this.modal.modal1.key
+                            this.menuList[key].children.push({
+                                id: res.id,
+                                title: this.modal.modal1.input
+                            })
+                            this.btnArr[key].push({
+                                state: false
+                            })
+                        }
+                        this.$Message.success(res.msg);
                     })
-                    this.btnArr[key].push({
-                        state: false
-                    })
-                    this.$Message.success('添加成功');
                 } else if (this.modal.modal1.state === 2) {
-                    // TODO 异步编辑数据 this.modal.modal1.id
-                    let key = this.modal.modal1.key
-                    let index = this.modal.modal1.index
-                    this.menuList[key].children[index].title = this.modal.modal1.input
-                    this.$Message.success('编辑成功');
+                    param = {
+                        action: 'update',
+                        id: this.modal.modal1.id,
+                        title: this.modal.modal1.input
+                    }
+                    sendRegimeManagement(param).then(async res => {
+                        if (res.state === true) {
+                            let key = this.modal.modal1.key
+                            let index = this.modal.modal1.index
+                            this.menuList[key].children[index].title = this.modal.modal1.input
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else {
-                    // TODO 异步删除操作
-                    let key = this.modal.modal1.key
-                    let index = this.modal.modal1.index
-                    this.menuList[key].children.splice(index, 1)
-                    // 清除按钮里面对应的数据
-                    this.btnArr[key].splice(index, 1)
-                    this.$Message.success('删除成功');
+                    param = {
+                        action: 'delete',
+                        id: this.modal.modal1.id
+                    }
+                    sendRegimeManagement(param).then(async res => {
+                        let key = this.modal.modal1.key
+                        let index = this.modal.modal1.index
+                        this.menuList[key].children.splice(index, 1)
+                        // 清除按钮里面对应的数据
+                        this.btnArr[key].splice(index, 1)
+                        this.$Message.success(res.msg)
+                    })
                 }
             },
             modalAction (state, temp, key = 0, index = 0) {
                 // 操作显示不同的模态框
                 if (state === 1) {
-                    // add
+                    // add  key-> 组
                     this.modal.modal1.title = '添加类别'
                     this.modal.modal1.state = 1
                     this.modal.modal1.input = ''
@@ -293,7 +332,7 @@
                     this.modal.modal1.title = '编辑类别'
                     this.modal.modal1.state = 2
                     this.modal.modal1.input = temp.title
-                    this.modal.modal1.id = temp
+                    this.modal.modal1.id = temp.id
                     this.modal.modal1.key = key
                     this.modal.modal1.index = index
                 } else {
@@ -314,7 +353,12 @@
                     item.children.some((value, index, a) => {
                         if (key === 0 && index === 0) {
                             // 默认第一个选中
-                            this.getTableDataById(value.id)
+                            let param = {
+                                groupId: item.id,
+                                menuId: value.id,
+                                isFirst: true
+                            }
+                            this.getRegimeByParameterTableByParam(param)
                             tempArr[key].push({
                                 state: true
                             })
@@ -327,15 +371,31 @@
                 })
                 this.btnArr = tempArr
             },
-            getTableDataById (id = 0) {
-                let param = {
-                    id: id
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem = {
+                        category: undefined,
+                        fileType: undefined,
+                        input: undefined,
+                        pageSize: 10,
+                        page: 1,
+                        sortWay: undefined
+                    }
                 }
+                this.getRegimeByParameterTableByParam(this.formItem)
+            },
+            getRegimeByParameterTableByParam (param) {
+                this.table.loading = true
                 getRegimeByParameter(param).then(async res => {
-                    console.log('res++++', res)
                     this.table.data = res.table.data
-                    this.table.loading = false
-                    this.getSelectItem(res.table.columns)
+                    this.total = res.table.total
+                    if (param.isFirst === true) {
+                        this.modal.modal2.categoryList = res.table.categoryList
+                        this.modal.modal2.fileTypeList = res.table.fileTypeList
+                    }
                     res.table.columns.push({
                         title: '操作',
                         width: '250',
@@ -345,6 +405,7 @@
                         key: 'attachment'
                     })
                     this.table.columns = res.table.columns
+                    this.table.loading = false
                 })
             },
             modalTable (state, temp) {
@@ -363,6 +424,7 @@
                 } else if (state === 3) {
                     this.modal.modal2.title = '删除当前行数据?'
                     this.modal.modal2.state = 3
+                    this.modal.modal2.id = temp.id
                 } else if (state === 4) {
                     this.setModalFormItem(temp)
                     this.modal.modal2.title = '数据详情预览'
@@ -371,19 +433,43 @@
                 this.modal.modal2.status = true
             },
             tableSubmit () {
+                let param
                 if (this.modal.modal2.state === 1) {
-                    console.log(this.formDynamic)
-                    this.$Message.success('添加成功');
+                    param = {
+                        action: 'insert',
+                        fileName: this.modal.modal2.fileName,
+                        category: this.modal.modal2.category,
+                        fileType: this.modal.modal2.fileType,
+                        fileInfo: this.modal.modal2.fileInfo
+                    }
+                    sendRegimeAction(param).then(async res => {
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.modal2.state === 2) {
-                    this.$Message.success('编辑成功');
+                    param = {
+                        action: 'update',
+                        id: this.modal.modal2.id,
+                        fileName: this.modal.modal2.fileName,
+                        category: this.modal.modal2.category,
+                        fileType: this.modal.modal2.fileType,
+                        fileInfo: this.modal.modal2.fileInfo
+                    }
+                    sendRegimeAction(param).then(async res => {
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.modal2.state === 3) {
-                    this.$Message.success('删除成功');
+                    param = {
+                        action: 'delete',
+                        id: this.modal.modal2.id
+                    }
+                    sendRegimeAction(param).then(async res => {
+                        this.$Message.success(res.msg);
+                    })
                 }
             },
             uploadSuccess (response, file, fileList) {
+                this.modal.modal2.fileInfo = response.id
                 this.$Message.success('文件上传成功!');
-                // TODO 上传完成之后需要处理
-                console.log(response, file, fileList)
             },
             uploadFailed (response, file, fileList) {
                 console.log(response, file, fileList)
@@ -391,54 +477,12 @@
                 this.$refs.uploadEle.clearFiles()
                 this.$Message.error('文件上传失败!');
             },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // TODO 只能 请求API限制  分页 限制每页显示数量
-            },
-            doQuery () {
-                console.log('do query');
-                // TODO 只能 请求API筛选处理 查询
-            },
-            changePage () {
-                // TODO 翻页
-            },
-            getSelectItem (data) {
-                let categoryList = []
-                let fileType = []
-                data.some((item, key, arr) => {
-                    if (categoryList.indexOf(item.category) === -1) {
-                        categoryList.push(item.category)
-                    }
-                    if (fileType.indexOf(item.file_type) === -1) {
-                        fileType.push(item.file_type)
-                    }
-                })
-                this.modal.modal2.categoryList = categoryList
-                this.modal.modal2.fileTypeList = fileType
-            },
             setModalFormItem (data = []) {
-                let form = []
-                let columns = this.table.columns
-                for (let i = 1; i < (columns.length - 1); i++) {
-                    let formItem = {
-                        label: columns[i].title,
-                        name: columns[i].key,
-                        value: undefined
-                    }
-                    if (data) {
-                        Object.assign(formItem, {
-                            value: data[columns[i].key]
-                        })
-                    }
-                    if (columns[i].title.indexOf('时间') !== -1 || columns[i].title.indexOf('日期') !== -1) {
-                        Object.assign(formItem, {
-                            isTime: true
-                        })
-                    }
-                    form.push(formItem)
-                }
-                this.formDynamic.items = form
+                this.modal.modal2.id = data ? data.id : ''
+                this.modal.modal2.fileName = data ? data.file_name : ''
+                this.modal.modal2.category = data ? parseInt(data.category) : ''
+                this.modal.modal2.fileType = data ? data.file_type : ''
+                this.modal.modal2.fileInfo = data ? data.file_url : ''
             },
             download (url) {
                 if (!url) {

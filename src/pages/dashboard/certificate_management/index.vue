@@ -16,9 +16,9 @@
                                  @click="selectThisBtn(key, index)">
                                 <div class="ivu-inline-block">{{ value.title }}</div>
                                 <div class="ivu-inline-block do-action-btn">
-                                    <Icon type="ios-add-circle" size="18" @click="modalAction(1, '', key)"/>
-                                    <Icon type="ios-close-circle" size="18" @click="modalAction(3, value.id, key, index)"/>
-                                    <Icon type="md-create" size="18" @click="modalAction(2, value, key, index)"/>
+                                    <Icon type="ios-add-circle" size="18" @click.stop="modalAction(1, '', key)"/>
+                                    <Icon type="ios-close-circle" size="18" @click.stop="modalAction(3, value.id, key, index)"/>
+                                    <Icon type="md-create" size="18" @click.stop="modalAction(2, value, key, index)"/>
                                 </div>
                             </div>
                         </div>
@@ -37,34 +37,38 @@
                         功能操作
                     </div>
                     <FormItem label="输入搜索">
-                        <Input v-model="formItem.condition" placeholder="文件名/序号/..." size="small"
-                               style="width: 150px" />
+                        <Input v-model="formItem.input" placeholder="文件名/序号/..." size="small"
+                               style="width: 180px" />
                     </FormItem>
                     <FormItem label="临期时间">
-                        <Select v-model="formItem.fileType" size="small"
+                        <Select v-model="formItem.periodTime" size="small"
                                 class="ivu-nomal-select"
-                                style="width:150px">
+                                style="width:180px">
                             <Option value="10">临期10天</Option>
                             <Option value="20">临期20天</Option>
                             <Option value="30">临期30天</Option>
                         </Select>
-                        <Button type="primary" size="small" @click="doQuery"
+                        <Button type="primary" size="small" @click="reloadTable"
                                 class="ivu-ml-40 ivu-query-btn">查询结果</Button>
-                        <Button size="small" @click="doQuery" class="ivu-ml">重置查询</Button>
+                        <Button size="small" @click="reloadTable(false)" class="ivu-ml">重置查询</Button>
                         <Button size="small" @click="modalTable(1)" class="ivu-ml">添加</Button>
                     </FormItem>
                     <div class="ivu-inline-block ivu-form-item ivu-no-lable" style="float: right">
-                        <Select v-model="formItem.showNum" size="small"
+                        <Select v-model="formItem.pageSize" size="small"
                                 placeholder="显示条数"
-                                @on-change="setPageSize" style="width: 110px;margin-top: 4px;">
+                                @on-change="reloadTable" style="width: 110px;margin-top: 4px;">
                             <Option value="20">20条/页</Option>
                             <Option value="50">50条/页</Option>
                             <Option value="100">100条/页</Option>
                         </Select>
                         <Select v-model="formItem.sortWay" size="small"
                                 placeholder="排序方式"
+                                @on-change="reloadTable"
                                 style="width: 110px;margin-left: 10px; margin-top: 4px;">
-                            <Option value="errorInfo">报警内容</Option>
+                            <Option :value="item.key"
+                                    v-for="(item, key) in table.columns"
+                                    v-if="key < (table.columns.length - 1)"
+                                    :key="key">{{ item.title }}</Option>
                         </Select>
                     </div>
                 </Form>
@@ -77,7 +81,9 @@
                     </template>
                 </Table>
                 <div class="ivu-block" style="float: right;margin-top: 30px;">
-                    <Page :total="total" :loading="loading" :page-size="pageSize" show-total show-elevator size="small" @on-change="changePage"/>
+                    <Page :total="total" :loading="loading" :page-size="pageSize"
+                          show-total show-elevator size="small"
+                          @on-change="reloadTable(true, $event)"/>
                 </div>
             </div>
         </div>
@@ -144,7 +150,7 @@
                     <FormItem label="图片详情"
                               class="item-copy"
                               v-else>
-                            <img :src="modal.modal2.filePath" alt="">
+                            <img :src="modal.modal2.fileInfo" alt="">
                     </FormItem>
                     <div style="clear: both"></div>
                 </Form>
@@ -154,7 +160,11 @@
 </template>
 <script>
     import { mapState } from 'vuex';
-    import { getCertificateManagement, getCertificateByParameter } from '@api';
+    import {
+        getCertificateManagement, getCertificateByParameter,
+        sendCertificateAction,
+        sendCertificateManagement
+    } from '@api';
     import Config from '@/config';
     const echarts = require('echarts');
 
@@ -163,7 +173,7 @@
         data () {
             return {
                 logoDesc: Config.logo.logoDesc,
-                title: '制度管理',
+                title: '证书管理',
                 modelImg: '/assets/images/vbg.png',
                 menuList: [],
                 modal: {
@@ -181,10 +191,11 @@
                         status: false,
                         state: 1,
                         title: '添加文件',
+                        id: undefined,
                         fileName: '',
                         category: '',
                         fileType: '',
-                        filePath: '' // 返回id 还是路劲
+                        fileInfo: '' // 返回id 还是路劲
                     }
                 },
                 btnArr: [],
@@ -192,11 +203,10 @@
                 total: 12,
                 loading: false,
                 formItem: {
-                    category: undefined,
-                    fileType: undefined,
-                    dateRange: undefined,
-                    condition: undefined,
-                    showNum: 1,
+                    input: undefined,
+                    periodTime: undefined,
+                    pageSize: 10,
+                    page: 1,
                     sortWay: undefined
                 },
                 table: {
@@ -244,38 +254,60 @@
                 this.btnArr[key][index].state = true
                 // todo 更换右侧表单的数据
                 this.table.loading = true
-                let that = this
                 let id = this.menuList[key].children[index].id
-                setTimeout(() => {
-                    that.getTableDataById(id)
-                }, 500)
+                let param = {
+                    groupId: this.menuList[key]['id'],
+                    menuId: id
+                }
+                this.getCertificateTableByParam(param)
             },
             submit () {
+                let param
                 if (this.modal.modal1.state === 1) {
                     // TODO 异步后台添加
-                    let key = this.modal.modal1.key
-                    this.menuList[key].children.push({
-                        id: 520,
-                        title: this.modal.modal1.input
+                    param = {
+                        action: 'insert'
+                    }
+                    sendCertificateManagement(param).then(async res => {
+                        if (res.state === true) {
+                            let key = this.modal.modal1.key
+                            this.menuList[key].children.push({
+                                id: res.id,
+                                title: this.modal.modal1.input
+                            })
+                            this.btnArr[key].push({
+                                state: false
+                            })
+                        }
+                        this.$Message.success(res.msg);
                     })
-                    this.btnArr[key].push({
-                        state: false
-                    })
-                    this.$Message.success('添加成功');
                 } else if (this.modal.modal1.state === 2) {
-                    // TODO 异步编辑数据 this.modal.modal1.id
-                    let key = this.modal.modal1.key
-                    let index = this.modal.modal1.index
-                    this.menuList[key].children[index].title = this.modal.modal1.input
-                    this.$Message.success('编辑成功');
+                    param = {
+                        action: 'update',
+                        id: this.modal.modal1.id,
+                        title: this.modal.modal1.input
+                    }
+                    sendCertificateManagement(param).then(async res => {
+                        if (res.state === true) {
+                            let key = this.modal.modal1.key
+                            let index = this.modal.modal1.index
+                            this.menuList[key].children[index].title = this.modal.modal1.input
+                        }
+                        this.$Message.success(res.msg);
+                    })
                 } else {
-                    // TODO 异步删除操作
-                    let key = this.modal.modal1.key
-                    let index = this.modal.modal1.index
-                    this.menuList[key].children.splice(index, 1)
-                    // 清除按钮里面对应的数据
-                    this.btnArr[key].splice(index, 1)
-                    this.$Message.success('删除成功');
+                    param = {
+                        action: 'delete',
+                        id: this.modal.modal1.id
+                    }
+                    sendCertificateManagement(param).then(async res => {
+                        let key = this.modal.modal1.key
+                        let index = this.modal.modal1.index
+                        this.menuList[key].children.splice(index, 1)
+                        // 清除按钮里面对应的数据
+                        this.btnArr[key].splice(index, 1)
+                        this.$Message.success(res.msg)
+                    })
                 }
             },
             modalAction (state, temp, key = 0, index = 0) {
@@ -291,7 +323,7 @@
                     this.modal.modal1.title = '编辑类别'
                     this.modal.modal1.state = 2
                     this.modal.modal1.input = temp.title
-                    this.modal.modal1.id = temp
+                    this.modal.modal1.id = temp.id
                     this.modal.modal1.key = key
                     this.modal.modal1.index = index
                 } else {
@@ -312,7 +344,12 @@
                     item.children.some((value, index, a) => {
                         if (key === 0 && index === 0) {
                             // 默认第一个选中
-                            this.getTableDataById(value.id)
+                            let param = {
+                                groupId: item.id,
+                                menuId: value.id,
+                                isFirst: true
+                            }
+                            this.getCertificateTableByParam(param)
                             tempArr[key].push({
                                 state: true
                             })
@@ -325,14 +362,28 @@
                 })
                 this.btnArr = tempArr
             },
-            getTableDataById (id = 0) {
-                let param = {
-                    id: id
+            reloadTable (state = true, event) {
+                if (state) {
+                    this.formItem.page = event === undefined ? 1 : event
+                    this.pageSize = parseInt(this.formItem.pageSize);
+                } else {
+                    this.formItem = {
+                        input: undefined,
+                        periodTime: undefined,
+                        pageSize: 10,
+                        page: 1,
+                        sortWay: undefined
+                    }
                 }
+                this.getCertificateTableByParam(this.formItem)
+            },
+            getCertificateTableByParam (param) {
+                this.table.loading = true
+                console.log('param', param)
                 getCertificateByParameter(param).then(async res => {
                     this.table.data = res.table.data
+                    this.total = res.table.total
                     this.table.loading = false
-                    this.getSelectItem(res.table.columns)
                     res.table.columns.push({
                         title: '附件',
                         width: '250',
@@ -342,6 +393,7 @@
                         key: 'attachment'
                     })
                     this.table.columns = res.table.columns
+                    this.table.loading = false
                 })
             },
             modalTable (state, temp) {
@@ -360,6 +412,7 @@
                 } else if (state === 3) {
                     this.modal.modal2.title = '删除当前行数据?'
                     this.modal.modal2.state = 3
+                    this.modal.modal2.id = temp.id
                 } else if (state === 4) {
                     this.setModalFormItem(temp)
                     this.modal.modal2.title = '数据详情预览'
@@ -368,51 +421,36 @@
                 this.modal.modal2.status = true
             },
             tableSubmit () {
+                let param
                 if (this.modal.modal2.state === 1) {
-                    console.log(this.formDynamic)
-                    this.$Message.success('添加成功');
+                    param = this.formDynamic.items
+                    sendCertificateAction(param).then(async res => {
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.modal2.state === 2) {
-                    this.$Message.success('编辑成功');
+                    param = this.formDynamic.items
+                    sendCertificateAction(param).then(async res => {
+                        this.$Message.success(res.msg);
+                    })
                 } else if (this.modal.modal2.state === 3) {
-                    this.$Message.success('删除成功');
+                    param = {
+                        action: 'delete',
+                        id: this.modal.modal2.id
+                    }
+                    sendCertificateAction(param).then(async res => {
+                        this.$Message.success(res.msg);
+                    })
                 }
             },
             uploadSuccess (response, file, fileList) {
+                this.modal.modal2.fileInfo = response.id
                 this.$Message.success('文件上传成功!');
-                // TODO 上传完成之后需要处理
-                console.log(response, file, fileList)
             },
             uploadFailed (response, file, fileList) {
                 console.log(response, file, fileList)
                 // TODO 上传失败之后需要处理
                 this.$refs.uploadEle.clearFiles()
                 this.$Message.error('文件上传失败!');
-            },
-            setPageSize () {
-                this.pageSize = parseInt(this.formItem.showNum);
-                console.log('reset page size', this.pageSize);
-                // TODO 只能 请求API限制  分页 限制每页显示数量
-            },
-            doQuery () {
-                console.log('do query');
-                // TODO 只能 请求API筛选处理 查询
-            },
-            changePage () {
-                // TODO 翻页
-            },
-            getSelectItem (data) {
-                let categoryList = []
-                let fileType = []
-                data.some((item, key, arr) => {
-                    if (categoryList.indexOf(item.category) === -1) {
-                        categoryList.push(item.category)
-                    }
-                    if (fileType.indexOf(item.file_type) === -1) {
-                        fileType.push(item.file_type)
-                    }
-                })
-                this.modal.modal2.categoryList = categoryList
-                this.modal.modal2.fileTypeList = fileType
             },
             setModalFormItem (data = []) {
                 let form = []
@@ -488,71 +526,6 @@
                                     shadowColor: 'rgba(0, 0, 0, 0.5)'
                                 }
                             }
-                        }
-                    ]
-                })
-            },
-            drawBarChart (elementId, legend, data, state) {
-                let title = '年龄分布'
-                if (state === 1) {
-                    title = '在职时长'
-                }
-                let myChart = echarts.init(document.getElementById(elementId));
-                myChart.setOption({
-                    title: {
-                        text: title,
-                        x: 'center',
-                        textStyle: {
-                            color: '#cfcfcf'
-                        }
-                    },
-                    color: ['#3398DB'],
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: legend,
-                        axisLabel: {
-                            show: true,
-                            textStyle: {
-                                color: '#cfcfcf'
-                            }
-                        },
-                        lineStyle: {
-                            color: '#cfcfcf' // 更改坐标轴颜色
-                        }
-                    },
-                    yAxis: {
-                        type: 'value',
-                        axisLabel: {
-                            show: true,
-                            textStyle: {
-                                color: '#cfcfcf'
-                            }
-                        },
-                        axisLine: {
-                            lineStyle: {
-                                color: '#cfcfcf' // 更改坐标轴颜色
-                            }
-                        }
-                    },
-                    grid: {
-                        top: '15%',
-                        left: '3%',
-                        right: '4%',
-                        bottom: '0%',
-                        containLabel: true
-                    },
-                    series: [
-                        {
-                            name: '数据量',
-                            type: 'bar',
-                            barWidth: '45%',
-                            data: data
                         }
                     ]
                 })
